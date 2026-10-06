@@ -8,7 +8,9 @@ import {
   Button,
   Card,
   Icon,
+  Placeholder,
 } from "@/components/ui";
+import { siteConfig } from "@/config";
 import {
   Phone,
   Sparkles,
@@ -359,6 +361,66 @@ export default function StyleGuidePage() {
                 <span className={styles.iconLabel}>{label}</span>
               </div>
             ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* Section: Content Config, Placeholders & Trust Gating (Phase 2) */}
+      <Section variant="ice">
+        <Container>
+          <HeadingBlock
+            level="h2"
+            eyebrow="Rule 5 & 6 Architecture"
+            title="Content Config, Placeholders & Trust Gating"
+            description="All business facts live in src/config/siteConfig.ts. Unknown values render with prominent dev badges and are strictly gated from production."
+          />
+
+          <div className={styles.gridCols3} style={{ marginBottom: "2rem" }}>
+            <Card>
+              <h3 style={{ fontSize: "1.125rem", marginBottom: "12px", color: "var(--color-navy-900)" }}>
+                Business Placeholders
+              </h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "0.875rem" }}>
+                <div><strong>Phone:</strong> <Placeholder value={siteConfig.business.phone} label="PHONE NUMBER" /></div>
+                <div><strong>Email:</strong> <Placeholder value={siteConfig.business.email} label="EMAIL ADDRESS" /></div>
+                <div><strong>ABN:</strong> <Placeholder value={siteConfig.business.abn} label="ABN" /></div>
+                <div><strong>Tagline:</strong> <Placeholder value={siteConfig.business.tagline} label="TAGLINE" /></div>
+                <div><strong>Region:</strong> <Placeholder value={siteConfig.business.primaryRegion} label="REGION" /></div>
+                <div><strong>Hours:</strong> <Placeholder value={siteConfig.business.openingHours} label="HOURS" /></div>
+              </div>
+            </Card>
+
+            <Card>
+              <h3 style={{ fontSize: "1.125rem", marginBottom: "12px", color: "var(--color-navy-900)" }}>
+                Trust Gating Status
+              </h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "0.8125rem" }}>
+                {Object.entries(siteConfig.trust.flags).map(([flag, enabled]) => (
+                  <div key={flag} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span>{flag}:</span>
+                    <span className={enabled ? styles.passBadge : styles.failBadge}>
+                      {enabled ? "ACTIVE" : "GATED (OFF)"}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            <Card>
+              <h3 style={{ fontSize: "1.125rem", marginBottom: "12px", color: "var(--color-navy-900)" }}>
+                Configured Services ({siteConfig.services.length})
+              </h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "0.8125rem" }}>
+                {siteConfig.services.map((svc) => (
+                  <div key={svc.slug} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span>{svc.title}</span>
+                    <span className={svc.confirmed ? styles.passBadge : styles.failBadge}>
+                      {svc.confirmed ? "CONFIRMED" : "UNCONFIRMED"}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
         </Container>
       </Section>

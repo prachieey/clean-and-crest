@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node --no-warnings --experimental-strip-types scripts/audit-placeholders.mjs",
     "build": "next build",
+    "audit:placeholders": "node --no-warnings --experimental-strip-types scripts/audit-placeholders.mjs",
     "start": "next start",
     "lint": "eslint"
   },

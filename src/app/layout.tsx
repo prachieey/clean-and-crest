@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { siteConfig } from "@/config";
 import "./globals.css";
 
 const headingFont = Plus_Jakarta_Sans({
@@ -17,8 +18,8 @@ const bodyFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Clean & Crest | Professional Cleaning Services",
-  description: "Reliable residential and commercial cleaning across Australia.",
+  title: `${siteConfig.business.name} | Professional Cleaning Services`,
+  description: siteConfig.seoDefaults.defaultDescription,
 };
 
 export default function RootLayout({

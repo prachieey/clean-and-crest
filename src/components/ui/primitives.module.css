@@ -199,3 +199,28 @@
   flex-shrink: 0;
   color: currentColor;
 }
+
+/* Development Placeholder Highlight */
+.placeholderDev {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px dashed #D97706;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.placeholderDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #D97706;
+  display: inline-block;
+}
+
