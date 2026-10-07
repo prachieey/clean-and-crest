@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { siteConfig } from "@/config";
+import { Header } from "@/components/layout";
 import "./globals.css";
 
 const headingFont = Plus_Jakarta_Sans({
@@ -29,7 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-AU" className={`${headingFont.variable} ${bodyFont.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main id="main-content">{children}</main>
+      </body>
     </html>
   );
 }
