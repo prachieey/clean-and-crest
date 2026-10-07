@@ -86,6 +86,18 @@ export interface SeoDefaults {
   defaultShareImage: string;
 }
 
+export interface BenefitItem {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  /**
+   * Editable operational benefit. Must be confirmed by business owner
+   * to reflect actual operating practices.
+   */
+  confirmedByUser: boolean;
+}
+
 export interface SiteConfig {
   business: BusinessConfig;
   services: ServiceItem[];
@@ -94,6 +106,7 @@ export interface SiteConfig {
   reviews: ReviewItem[];
   quoteFormOptions: QuoteFormOptions;
   seoDefaults: SeoDefaults;
+  whyChooseUs: BenefitItem[];
 }
 
 export const siteConfig: SiteConfig = {
@@ -236,6 +249,42 @@ export const siteConfig: SiteConfig = {
     siteUrl: "[SITE URL]",
     defaultShareImage: "/images/clean-and-crest-logo.jpg",
   },
+
+  /**
+   * WHY CHOOSE US BENEFITS (Operational statements):
+   * NOTE FOR USER: These statements describe HOW the business operates rather than
+   * unverified claims. Please review and confirm that these align with your workflow.
+   */
+  whyChooseUs: [
+    {
+      id: "free-quotes",
+      icon: "FileText",
+      title: "Free, no-obligation quotes",
+      description: "Receive a clear, upfront estimate tailored to your property before any work begins.",
+      confirmedByUser: false, // USER TO CONFIRM
+    },
+    {
+      id: "clear-communication",
+      icon: "MessageSquare",
+      title: "Clear communication",
+      description: "Direct updates and prompt responses from your initial enquiry through to job completion.",
+      confirmedByUser: false, // USER TO CONFIRM
+    },
+    {
+      id: "checklist-cleaning",
+      icon: "ClipboardCheck",
+      title: "Checklist-based cleans",
+      description: "Every room is cleaned according to a systematic task checklist so nothing is missed.",
+      confirmedByUser: false, // USER TO CONFIRM
+    },
+    {
+      id: "simple-booking",
+      icon: "CalendarCheck",
+      title: "Simple phone or online booking",
+      description: "Flexible scheduling arranged easily via call, SMS, or our short quote form.",
+      confirmedByUser: false, // USER TO CONFIRM
+    },
+  ],
 };
 
 /**

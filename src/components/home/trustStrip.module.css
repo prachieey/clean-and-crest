@@ -1,0 +1,60 @@
+/* Slim Trust Strip Styles */
+
+.trustStrip {
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-ice-100);
+  padding: 14px 0;
+  width: 100%;
+}
+
+.trustList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3) var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-navy-900);
+}
+
+.trustIcon {
+  color: var(--color-blue-600);
+  flex-shrink: 0;
+}
+
+/* Development placeholder row when all trust flags are off */
+.devPlaceholderRow {
+  background-color: var(--color-white);
+  border-top: 1px dashed var(--color-ice-100);
+  border-bottom: 1px dashed var(--color-ice-100);
+  padding: 10px 0;
+  text-align: center;
+}
+
+.devPlaceholderText {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  opacity: 0.7;
+}
+
+.devPlaceholderDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-ink-500);
+}
