@@ -35,6 +35,10 @@ export interface ServiceItem {
   image: string | null;
   confirmed: boolean;
   startingPriceText: string | null;
+  /** Checklist of service inclusions. In dev: shows placeholder if unconfirmed */
+  inclusions?: string[];
+  /** Short paragraph describing who the service suits best */
+  whoItSuits?: string;
 }
 
 export interface TrustFlags {
@@ -107,6 +111,11 @@ export interface SiteConfig {
   quoteFormOptions: QuoteFormOptions;
   seoDefaults: SeoDefaults;
   whyChooseUs: BenefitItem[];
+  customQuotePrompt: {
+    enabled: boolean;
+    text: string;
+    linkHref: string;
+  };
 }
 
 export const siteConfig: SiteConfig = {
@@ -137,6 +146,10 @@ export const siteConfig: SiteConfig = {
       image: null,
       confirmed: false,
       startingPriceText: null,
+      inclusions: [
+        "[CONFIRM WHAT'S INCLUDED: Living areas, kitchen, bathrooms & bedrooms]",
+      ],
+      whoItSuits: "Busy homeowners, working professionals, and families seeking consistent, dependable cleaning on a regular or one-off basis.",
     },
     {
       slug: "end-of-lease-cleaning",
@@ -147,6 +160,10 @@ export const siteConfig: SiteConfig = {
       image: null,
       confirmed: false,
       startingPriceText: null,
+      inclusions: [
+        "[CONFIRM WHAT'S INCLUDED: Vacate condition checklist, oven, interior glass, wet areas]",
+      ],
+      whoItSuits: "Renters moving out, property managers preparing homes for new tenancies, and owners preparing properties for market inspection.",
     },
     {
       slug: "deep-cleaning",
@@ -157,6 +174,10 @@ export const siteConfig: SiteConfig = {
       image: null,
       confirmed: false,
       startingPriceText: null,
+      inclusions: [
+        "[CONFIRM WHAT'S INCLUDED: Heavy scrubbing, tile grout, kitchen appliances, high-touch sanitisation]",
+      ],
+      whoItSuits: "Properties requiring thorough seasonal cleaning, spring cleans, or restorative attention after renovations or long intervals.",
     },
     {
       slug: "commercial-cleaning",
@@ -167,6 +188,10 @@ export const siteConfig: SiteConfig = {
       image: null,
       confirmed: false,
       startingPriceText: null,
+      inclusions: [
+        "[CONFIRM WHAT'S INCLUDED: Workstation sanitisation, common areas, waste removal, amenities]",
+      ],
+      whoItSuits: "Offices, retail spaces, studios, and commercial facilities requiring dependable cleaning scheduled outside trading hours.",
     },
     {
       slug: "carpet-steam-cleaning",
@@ -177,6 +202,10 @@ export const siteConfig: SiteConfig = {
       image: null,
       confirmed: false,
       startingPriceText: null,
+      inclusions: [
+        "[CONFIRM WHAT'S INCLUDED: Pre-spray treatment, high-temperature steam extraction, standard spot care]",
+      ],
+      whoItSuits: "Households and businesses aiming to refresh high-traffic carpets and rugs, or tenants needing carpet receipts for bond sign-off.",
     },
     {
       slug: "upholstery-cleaning",
@@ -187,6 +216,10 @@ export const siteConfig: SiteConfig = {
       image: null,
       confirmed: false,
       startingPriceText: null,
+      inclusions: [
+        "[CONFIRM WHAT'S INCLUDED: Fabric vacuuming, gentle extraction, deodorisation for lounge suites and dining chairs]",
+      ],
+      whoItSuits: "Homeowners and property owners looking to revive fabric sofas, armchairs, dining seating, and mattresses.",
     },
   ],
 
@@ -285,6 +318,16 @@ export const siteConfig: SiteConfig = {
       confirmedByUser: false, // USER TO CONFIRM
     },
   ],
+
+  /**
+   * Custom quote prompt below services grid.
+   * NOTE FOR USER: Marked as editable. Confirms whether you take custom enquiries.
+   */
+  customQuotePrompt: {
+    enabled: true,
+    text: "Don't see what you need? Ask us for a custom quote.",
+    linkHref: "/contact",
+  },
 };
 
 /**
