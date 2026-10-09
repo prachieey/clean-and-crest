@@ -1,19 +1,29 @@
 import React from "react";
 import { ArrowRight, Phone } from "lucide-react";
+import type { Metadata } from "next";
 import { siteConfig } from "@/config";
+import { generatePageMetadata, getBreadcrumbJsonLd } from "@/config/seo";
+
 import { Container, Section, Eyebrow, Button, Icon } from "@/components/ui";
 import { ServicesGrid } from "@/components/services";
+import { HowItWorks } from "@/components/home";
+import { FinalCtaBand } from "@/components/layout";
+import { JsonLd } from "@/components/seo";
 
-export const metadata = {
-  title: "Cleaning Services | Clean & Crest",
-  description: "Explore our range of professional residential, vacate, and commercial cleaning services across Australia.",
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: "All Cleaning Services & Packages | Clean & Crest",
+  description:
+    "Explore professional house, end of lease, deep, and commercial cleaning services by Clean & Crest. Tailored checklists and upfront quotes for every space.",
+  path: "/services",
+});
+
 
 export default function ServicesOverviewPage() {
   const phoneHref = siteConfig.business.phoneHref || `tel:${siteConfig.business.phone}`;
 
   return (
     <>
+      <JsonLd schema={getBreadcrumbJsonLd([{ name: "Services", path: "/services" }])} />
       <Section variant="white">
         <Container>
           {/* Page Header */}
@@ -27,8 +37,9 @@ export default function ServicesOverviewPage() {
             </p>
           </div>
 
-          {/* Reusable Services Card Grid */}
-          <ServicesGrid />
+          {/* Reusable Services Card Grid (h2 for valid semantic hierarchy below h1) */}
+          <ServicesGrid headingLevel="h2" />
+
 
           {/* Not Sure Which Service Block */}
           <div
@@ -67,6 +78,13 @@ export default function ServicesOverviewPage() {
           </div>
         </Container>
       </Section>
+
+      {/* How It Works Section */}
+      <HowItWorks />
+
+      {/* Final Call to Action */}
+      <FinalCtaBand />
     </>
   );
 }
+

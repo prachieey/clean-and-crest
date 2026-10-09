@@ -9,12 +9,7 @@ import { siteConfig } from "@/config";
 import { Button, Icon } from "@/components/ui";
 import styles from "./header.module.css";
 
-const navItems = [
-  { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
-  { label: "Service Areas", href: "/service-areas" },
-  { label: "Contact", href: "/contact" },
-];
+const navItems = siteConfig.navigation;
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);

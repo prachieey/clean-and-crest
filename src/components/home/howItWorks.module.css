@@ -1,0 +1,235 @@
+/* How It Works Section Styles */
+
+.howItWorksSection {
+  border-top: 1px solid var(--color-ice-100);
+}
+
+.headerWrapper {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto var(--space-6);
+}
+
+.subheading {
+  color: var(--color-ink-500);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  margin: 0 auto;
+}
+
+/* Ordered list reset & container */
+.stepsList {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto var(--space-8);
+  max-width: 540px;
+}
+
+/* ============================================================
+   MOBILE-FIRST: Vertical Stack (< 768px)
+   Line runs down the left connecting steps 1 -> 2 -> 3 -> 4
+   ============================================================ */
+
+.stepItem {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+/* Step marker container on the left */
+.markerCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.numberCircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--color-navy-900);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-level-1);
+  z-index: 2;
+}
+
+/* Subtle cyan accent dot on the number circle */
+.cyanAccentDot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-cyan-400);
+  border: 2px solid var(--color-white);
+}
+
+/* Continuous vertical connector line on mobile */
+.verticalLine {
+  flex: 1;
+  width: 2px;
+  min-height: 28px;
+  background-color: var(--color-ice-100);
+  margin: 4px 0;
+}
+
+.stepItem:last-child .verticalLine {
+  display: none;
+}
+
+/* Step text content */
+.stepContent {
+  padding-top: 4px;
+  padding-bottom: var(--space-5);
+  flex: 1;
+  min-width: 0;
+}
+
+.stepItem:last-child .stepContent {
+  padding-bottom: 0;
+}
+
+.stepTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  line-height: 1.3;
+  margin-bottom: var(--space-1);
+}
+
+.stepDescription {
+  font-size: var(--font-size-body);
+  color: var(--color-ink-500);
+  line-height: var(--line-height-body);
+  margin: 0;
+}
+
+/* Horizontal connector hidden on mobile */
+.horizontalLine {
+  display: none;
+}
+
+/* ============================================================
+   TABLET & DESKTOP (>= 768px): Horizontal 4-Column Row
+   Connected by a thin line (ice-100) with a cyan dot accent
+   ============================================================ */
+
+@media (min-width: 768px) {
+  .stepsList {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+    max-width: none;
+  }
+
+  .stepItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .markerCol {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    align-self: auto;
+    position: relative;
+  }
+
+  /* Vertical line hidden on tablet/desktop */
+  .verticalLine {
+    display: none;
+  }
+
+  /* Horizontal line connects circle across gap to next step */
+  .horizontalLine {
+    display: block;
+    position: absolute;
+    top: 21px;
+    left: 44px;
+    right: calc(-1 * var(--space-3));
+    height: 2px;
+    background-color: var(--color-ice-100);
+    z-index: 1;
+  }
+
+  /* Last step has NO connector line extending rightward */
+  .stepItem:last-child .horizontalLine {
+    display: none;
+  }
+
+  /* Cyan accent dot centered along the horizontal connector */
+  .horizontalLineDot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-cyan-400);
+  }
+
+  .stepContent {
+    padding: 0;
+    flex: auto;
+  }
+
+  .stepDescription {
+    font-size: var(--font-size-body);
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stepsList {
+    gap: var(--space-4);
+  }
+
+  .horizontalLine {
+    right: calc(-1 * var(--space-4));
+  }
+
+  .stepDescription {
+    font-size: var(--font-size-body);
+  }
+}
+
+/* Closing Action Row */
+.closingRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  padding-top: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .closingRow {
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 639px) {
+  .closingRow a,
+  .closingRow button {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -36,7 +36,11 @@ for (const [key, val] of Object.entries(siteConfig.seoDefaults)) {
 }
 
 // 3. Service areas
-const areaPlaceholders = siteConfig.serviceAreas.filter((a) => a.includes("["));
+const areaPlaceholders = siteConfig.serviceAreas.filter((a) => {
+  if (typeof a === "string") return a.includes("[");
+  if (a && typeof a.name === "string") return a.name.includes("[");
+  return false;
+});
 
 // 4. Unconfirmed services
 const unconfirmedServices = siteConfig.services.filter((s) => !s.confirmed);
@@ -78,6 +82,28 @@ console.log("\n" + bold("5. GATED TRUST CLAIMS:") + ` (${disabledTrustFlags.leng
 disabledTrustFlags.forEach(([flag]) => {
   console.log(`   ${dim("●")} ${flag}: ${red("false")} (hidden in production per Rule 6)`);
 });
+
+// 6. About & Team placeholders
+const aboutPlaceholders = [];
+if (siteConfig.about?.story?.needsOwnerInput) {
+  aboutPlaceholders.push({ field: "about.story", note: "Founding story / background pending owner input" });
+}
+if (siteConfig.about?.teaser?.needsOwnerInput) {
+  aboutPlaceholders.push({ field: "about.teaser", note: "Teaser copy pending owner input" });
+}
+if (siteConfig.about?.photo?.isPlaceholder) {
+  aboutPlaceholders.push({ field: "about.photo", note: "Real team photo pending owner supply (using neutral placeholder)" });
+}
+if (siteConfig.about?.team?.length === 0) {
+  aboutPlaceholders.push({ field: "about.team", note: "No team members configured (team section hidden)" });
+}
+
+if (aboutPlaceholders.length > 0) {
+  console.log("\n" + bold("6. ABOUT & TEAM PLACEHOLDERS:") + ` (${aboutPlaceholders.length} items flagged for owner input)`);
+  aboutPlaceholders.forEach(({ field, note }) => {
+    console.log(`   ${yellow("●")} ${bold(field)}: ${yellow(note)}`);
+  });
+}
 
 console.log("\n" + yellow("-".repeat(72)));
 console.log(

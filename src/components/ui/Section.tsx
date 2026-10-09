@@ -8,6 +8,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   variant?: SectionVariant;
   className?: string;
   id?: string;
+  reveal?: boolean;
 }
 
 export function Section({
@@ -15,6 +16,7 @@ export function Section({
   variant = "white",
   className = "",
   id,
+  reveal = true,
   ...props
 }: SectionProps) {
   const variantClass =
@@ -27,7 +29,12 @@ export function Section({
   const sectionClass = `${styles.section} ${variantClass} ${className}`.trim();
 
   return (
-    <section id={id} className={sectionClass} {...props}>
+    <section
+      id={id}
+      className={sectionClass}
+      data-reveal={reveal ? "true" : undefined}
+      {...props}
+    >
       {children}
     </section>
   );

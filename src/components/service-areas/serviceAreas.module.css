@@ -1,0 +1,318 @@
+/* Service Areas Module Styles */
+
+.bandSection {
+  border-top: 1px solid var(--color-ice-100);
+}
+
+.headerWrapper {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto var(--space-6);
+}
+
+.subheading {
+  color: var(--color-ink-500);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  margin: var(--space-1) auto 0;
+}
+
+/* Development Status Notice */
+.devNotice {
+  background-color: #FFFBEB;
+  border: 1px solid #FCD34D;
+  color: #92400E;
+  padding: 12px 18px;
+  border-radius: var(--radius-input);
+  font-size: 0.875rem;
+  max-width: 680px;
+  margin: 0 auto var(--space-6);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+/* Production Neutral Line Box */
+.neutralCoverageBox {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--space-6);
+  box-shadow: var(--shadow-level-1);
+}
+
+.neutralCoverageText {
+  font-size: var(--font-size-body);
+  color: var(--color-ink-700);
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+}
+
+/* Region Columns & Cards Grid */
+.regionsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .regionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .regionsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.regionCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-level-1);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.regionCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.regionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-ice-50);
+}
+
+.regionTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.suburbCount {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-blue-600);
+  background-color: var(--color-ice-50);
+  padding: 2px 8px;
+  border-radius: var(--radius-badge);
+}
+
+/* Suburb Chips */
+.suburbChipsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suburbChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-badge);
+  font-size: 0.8125rem;
+  color: var(--color-ink-700);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.suburbChipHighlighted {
+  background-color: #FEF3C7;
+  border-color: #FCD34D;
+  color: #92400E;
+  font-weight: 600;
+}
+
+/* Search Box Container on /service-areas page */
+.searchWrapper {
+  max-width: 580px;
+  margin: 0 auto var(--space-8);
+  position: relative;
+}
+
+.searchLabel {
+  display: block;
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-navy-900);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.searchInputGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  color: var(--color-ink-500);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  min-height: 48px;
+  font-size: 1rem;
+  font-family: var(--font-family-body);
+  color: var(--color-ink-700);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  padding: 12px 42px 12px 42px;
+  box-shadow: var(--shadow-level-1);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-blue-600);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: 2px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  color: var(--color-ink-500);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  border-radius: 4px;
+}
+
+.clearSearchBtn:hover {
+  color: var(--color-navy-900);
+}
+
+.clearSearchBtn:focus-visible {
+  outline: 2px solid var(--color-primary);
+}
+
+.searchStatus {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: var(--color-ink-500);
+  text-align: center;
+}
+
+/* No Match Notice */
+.noMatchCard {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  text-align: center;
+  max-width: 600px;
+  margin: var(--space-4) auto var(--space-8);
+}
+
+.noMatchTitle {
+  font-size: 1.125rem;
+  color: var(--color-navy-900);
+  margin-bottom: 6px;
+}
+
+.noMatchText {
+  font-size: 1rem;
+  color: var(--color-ink-500);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+/* Closing CTA Band (Homepage & Page) */
+.closingCtaBlock {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  text-align: center;
+  margin-top: var(--space-6);
+}
+
+.closingCtaHeading {
+  font-size: 1.25rem;
+  color: var(--color-navy-900);
+  margin-bottom: 4px;
+}
+
+.closingCtaText {
+  font-size: 1rem;
+  color: var(--color-ink-500);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.ctaButtonsRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .ctaButtonsRow {
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 639px) {
+  .ctaButtonsRow a,
+  .ctaButtonsRow button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-blue-600);
+  min-height: 44px;
+  margin-top: var(--space-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.viewAllLink:hover {
+  color: var(--color-blue-500);
+}

@@ -24,12 +24,18 @@ import {
   AlertCircle,
   HelpCircle,
 } from "lucide-react";
+import type { Metadata } from "next";
+import { generatePageMetadata } from "@/config/seo";
 import styles from "./styleguide.module.css";
 
-export const metadata = {
-  title: "Design System & Style Guide | Clean & Crest (Internal Review)",
-  description: "Brand foundation, design tokens, typography scale, primitives, and WCAG AA contrast checklist for Clean & Crest.",
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: "Design System & Style Guide | Clean & Crest",
+  description:
+    "Brand foundation, design tokens, typography scale, primitives, and WCAG AA contrast checklist for Clean & Crest.",
+  path: "/style-guide",
+  noIndex: true,
+});
+
 
 const brandTokens = [
   { name: "navy-900", hex: "#0D253F", role: "Headings, dark CTA bands, footer", bg: "#0D253F", fg: "#FFFFFF" },
@@ -104,7 +110,8 @@ export default function StyleGuidePage() {
             />
             <div className={styles.logoDetails}>
               <Eyebrow>Brand Asset Inspection</Eyebrow>
-              <h3 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>Clean & Crest Logo</h3>
+              <h2 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>Clean & Crest Logo</h2>
+
               <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", marginBottom: "8px" }}>
                 <strong>File:</strong> <code>clean-and-crest-logo.jpg</code> (1254 × 1254px, JPEG, RGB solid background)
               </p>
@@ -210,18 +217,25 @@ export default function StyleGuidePage() {
           <Card>
             <div className={styles.typeSample}>
               <div className={styles.typeMeta}>Heading 1 — clamp(2.25rem, 4vw + 1rem, 3.5rem) / 36px–56px</div>
-              <h1>Spotless Homes & Commercial Spaces Across Australia</h1>
+              <div style={{ fontSize: "var(--font-size-h1)", fontFamily: "var(--font-family-heading)", fontWeight: 700, color: "var(--color-navy-900)", lineHeight: "var(--line-height-heading)" }}>
+                Spotless Homes & Commercial Spaces Across Australia
+              </div>
             </div>
 
             <div className={styles.typeSample}>
               <div className={styles.typeMeta}>Heading 2 — clamp(1.75rem, 2.5vw + 0.75rem, 2.5rem) / 28px–40px</div>
-              <h2>Professional Cleaning You Can Rely On Every Time</h2>
+              <div style={{ fontSize: "var(--font-size-h2)", fontFamily: "var(--font-family-heading)", fontWeight: 700, color: "var(--color-navy-900)", lineHeight: "var(--line-height-heading)" }}>
+                Professional Cleaning You Can Rely On Every Time
+              </div>
             </div>
 
             <div className={styles.typeSample}>
               <div className={styles.typeMeta}>Heading 3 — clamp(1.25rem, 1.2vw + 0.8rem, 1.5rem) / 20px–24px</div>
-              <h3>Tailored Service Packages For Households & Strata</h3>
+              <div style={{ fontSize: "var(--font-size-h3)", fontFamily: "var(--font-family-heading)", fontWeight: 700, color: "var(--color-navy-900)", lineHeight: "var(--line-height-heading)" }}>
+                Tailored Service Packages For Households & Strata
+              </div>
             </div>
+
 
             <div className={styles.typeSample}>
               <div className={styles.typeMeta}>Body Regular — clamp(1rem, 0.5vw + 0.875rem, 1.125rem) / 16px–18px, Line-Height: 1.6</div>

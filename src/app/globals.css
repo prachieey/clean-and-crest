@@ -87,8 +87,9 @@
    * Animation & Transitions
    * -------------------------------------------------- */
   --transition-fast: 150ms ease;
-  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 
 /* --------------------------------------------------
  * CSS Reset & Baseline
@@ -114,7 +115,6 @@ body {
   line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 /* Accessible focus visible */
@@ -161,11 +161,62 @@ button, input, select, textarea {
   font: inherit;
 }
 
+/* --------------------------------------------------
+ * Scroll Reveal & Stagger Animation System
+ * (Progressive Enhancement: Opacity is 1 by default if JS fails)
+ * -------------------------------------------------- */
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Enabled only when JavaScript runs and registers observer */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1), transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.js-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered Grid Reveal: children staggered by 60ms (max 6 items) */
+.js-reveal [data-reveal-stagger] > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1), transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.js-reveal [data-reveal-stagger].is-revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(1) { transition-delay: 0ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(2) { transition-delay: 60ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(3) { transition-delay: 120ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(4) { transition-delay: 180ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(5) { transition-delay: 240ms; }
+.js-reveal [data-reveal-stagger].is-revealed > *:nth-child(6) { transition-delay: 300ms; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transform: none !important;
     scroll-behavior: auto !important;
   }
+
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
+

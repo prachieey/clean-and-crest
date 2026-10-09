@@ -38,7 +38,7 @@ export function WhyChooseUs() {
         </div>
 
         {/* 4 Benefit Cards Grid */}
-        <div className={styles.benefitGrid}>
+        <div className={styles.benefitGrid} data-reveal-stagger="true">
           {benefits.map((benefit) => {
             const BenefitIcon = iconMap[benefit.icon] || FileText;
             return (

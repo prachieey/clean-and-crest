@@ -1,10 +1,16 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2, ArrowRight, Phone, Camera } from "lucide-react";
+import { CheckCircle2, ArrowRight, Phone } from "lucide-react";
+import type { Metadata } from "next";
 import { siteConfig, getServices } from "@/config";
-import { Container, Section, Eyebrow, Button, Card, Icon, Placeholder } from "@/components/ui";
+import {
+  generatePageMetadata,
+  getBreadcrumbJsonLd,
+  getServiceJsonLd,
+} from "@/config/seo";
+import { Container, Section, Eyebrow, Button, Card, Icon, Placeholder, SiteImage } from "@/components/ui";
+import { JsonLd } from "@/components/seo";
 import styles from "@/components/services/services.module.css";
 
 interface PageProps {
@@ -21,16 +27,30 @@ export async function generateStaticParams() {
   return siteConfig.services.map((s) => ({ slug: s.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const service = siteConfig.services.find((s) => s.slug === slug);
   if (!service) {
-    return { title: "Service Not Found | Clean & Crest" };
+    return generatePageMetadata({
+      title: "Service Not Found | Clean & Crest",
+      description: "The requested cleaning service could not be found. Explore all available cleaning services.",
+      path: `/services/${slug}`,
+      noIndex: true,
+    });
   }
-  return {
-    title: `${service.title} | Clean & Crest`,
-    description: service.shortDescription,
-  };
+
+  const desc =
+    service.shortDescription && service.shortDescription.length >= 130
+      ? service.shortDescription
+      : `Professional ${service.title.toLowerCase()} services by Clean & Crest. Tailored checklists, vetted cleaners, and upfront free quotes across Australia.`;
+
+  return generatePageMetadata({
+    title: `${service.title} Services | Clean & Crest`,
+    description: desc,
+    path: `/services/${service.slug}`,
+    noIndex: !service.confirmed,
+  });
+
 }
 
 export default async function ServiceDetailPage({ params }: PageProps) {
@@ -47,8 +67,17 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const relatedServices = getServices().filter((s) => s.slug !== service.slug).slice(0, 3);
   const inclusions = service.inclusions || [];
 
+  const breadcrumbs = getBreadcrumbJsonLd([
+    { name: "Services", path: "/services" },
+    { name: service.title, path: `/services/${service.slug}` },
+  ]);
+  const serviceSchema = service.confirmed ? getServiceJsonLd(service.slug) : null;
+
   return (
-    <Section variant="white">
+    <>
+      <JsonLd schema={serviceSchema ? [breadcrumbs, serviceSchema] : breadcrumbs} />
+      <Section variant="white">
+
       <Container>
         {/* Development Unconfirmed Warning Banner */}
         {!service.confirmed && (
@@ -63,7 +92,17 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         {/* Detail Header */}
         <div className={styles.detailHeader}>
           <div style={{ marginBottom: "8px" }}>
-            <Link href="/services" style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", fontWeight: 600 }}>
+            <Link
+              href="/services"
+              style={{
+                fontSize: "0.875rem",
+                color: "var(--color-ink-500)",
+                fontWeight: 600,
+                display: "inline-flex",
+                alignItems: "center",
+                minHeight: "44px",
+              }}
+            >
               &larr; Back to all services
             </Link>
           </div>
@@ -81,38 +120,15 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           {/* Left Column: Inclusions, Who It Suits, Imagery */}
           <div>
             {/* Visual Frame */}
-            <div
-              style={{
-                width: "100%",
-                aspectRatio: "16 / 10",
-                backgroundColor: "var(--color-ice-50)",
-                borderRadius: "var(--radius-card)",
-                border: "1px solid var(--color-ice-100)",
-                overflow: "hidden",
-                marginBottom: "var(--space-6)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {service.image ? (
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  width={720}
-                  height={450}
-                  className={styles.thumbnailImg}
-                  priority
-                />
-              ) : (
-                <div className={styles.imagePlaceholderBox} style={{ padding: "var(--space-4)" }}>
-                  <Icon icon={Camera} size={28} color="var(--color-blue-600)" />
-                  <span className={styles.imagePlaceholderBadge}>REPLACE WITH REAL PHOTO</span>
-                  <p className={styles.imagePlaceholderPrompt} style={{ maxWidth: "42ch" }}>
-                    Supply a bright, real photo of {service.title.toLowerCase()} (tidy room or professional cleaner at work). Aspect ratio 16:10 or 4:3. No cartoon art.
-                  </p>
-                </div>
-              )}
+            <div style={{ marginBottom: "var(--space-6)" }}>
+              <SiteImage
+                slotId={`service-${service.slug}`}
+                src={service.image}
+                aspectRatio="16 / 10"
+                width={720}
+                height={450}
+                sizes="(max-width: 768px) 100vw, 720px"
+              />
             </div>
 
             {/* What's Included Section */}
@@ -196,5 +212,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         )}
       </Container>
     </Section>
+    </>
   );
 }
+

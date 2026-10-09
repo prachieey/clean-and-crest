@@ -1,8 +1,8 @@
 import React from "react";
-import Image from "next/image";
-import { ArrowRight, Phone, CheckCircle2, Camera } from "lucide-react";
+import { Phone, CheckCircle2 } from "lucide-react";
 import { siteConfig, isTrustClaimVerified } from "@/config";
-import { Container, Button, Icon, Placeholder } from "@/components/ui";
+import { Container, Button, Icon, Placeholder, SiteImage } from "@/components/ui";
+import { HeroQuickQuote } from "./HeroQuickQuote";
 import styles from "./hero.module.css";
 
 interface HeroProps {
@@ -76,17 +76,11 @@ export function Hero({ imageSrc }: HeroProps) {
               Dependable regular, deep, and end of lease cleaning for households and commercial spaces. Request an upfront quote online with no obligation.
             </p>
 
-            {/* Action CTAs */}
-            <div className={styles.ctaGroup}>
-              <Button
-                variant="primary"
-                href="/quote"
-                className={styles.ctaBtnPrimary}
-              >
-                <span>Get a Free Quote</span>
-                <Icon icon={ArrowRight} size={18} />
-              </Button>
+            {/* Primary Action: Hero Quick-Quote Bar */}
+            <HeroQuickQuote />
 
+            {/* Secondary Action: Direct Phone Link */}
+            <div className={styles.secondaryActionRow}>
               <Button
                 variant="secondary"
                 href={phoneHref}
@@ -95,6 +89,7 @@ export function Hero({ imageSrc }: HeroProps) {
                 <Icon icon={Phone} size={18} />
                 <span>Call Now</span>
               </Button>
+              <span className={styles.orCallText}>or call for instant advice</span>
             </div>
 
             {/* Reassurance Row */}
@@ -114,30 +109,12 @@ export function Hero({ imageSrc }: HeroProps) {
 
           {/* Right Column: Hero Visual / Photo Placeholder */}
           <div className={styles.imageArea}>
-            <div className={styles.imageFrame}>
-              {imageSrc ? (
-                <Image
-                  src={imageSrc}
-                  alt="Clean and tidy modern interior cleaned by Clean & Crest"
-                  width={640}
-                  height={480}
-                  priority
-                  className={styles.heroImg}
-                />
-              ) : (
-                <div className={styles.placeholderFrame}>
-                  <div className={styles.placeholderIconWrap}>
-                    <Icon icon={Camera} size={24} />
-                  </div>
-                  <span className={styles.devBadge}>
-                    REPLACE WITH REAL PHOTO
-                  </span>
-                  <p className={styles.devPromptText}>
-                    Supply a bright, real Australian residential interior or a cleaner at work in uniform with equipment (4:3 aspect ratio). No cartoon graphics or stock models with forced poses.
-                  </p>
-                </div>
-              )}
-            </div>
+            <SiteImage
+              slotId="hero-main"
+              src={imageSrc}
+              priority
+              className={styles.heroImg}
+            />
           </div>
         </div>
       </Container>

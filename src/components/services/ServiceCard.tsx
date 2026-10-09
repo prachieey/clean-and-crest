@@ -1,17 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Sparkles,
   ShieldCheck,
   Clock,
   MapPin,
   ArrowRight,
-  Camera,
   LucideIcon,
 } from "lucide-react";
 import { ServiceItem } from "@/config";
-import { Icon } from "@/components/ui";
+import { Icon, SiteImage } from "@/components/ui";
 import styles from "./services.module.css";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -23,33 +21,26 @@ const iconMap: Record<string, LucideIcon> = {
 
 interface ServiceCardProps {
   service: ServiceItem;
+  headingLevel?: "h2" | "h3";
 }
 
-export function ServiceCard({ service }: ServiceCardProps) {
+export function ServiceCard({ service, headingLevel = "h3" }: ServiceCardProps) {
   const ServiceIcon = iconMap[service.icon] || Sparkles;
   const isDev = process.env.NODE_ENV !== "production";
+  const HeadingTag = headingLevel;
 
   return (
     <div className={styles.serviceCard}>
       {/* Thumbnail or Visual Placeholder */}
       <div className={styles.thumbnailWrapper}>
-        {service.image ? (
-          <Image
-            src={service.image}
-            alt={service.title}
-            width={400}
-            height={250}
-            className={styles.thumbnailImg}
-          />
-        ) : (
-          <div className={styles.imagePlaceholderBox}>
-            <Icon icon={Camera} size={22} color="var(--color-blue-600)" />
-            <span className={styles.imagePlaceholderBadge}>PHOTO NEEDED</span>
-            <span className={styles.imagePlaceholderPrompt}>
-              {service.title} (real photo)
-            </span>
-          </div>
-        )}
+        <SiteImage
+          slotId={`service-${service.slug}`}
+          src={service.image}
+          aspectRatio="16 / 10"
+          width={400}
+          height={250}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
       </div>
 
       {/* Card Content Body */}
@@ -63,7 +54,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
           )}
         </div>
 
-        <h3 className={styles.serviceTitle}>{service.title}</h3>
+        <HeadingTag className={styles.serviceTitle}>{service.title}</HeadingTag>
+
         <p className={styles.serviceDesc}>{service.shortDescription}</p>
 
         {/* Card Actions */}

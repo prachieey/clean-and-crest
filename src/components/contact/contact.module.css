@@ -1,0 +1,435 @@
+/* Contact Page Module Styles — Clean & Crest */
+
+.contactSection {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-8);
+}
+
+.pageHeader {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--space-8);
+}
+
+.pageTitle {
+  font-size: var(--font-size-h1);
+  color: var(--color-navy-900);
+  margin-bottom: var(--space-2);
+}
+
+.pageIntro {
+  font-size: var(--font-size-body);
+  color: var(--color-ink-500);
+  line-height: var(--line-height-body, 1.6);
+  margin: 0 auto;
+}
+
+.introQuoteLink {
+  color: var(--color-blue-600);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 6px;
+}
+
+
+.introQuoteLink:hover {
+  color: var(--color-blue-500);
+}
+
+/* Two-column layout on desktop, stacked on mobile with Call first */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .mainGrid {
+    grid-template-columns: 380px 1fr;
+    gap: var(--space-8);
+  }
+}
+
+/* Details Column */
+.detailsCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Call Card (Promoted top item) */
+.callCard {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-left: 4px solid var(--color-blue-600);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconCircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: var(--color-white);
+  color: var(--color-blue-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-ice-100);
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.callLinkLarge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-weight: 700;
+  color: var(--color-blue-600);
+  text-decoration: none;
+  min-height: 48px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.callLinkLarge:hover {
+  color: var(--color-blue-500);
+  transform: translateX(2px);
+}
+
+.callNote {
+  font-size: 0.875rem;
+  color: var(--color-ink-500);
+  margin: 0;
+}
+
+/* Standard Detail Cards */
+.detailCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cardBodyText {
+  font-size: 1rem;
+  color: var(--color-ink-700);
+  margin: 0;
+  line-height: 1.6;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.emailLink {
+  color: var(--color-blue-600);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 1rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.emailLink:hover {
+  color: var(--color-blue-500);
+}
+
+.serviceAreasLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-blue-600);
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-top: 4px;
+  min-height: 44px;
+}
+
+.serviceAreasLink:hover {
+  color: var(--color-blue-500);
+  text-decoration: underline;
+}
+
+/* Social links list */
+.socialLinksList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.socialLinkItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-button, 8px);
+  color: var(--color-navy-900);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  min-height: 44px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.socialLinkItem:hover {
+  border-color: var(--color-blue-600);
+  background-color: var(--color-white);
+  color: var(--color-blue-600);
+}
+
+/* Form Card */
+.formCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card, 16px);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-level-1, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+@media (min-width: 640px) {
+  .formCard {
+    padding: var(--space-6);
+  }
+}
+
+.formHeader {
+  margin-bottom: var(--space-5);
+}
+
+.formTitle {
+  font-size: var(--font-size-h3);
+  color: var(--color-navy-900);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.formSubtitle {
+  font-size: 1rem;
+  color: var(--color-ink-500);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.formBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: block;
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-navy-900);
+  margin-bottom: 6px;
+}
+
+.optionalBadge {
+  font-weight: 400;
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+  margin-left: 4px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  min-height: 48px;
+  font-size: 1rem;
+  font-family: var(--font-family-body);
+  color: var(--color-ink-700);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input, 8px);
+  padding: 12px 16px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-blue-600);
+  box-shadow: 0 0 0 3px var(--color-focus-ring, rgba(22, 105, 201, 0.4));
+}
+
+.inputError {
+  border-color: var(--color-error, #B91C1C) !important;
+}
+
+.fieldError {
+  color: var(--color-error, #B91C1C);
+  font-size: 0.8125rem;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Consent Checkbox */
+.consentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  min-height: 44px;
+}
+
+.checkboxInput {
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  accent-color: var(--color-blue-600);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.consentText {
+  font-size: 0.875rem;
+  color: var(--color-ink-700);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+
+/* Honeypot field (hidden from view) */
+.honeypotField {
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Error Summary Banner */
+.errorSummary {
+  background-color: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: var(--color-error, #B91C1C);
+  padding: 12px 16px;
+  border-radius: var(--radius-input, 8px);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Submit row */
+.submitRow {
+  margin-top: var(--space-2);
+}
+
+/* Success Card */
+.successCard {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.successIconWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #DCFCE7;
+  color: #16A34A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-1);
+}
+
+.successTitle {
+  font-size: var(--font-size-h3);
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.successDesc {
+  font-size: 0.9375rem;
+  color: var(--color-ink-500);
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0;
+}
+
+/* Secondary CTA Block: Want a price? Request a free quote */
+.secondaryQuoteBlock {
+  margin-top: var(--space-8);
+  background: linear-gradient(135deg, var(--color-ice-50) 0%, #e8f2fa 100%);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card, 16px);
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .secondaryQuoteBlock {
+    padding: var(--space-8);
+  }
+}
+
+.quoteBlockTitle {
+  font-size: var(--font-size-h2);
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.quoteBlockDesc {
+  font-size: var(--font-size-body);
+  color: var(--color-ink-500);
+  max-width: 620px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.quoteBlockBtnRow {
+  margin-top: var(--space-2);
+}

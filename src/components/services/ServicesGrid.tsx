@@ -7,11 +7,13 @@ import styles from "./services.module.css";
 interface ServicesGridProps {
   services?: ServiceItem[];
   showCustomQuotePrompt?: boolean;
+  headingLevel?: "h2" | "h3";
 }
 
 export function ServicesGrid({
   services,
   showCustomQuotePrompt = true,
+  headingLevel = "h3",
 }: ServicesGridProps) {
   const displayServices = services || getServices();
   const customQuote = siteConfig.customQuotePrompt;
@@ -26,11 +28,12 @@ export function ServicesGrid({
 
   return (
     <div>
-      <div className={styles.servicesGrid}>
+      <div className={styles.servicesGrid} data-reveal-stagger="true">
         {displayServices.map((service) => (
-          <ServiceCard key={service.slug} service={service} />
+          <ServiceCard key={service.slug} service={service} headingLevel={headingLevel} />
         ))}
       </div>
+
 
       {showCustomQuotePrompt && customQuote.enabled && (
         <div className={styles.customQuoteRow}>

@@ -59,7 +59,7 @@
 /* Main Heading */
 .heroTitle {
   font-family: var(--font-family-heading);
-  font-size: clamp(2rem, 3.8vw + 0.8rem, 3.25rem);
+  font-size: clamp(1.75rem, 3.8vw + 0.8rem, 3.25rem);
   color: var(--color-navy-900);
   font-weight: 800;
   line-height: 1.15;

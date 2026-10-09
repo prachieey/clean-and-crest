@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
-import { siteConfig } from "@/config";
-import { Header } from "@/components/layout";
+import { generatePageMetadata, getOrganizationJsonLd, getWebSiteJsonLd } from "@/config/seo";
+import { Header, Footer, MobileActionBar } from "@/components/layout";
+import { ScrollRevealInit } from "@/components/ui";
+import { JsonLd } from "@/components/seo";
 import "./globals.css";
 
 const headingFont = Plus_Jakarta_Sans({
@@ -18,10 +20,12 @@ const bodyFont = Inter({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = {
-  title: `${siteConfig.business.name} | Professional Cleaning Services`,
-  description: siteConfig.seoDefaults.defaultDescription,
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: "Professional Cleaning Services | Clean & Crest",
+  description:
+    "Dependable residential and commercial cleaning services across Australia. Transparent pricing, systematic checklists, and upfront quotes from Clean & Crest.",
+  path: "/",
+});
 
 export default function RootLayout({
   children,
@@ -31,9 +35,14 @@ export default function RootLayout({
   return (
     <html lang="en-AU" className={`${headingFont.variable} ${bodyFont.variable}`}>
       <body>
+        <JsonLd schema={[getOrganizationJsonLd(), getWebSiteJsonLd()]} />
+        <ScrollRevealInit />
         <Header />
         <main id="main-content">{children}</main>
+        <Footer />
+        <MobileActionBar />
       </body>
     </html>
   );
 }
+

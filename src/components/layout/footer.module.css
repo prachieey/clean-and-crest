@@ -1,0 +1,249 @@
+/* Footer Module Styles — Clean & Crest */
+
+.footerWrapper {
+  background-color: #071726; /* Deep dark navy, consistent with navy-900 band */
+  color: var(--color-ice-100);
+  border-top: 1px solid rgba(224, 236, 245, 0.1);
+  padding-top: var(--space-8);
+  /* Safe padding on mobile so Sticky Mobile Bar does not obscure bottom bar */
+}
+
+@media (max-width: 767px) {
+  .footerWrapper {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  padding-bottom: var(--space-8);
+}
+
+@media (min-width: 640px) {
+  .footerGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footerGrid {
+    grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
+    gap: var(--space-8);
+  }
+}
+
+/* Brand Column */
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.logoRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.logoImg {
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.brandName {
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: -0.01em;
+}
+
+.brandDesc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(224, 236, 245, 0.75);
+  margin: 0;
+  max-width: 38ch;
+}
+
+.serviceAreaLine {
+  font-size: 0.8125rem;
+  color: rgba(224, 236, 245, 0.75);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.serviceAreaLink {
+  color: var(--color-cyan-400);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 0;
+}
+
+
+.serviceAreaLink:hover {
+  color: var(--color-white);
+}
+
+/* Social Icons */
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--space-1);
+}
+
+.socialIconLink {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.socialIconLink:hover {
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+}
+
+/* Column Common Styles */
+.colTitle {
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footerLink {
+  color: rgba(224, 236, 245, 0.75);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 4px 0;
+}
+
+.footerLink:hover {
+  color: var(--color-white);
+  transform: translateX(2px);
+}
+
+/* Contact List */
+.contactList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  color: rgba(224, 236, 245, 0.75);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.contactIcon {
+  color: var(--color-cyan-400);
+  flex-shrink: 0;
+}
+
+.contactLink {
+  color: rgba(224, 236, 245, 0.85);
+  text-decoration: none;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 0;
+}
+
+.contactLink:hover {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+
+/* Bottom Bar */
+.bottomBar {
+  border-top: 1px solid rgba(224, 236, 245, 0.1);
+  padding: var(--space-4) 0;
+}
+
+.bottomBarInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: rgba(224, 236, 245, 0.6);
+}
+
+@media (min-width: 768px) {
+  .bottomBarInner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.legalLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.legalLink {
+  color: rgba(224, 236, 245, 0.6);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 6px;
+}
+
+.legalLink:hover {
+  color: var(--color-white);
+}
+
+.abnBadge {
+  margin-left: 8px;
+}

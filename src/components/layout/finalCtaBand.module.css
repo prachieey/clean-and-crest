@@ -1,0 +1,121 @@
+/* Final CTA Band Styles — Clean & Crest */
+
+.ctaBandSection {
+  background-color: var(--color-navy-900);
+  border-top: 1px solid rgba(224, 236, 245, 0.15); /* subtle ice accent */
+  border-bottom: 1px solid rgba(224, 236, 245, 0.15);
+  padding: var(--space-8) 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .ctaBandSection {
+    padding: var(--space-10) 0;
+  }
+}
+
+.contentWrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.eyebrow {
+  color: var(--color-cyan-400);
+  font-family: var(--font-family-heading);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-0-5);
+}
+
+.heading {
+  font-size: var(--font-size-h2);
+  color: var(--color-white);
+  line-height: var(--line-height-heading, 1.2);
+  margin: 0;
+}
+
+.subline {
+  font-size: var(--font-size-body);
+  color: var(--color-ice-100);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.buttonsRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: var(--space-4);
+  width: 100%;
+}
+
+@media (max-width: 599px) {
+  .buttonsRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.primaryBtn {
+  background-color: var(--color-blue-500);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-weight: 600;
+  font-size: 1rem;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: var(--radius-button, 8px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.primaryBtn:hover {
+  background-color: var(--color-blue-600);
+  border-color: var(--color-white);
+  transform: translateY(-1px);
+}
+
+.secondaryBtn {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  font-weight: 600;
+  font-size: 1rem;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: var(--radius-button, 8px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+@media (max-width: 599px) {
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+  }
+}
+
+.secondaryBtn:hover {
+  background-color: rgba(241, 247, 252, 0.12); /* subtle ice hover */
+  border-color: var(--color-white);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
