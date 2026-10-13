@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Sparkles,
   ShieldCheck,
@@ -9,7 +10,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import { ServiceItem } from "@/config";
-import { Icon, SiteImage } from "@/components/ui";
+import { Icon, SiteImage, TiltCard } from "@/components/ui";
 import styles from "./services.module.css";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -19,6 +20,15 @@ const iconMap: Record<string, LucideIcon> = {
   MapPin,
 };
 
+const service3DIconMap: Record<string, string> = {
+  "house-cleaning": "/images/3d-icon-house.webp",
+  "end-of-lease-cleaning": "/images/3d-icon-key.webp",
+  "deep-cleaning": "/images/3d-icon-sparkle-sponge.webp",
+  "commercial-cleaning": "/images/3d-icon-building.webp",
+  "carpet-steam-cleaning": "/images/3d-icon-steam.webp",
+  "upholstery-cleaning": "/images/3d-icon-sofa.webp",
+};
+
 interface ServiceCardProps {
   service: ServiceItem;
   headingLevel?: "h2" | "h3";
@@ -26,11 +36,12 @@ interface ServiceCardProps {
 
 export function ServiceCard({ service, headingLevel = "h3" }: ServiceCardProps) {
   const ServiceIcon = iconMap[service.icon] || Sparkles;
+  const icon3D = service3DIconMap[service.slug];
   const isDev = process.env.NODE_ENV !== "production";
   const HeadingTag = headingLevel;
 
   return (
-    <div className={styles.serviceCard}>
+    <TiltCard className={styles.serviceCard}>
       {/* Thumbnail or Visual Placeholder */}
       <div className={styles.thumbnailWrapper}>
         <SiteImage
@@ -46,9 +57,22 @@ export function ServiceCard({ service, headingLevel = "h3" }: ServiceCardProps) 
       {/* Card Content Body */}
       <div className={styles.cardBody}>
         <div className={styles.cardHeader}>
-          <div className={styles.iconCircle}>
-            <Icon icon={ServiceIcon} size={22} />
-          </div>
+          {icon3D ? (
+            <div className={styles.iconArea3D} aria-hidden="true">
+              <Image
+                src={icon3D}
+                alt=""
+                width={72}
+                height={72}
+                className={styles.iconImage3D}
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <div className={styles.iconCircle}>
+              <Icon icon={ServiceIcon} size={22} />
+            </div>
+          )}
           {isDev && !service.confirmed && (
             <span className={styles.unconfirmedBadge}>UNCONFIRMED</span>
           )}
@@ -80,6 +104,6 @@ export function ServiceCard({ service, headingLevel = "h3" }: ServiceCardProps) 
           </Link>
         </div>
       </div>
-    </div>
+    </TiltCard>
   );
 }

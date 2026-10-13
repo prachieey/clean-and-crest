@@ -9,7 +9,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Container, Section, Eyebrow, Button, Card, Icon } from "@/components/ui";
+import { Container, Section, Eyebrow, Button, Icon, TiltCard } from "@/components/ui";
 import styles from "./whyChooseUs.module.css";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -43,13 +43,13 @@ export function WhyChooseUs() {
             const BenefitIcon = iconMap[benefit.icon] || FileText;
             return (
               <li key={benefit.id} style={{ display: "contents" }}>
-                <Card className={styles.benefitCard}>
+                <TiltCard className={styles.benefitCard} maxTilt={4}>
                   <div className={styles.iconCircle}>
                     <Icon icon={BenefitIcon} size={22} />
                   </div>
                   <h3 className={styles.benefitTitle}>{benefit.title}</h3>
                   <p className={styles.benefitDescription}>{benefit.description}</p>
-                </Card>
+                </TiltCard>
               </li>
             );
           })}

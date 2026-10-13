@@ -66,6 +66,18 @@ export function FinalCtaBand({
             </a>
           </div>
         </div>
+
+        {/* Decorative 3D Crest Emblem Accent (Desktop Only, Right Negative Space) */}
+        <div className={styles.crestAccentWrapper} aria-hidden="true">
+          <Image
+            src="/images/3d-crest-emblem.webp"
+            alt=""
+            width={130}
+            height={130}
+            className={styles.crestAccentImg}
+            loading="lazy"
+          />
+        </div>
       </Container>
     </section>
   );

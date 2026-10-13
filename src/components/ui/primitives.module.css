@@ -114,19 +114,21 @@
   background-color: var(--color-blue-600);
   color: var(--color-white);
   border-color: var(--color-blue-600);
-  box-shadow: var(--shadow-level-1);
+  box-shadow: var(--shadow-button-depth);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
 .buttonPrimary:hover:not(:disabled) {
   background-color: var(--color-blue-500);
   border-color: var(--color-blue-500);
   color: var(--color-white);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-level-2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-depth-hover);
 }
 
 .buttonPrimary:active:not(:disabled) {
-  transform: translateY(0);
+  transform: translateY(1px);
+  box-shadow: var(--shadow-button-depth-active);
 }
 
 .buttonSecondary {
@@ -186,8 +188,8 @@
 }
 
 .cardInteractive:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-depth-lift);
   border-color: rgba(22, 105, 201, 0.25);
 }
 

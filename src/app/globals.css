@@ -85,11 +85,23 @@
   --radius-badge: 9999px;
 
   /* --------------------------------------------------
-   * Subtle Shadows (Two Levels + Hover Lift)
+   * Soft 3D Depth Shadows (Multi-layered, Blue-tinted)
    * -------------------------------------------------- */
-  --shadow-level-1: 0 1px 3px rgba(13, 37, 63, 0.06), 0 1px 2px rgba(13, 37, 63, 0.04);
-  --shadow-level-2: 0 4px 12px rgba(13, 37, 63, 0.08), 0 2px 4px rgba(13, 37, 63, 0.04);
-  --shadow-hover: 0 8px 24px rgba(13, 37, 63, 0.12), 0 3px 6px rgba(13, 37, 63, 0.06);
+  --shadow-depth-1: 0 2px 6px -1px rgba(13, 37, 63, 0.07), 0 1px 3px 0 rgba(22, 105, 201, 0.04), 0 0 0 1px rgba(13, 37, 63, 0.04);
+  --shadow-depth-2: 0 6px 16px -2px rgba(13, 37, 63, 0.09), 0 2px 6px -1px rgba(22, 105, 201, 0.06), 0 0 0 1px rgba(13, 37, 63, 0.05);
+  --shadow-depth-3: 0 16px 32px -4px rgba(13, 37, 63, 0.12), 0 6px 12px -2px rgba(22, 105, 201, 0.08), 0 0 0 1px rgba(13, 37, 63, 0.06);
+  --shadow-depth-lift: 0 14px 28px -3px rgba(13, 37, 63, 0.12), 0 6px 14px -2px rgba(22, 105, 201, 0.12), 0 0 0 1px rgba(22, 105, 201, 0.16);
+  --shadow-floating: 0 20px 40px -8px rgba(13, 37, 63, 0.18), 0 8px 16px -4px rgba(22, 105, 201, 0.12);
+  --shadow-chip: 0 2px 6px rgba(13, 37, 63, 0.12), 0 1px 2px rgba(22, 105, 201, 0.08);
+  --shadow-button-depth: 0 2px 4px rgba(13, 37, 63, 0.08), 0 4px 12px rgba(22, 105, 201, 0.22);
+  --shadow-button-depth-hover: 0 4px 8px rgba(13, 37, 63, 0.10), 0 8px 20px rgba(22, 105, 201, 0.32);
+  --shadow-button-depth-active: 0 1px 2px rgba(13, 37, 63, 0.12), 0 2px 6px rgba(22, 105, 201, 0.18);
+  --shadow-icon-3d: 0 8px 16px -2px rgba(13, 37, 63, 0.12), 0 2px 6px rgba(22, 105, 201, 0.08);
+
+  /* Backwards compatibility aliases */
+  --shadow-level-1: var(--shadow-depth-1);
+  --shadow-level-2: var(--shadow-depth-2);
+  --shadow-hover: var(--shadow-depth-lift);
 
   /* --------------------------------------------------
    * Animation & Transitions

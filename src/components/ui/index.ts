@@ -7,3 +7,5 @@ export * from "./Icon";
 export * from "./Placeholder";
 export * from "./SiteImage";
 export * from "./ScrollRevealInit";
+export * from "./TiltCard";
+export * from "./WaveDivider";

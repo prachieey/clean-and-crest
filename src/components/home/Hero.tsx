@@ -2,8 +2,9 @@ import React from "react";
 import { Phone, CheckCircle2 } from "lucide-react";
 import { siteConfig, isTrustClaimVerified } from "@/config";
 import { isRealValue } from "@/config/seo";
-import { Container, Button, Icon, Placeholder, SiteImage } from "@/components/ui";
+import { Container, Button, Icon, Placeholder } from "@/components/ui";
 import { HeroQuickQuote } from "./HeroQuickQuote";
+import { HeroVisual } from "./HeroVisual";
 import styles from "./hero.module.css";
 
 interface HeroProps {
@@ -127,15 +128,8 @@ export function Hero({ imageSrc }: HeroProps) {
             </ul>
           </div>
 
-          {/* Right Column: Hero Visual / Illustrative Photo */}
-          <div className={styles.imageArea}>
-            <SiteImage
-              slotId="hero-home"
-              src={imageSrc}
-              priority
-              className={styles.heroImg}
-            />
-          </div>
+          {/* Right Column: Hero Visual / Illustrative Photo with Soft 3D Accents */}
+          <HeroVisual imageSrc={imageSrc} />
         </div>
       </Container>
     </section>

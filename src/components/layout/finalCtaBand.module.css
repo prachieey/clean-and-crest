@@ -108,14 +108,20 @@
   justify-content: center;
   gap: 8px;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  box-shadow: var(--shadow-button-depth);
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .primaryBtn:hover {
   background-color: var(--color-blue-600);
   border-color: var(--color-white);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-depth-hover);
+}
+
+.primaryBtn:active {
+  transform: translateY(1px);
+  box-shadow: var(--shadow-button-depth-active);
 }
 
 .secondaryBtn {
@@ -153,4 +159,28 @@
   border-color: var(--color-white);
   color: var(--color-white);
   transform: translateY(-1px);
+}
+
+/* Decorative 3D Crest Emblem Accent */
+.crestAccentWrapper {
+  position: absolute;
+  top: 50%;
+  right: clamp(16px, 5vw, 64px);
+  transform: translateY(-50%);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+}
+
+.crestAccentImg {
+  display: block;
+  width: clamp(80px, 9vw, 120px);
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .crestAccentWrapper {
+    display: none; /* Never crowd small or medium screens */
+  }
 }

@@ -47,10 +47,10 @@
 }
 
 .numberCircle {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background-color: var(--color-navy-900);
+  background: linear-gradient(145deg, #16365C 0%, var(--color-navy-900) 100%);
   color: var(--color-white);
   display: flex;
   align-items: center;
@@ -60,8 +60,15 @@
   font-weight: 700;
   position: relative;
   flex-shrink: 0;
-  box-shadow: var(--shadow-level-1);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 10px rgba(13, 37, 63, 0.16), 0 1px 3px rgba(22, 105, 201, 0.12);
   z-index: 2;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stepItem:hover .numberCircle {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 16px rgba(13, 37, 63, 0.20), 0 2px 5px rgba(22, 105, 201, 0.16);
 }
 
 /* Subtle cyan accent dot on the number circle */
