@@ -50,9 +50,9 @@ export function AboutTeaser({ variant = "white", className = "" }: AboutTeaserPr
             </div>
           </div>
 
-          {/* Visual Column (Real photo or neutral labelled placeholder) */}
+          {/* Visual Column */}
           <div className={styles.imageCol}>
-            <AboutImage />
+            <AboutImage slotId="why-choose-us" />
           </div>
         </div>
       </Container>

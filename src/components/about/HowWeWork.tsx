@@ -59,20 +59,22 @@ export function HowWeWork() {
           )}
         </div>
 
-        <div className={styles.valuesGrid}>
+        <ul className={styles.valuesGrid} role="list">
           {values.map((value) => {
             const ValueIcon = (value.icon && iconMap[value.icon]) || CheckCircle;
             return (
-              <div key={value.id} className={styles.valueCard}>
-                <div className={styles.valueIconCircle}>
-                  <Icon icon={ValueIcon} size={24} color="var(--color-blue-600)" />
+              <li key={value.id} style={{ display: "contents" }}>
+                <div className={styles.valueCard}>
+                  <div className={styles.valueIconCircle}>
+                    <Icon icon={ValueIcon} size={24} color="var(--color-blue-600)" />
+                  </div>
+                  <h3 className={styles.valueTitle}>{value.title}</h3>
+                  <p className={styles.valueDescription}>{value.description}</p>
                 </div>
-                <h3 className={styles.valueTitle}>{value.title}</h3>
-                <p className={styles.valueDescription}>{value.description}</p>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </Container>
     </Section>
   );

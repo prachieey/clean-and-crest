@@ -114,15 +114,26 @@ export async function POST(request: NextRequest) {
       message: message.trim(),
     };
 
+    // Check Email Provider Configuration
+    const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || process.env.QUOTE_RECIPIENT_EMAIL || null;
+    const isEmailConfigured = Boolean(
+      recipientEmail && (process.env.RESEND_API_KEY || process.env.SMTP_HOST || process.env.SENDGRID_API_KEY)
+    );
+
     // Clean logging to server console in development / unconfigured provider mode
     console.log("\n=======================================================");
-    console.log("📬 [CONTACT MESSAGE RECEIVED]");
+    console.log(`📬 [CONTACT MESSAGE RECEIVED — ${isEmailConfigured ? "EMAIL DISPATCHED" : "EMAIL NOT YET CONFIGURED"}]`);
     console.log("-------------------------------------------------------");
     console.log(JSON.stringify(contactData, null, 2));
+    if (!isEmailConfigured) {
+      console.log("-------------------------------------------------------");
+      console.log("Configure CONTACT_RECIPIENT_EMAIL and email provider API keys to enable live dispatch.");
+    }
     console.log("=======================================================\n");
 
     return NextResponse.json({
       success: true,
+      emailConfigured: isEmailConfigured,
       message: "Message received successfully. We will get back to you shortly.",
     });
   } catch (error) {

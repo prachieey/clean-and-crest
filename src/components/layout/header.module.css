@@ -16,7 +16,8 @@
 
 .skipLink:focus {
   top: 16px;
-  outline: 3px solid var(--color-cyan-400);
+  outline: 3px solid var(--color-navy-900);
+  outline-offset: 2px;
 }
 
 /* Header Container */
@@ -151,9 +152,15 @@
   border-color: var(--color-blue-500);
 }
 
+.menuButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 /* Mobile Drawer Panel */
 .mobilePanel {
   display: none;
+  visibility: hidden;
   position: fixed;
   top: 64px;
   left: 0;
@@ -168,10 +175,11 @@
   opacity: 0;
   transform: translateY(-8px);
   pointer-events: none;
-  transition: opacity 200ms ease, transform 200ms ease;
+  transition: opacity 200ms ease, transform 200ms ease, visibility 200ms ease;
 }
 
 .mobilePanelOpen {
+  visibility: visible;
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;

@@ -1,7 +1,7 @@
 /* Footer Module Styles — Clean & Crest */
 
 .footerWrapper {
-  background-color: #071726; /* Deep dark navy, consistent with navy-900 band */
+  background-color: var(--color-navy-900);
   color: var(--color-ice-100);
   border-top: 1px solid rgba(224, 236, 245, 0.1);
   padding-top: var(--space-8);
@@ -212,7 +212,7 @@
   align-items: center;
   text-align: center;
   font-size: 0.8125rem;
-  color: rgba(224, 236, 245, 0.6);
+  color: rgba(224, 236, 245, 0.75);
 }
 
 @media (min-width: 768px) {
@@ -230,7 +230,7 @@
 }
 
 .legalLink {
-  color: rgba(224, 236, 245, 0.6);
+  color: rgba(224, 236, 245, 0.75);
   text-decoration: underline;
   text-underline-offset: 3px;
   transition: color 0.15s ease;
@@ -242,6 +242,16 @@
 
 .legalLink:hover {
   color: var(--color-white);
+}
+
+.logoRow:focus-visible,
+.serviceAreaLink:focus-visible,
+.socialIconLink:focus-visible,
+.footerLink:focus-visible,
+.contactLink:focus-visible,
+.legalLink:focus-visible {
+  outline: 2px solid var(--color-cyan-400);
+  outline-offset: 3px;
 }
 
 .abnBadge {

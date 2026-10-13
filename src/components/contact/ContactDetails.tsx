@@ -167,21 +167,22 @@ export function ContactDetails() {
             </div>
           </div>
 
-          <div className={styles.socialLinksList}>
+          <ul role="list" className={styles.socialLinksList}>
             {socialEntries.map(([platform, url]) => (
-              <a
-                key={platform}
-                href={url!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.socialLinkItem}
-                aria-label={`Visit Clean & Crest on ${platform}`}
-              >
-                <span style={{ textTransform: "capitalize" }}>{platform}</span>
-                <Icon icon={ExternalLink} size={14} />
-              </a>
+              <li key={platform}>
+                <a
+                  href={url!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.socialLinkItem}
+                  aria-label={`Visit Clean & Crest on ${platform} (opens in a new tab)`}
+                >
+                  <span style={{ textTransform: "capitalize" }}>{platform}</span>
+                  <Icon icon={ExternalLink} size={14} />
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
     </div>

@@ -70,4 +70,10 @@
   .quoteButton:active {
     background-color: var(--color-blue-500);
   }
+
+  .callButton:focus-visible,
+  .quoteButton:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }

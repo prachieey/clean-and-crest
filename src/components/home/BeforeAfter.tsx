@@ -13,9 +13,22 @@ export function BeforeAfter() {
   const items = siteConfig.beforeAfter || [];
 
   // Strictly gate unverified items in production per PROJECT_RULES
-  const displayItems = isProduction
+  // HARD RULE: reject any image whose source is 'ai-generated'
+  const displayItems = (isProduction
     ? items.filter((item) => item.verified)
-    : items;
+    : items
+  ).filter((item) => {
+    const isAi =
+      (item as { source?: string }).source === "ai-generated" ||
+      item.beforeImage?.includes("ai-generated") ||
+      item.afterImage?.includes("ai-generated");
+    if (isAi && !isProduction) {
+      console.warn(
+        `[Content Gating Warning] AI-generated image rejected for Before/After slot "${item.title}". Only verified real photos are permitted.`
+      );
+    }
+    return !isAi;
+  });
 
   if (displayItems.length === 0) {
     return null;
@@ -82,6 +95,7 @@ export function BeforeAfter() {
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={sliderPos}
+            aria-valuetext={`${sliderPos}% after clean revealed`}
           />
 
           {/* Visual Divider & Handle */}

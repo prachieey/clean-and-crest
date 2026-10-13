@@ -64,7 +64,9 @@ export function ServiceCard({ service, headingLevel = "h3" }: ServiceCardProps) 
             href={`/quote?service=${service.slug}`}
             className={styles.quoteLink}
           >
-            <span>Get a quote</span>
+            <span>
+              Get a quote<span className="sr-only"> for {service.title}</span>
+            </span>
             <Icon icon={ArrowRight} size={15} />
           </Link>
 
@@ -72,7 +74,9 @@ export function ServiceCard({ service, headingLevel = "h3" }: ServiceCardProps) 
             href={`/services/${service.slug}`}
             className={styles.learnMoreLink}
           >
-            Learn more &rarr;
+            <span>
+              Learn more<span className="sr-only"> about {service.title}</span> &rarr;
+            </span>
           </Link>
         </div>
       </div>

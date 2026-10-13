@@ -123,6 +123,7 @@
 }
 
 .rangeInput:focus-visible + .dividerLine .handleButton {
-  outline: 3px solid var(--color-cyan-400);
+  outline: 3px solid var(--color-navy-900);
   outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--color-cyan-400);
 }

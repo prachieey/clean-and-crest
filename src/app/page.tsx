@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config";
 import { generatePageMetadata, isRealValue } from "@/config/seo";
+import dynamic from "next/dynamic";
 import {
   Hero,
   TrustStrip,
   WhyChooseUs,
   HowItWorks,
-  BeforeAfter,
   Reviews,
   AboutTeaser,
   FaqSection,
 } from "@/components/home";
+
+const BeforeAfter = dynamic(
+  () => import("@/components/home/BeforeAfter").then((m) => m.BeforeAfter),
+  { ssr: true }
+);
 import { ServicesSection } from "@/components/services";
 import { ServiceAreasBand } from "@/components/service-areas";
 import { FinalCtaBand } from "@/components/layout";

@@ -90,7 +90,7 @@ export default function AboutPage() {
 
             {/* Visual Column */}
             <div>
-              <AboutImage priority />
+              <AboutImage slotId="cleaner-at-work" priority />
             </div>
           </div>
         </Container>

@@ -1,11 +1,40 @@
 /* Final CTA Band Styles — Clean & Crest */
 
 .ctaBandSection {
+  position: relative;
   background-color: var(--color-navy-900);
   border-top: 1px solid rgba(224, 236, 245, 0.15); /* subtle ice accent */
   border-bottom: 1px solid rgba(224, 236, 245, 0.15);
   padding: var(--space-8) 0;
   text-align: center;
+  overflow: hidden;
+}
+
+.bgImageWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.navyOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 23, 38, 0.88) 0%,
+    rgba(7, 23, 38, 0.94) 100%
+  );
+}
+
+.containerRelative {
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -111,6 +140,12 @@
   .secondaryBtn {
     width: 100%;
   }
+}
+
+.primaryBtn:focus-visible,
+.secondaryBtn:focus-visible {
+  outline: 2px solid var(--color-cyan-400);
+  outline-offset: 3px;
 }
 
 .secondaryBtn:hover {

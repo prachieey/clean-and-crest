@@ -11,7 +11,9 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-4);
-  margin-bottom: var(--space-6);
+  margin: 0 0 var(--space-6) 0;
+  padding: 0;
+  list-style: none;
 }
 
 @media (min-width: 640px) {
@@ -266,9 +268,9 @@
 }
 
 .devWarningBanner {
-  background-color: #FEF3C7;
-  color: #92400E;
-  border: 1px dashed #D97706;
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  border: 1px dashed var(--color-warning-border);
   padding: 8px 16px;
   border-radius: 6px;
   font-family: monospace;
@@ -277,4 +279,32 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.notSureBox {
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  background-color: var(--color-ice-50);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-ice-100);
+  text-align: center;
+}
+
+.notSureTitle {
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--space-2);
+}
+
+.notSureDesc {
+  color: var(--color-ink-500);
+  max-width: 52ch;
+  margin: 0 auto var(--space-4);
+  font-size: var(--font-size-body);
+}
+
+.notSureBtnRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
 }

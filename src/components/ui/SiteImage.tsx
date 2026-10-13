@@ -1,9 +1,7 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Camera, Sparkles, AlertTriangle } from "lucide-react";
-import { getImageSlot, ImageSlot } from "@/config/imageManifest";
+import { getImageSlot, ImageSlot, validateSlotSource } from "@/config/imageManifest";
 import { Icon } from "./Icon";
 import styles from "./siteImage.module.css";
 
@@ -34,9 +32,16 @@ export function SiteImage({
   className = "",
   overlay = false,
 }: SiteImageProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
   const isDev = process.env.NODE_ENV !== "production";
   const slot: ImageSlot | undefined = slotId ? getImageSlot(slotId) : undefined;
+
+  // HARD RULE: slots for Team, Reviews/avatars, Before/After and Recent Work
+  // must reject any image whose source is 'ai-generated' (show nothing and log a clear development warning).
+  const slotSource = slot?.source || (src?.includes("ai-generated") ? "ai-generated" : undefined);
+  const slotIdentifier = slotId || slot?.location || "";
+  if (!validateSlotSource(slotIdentifier, slotSource)) {
+    return null; // Show nothing
+  }
 
   // Resolved properties
   const resolvedSrc = src !== undefined ? src : slot?.filePath || null;
@@ -75,8 +80,7 @@ export function SiteImage({
             priority={resolvedPriority}
             loading={resolvedPriority ? undefined : "lazy"}
             sizes={resolvedSizes}
-            onLoad={() => setIsLoaded(true)}
-            className={`${styles.realImage} ${isLoaded ? styles.realImageLoaded : ""}`.trim()}
+            className={styles.realImage}
             style={{
               objectFit: "cover",
               objectPosition: resolvedFocalPoint,

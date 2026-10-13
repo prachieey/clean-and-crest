@@ -117,15 +117,16 @@ export function Reviews() {
         )}
 
         {/* Responsive Reviews Grid (1 column mobile, 2 tablet, 3 desktop) */}
-        <div className={styles.reviewsGrid} data-reveal-stagger="true">
+        <ul className={styles.reviewsGrid} role="list" data-reveal-stagger="true">
           {displayReviews.map((review, idx) => (
-            <ReviewCard
-              key={idx}
-              review={review}
-              isSample={isUsingSamples}
-            />
+            <li key={idx} style={{ display: "contents" }}>
+              <ReviewCard
+                review={review}
+                isSample={isUsingSamples}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Optional Closing Link: only if URL configured */}
         {leaveReviewUrl && (
@@ -137,6 +138,7 @@ export function Reviews() {
               className={styles.leaveReviewLink}
             >
               <span>Leave us a review</span>
+              <span className="sr-only"> (opens in a new tab)</span>
               <Icon icon={ArrowRight} size={16} />
             </a>
           </div>

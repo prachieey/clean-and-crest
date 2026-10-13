@@ -61,6 +61,7 @@ export function ReviewCard({ review, isSample = false }: ReviewCardProps) {
       {/* Review Text with Line Clamping */}
       <div className={styles.reviewBody}>
         <p
+          id={`review-text-${review.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
           className={`${styles.reviewText} ${
             isLong && !isExpanded ? styles.reviewTextClamped : ""
           }`.trim()}
@@ -74,8 +75,12 @@ export function ReviewCard({ review, isSample = false }: ReviewCardProps) {
             onClick={() => setIsExpanded(!isExpanded)}
             className={styles.readMoreBtn}
             aria-expanded={isExpanded}
+            aria-controls={`review-text-${review.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
           >
-            {isExpanded ? "Read less" : "Read more"}
+            <span>
+              {isExpanded ? "Read less" : "Read more"}
+              <span className="sr-only"> of review by {review.name}</span>
+            </span>
           </button>
         )}
       </div>

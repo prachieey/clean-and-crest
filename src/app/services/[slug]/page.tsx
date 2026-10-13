@@ -190,24 +190,40 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         {relatedServices.length > 0 && (
           <div style={{ borderTop: "1px solid var(--color-ice-100)", paddingTop: "var(--space-8)" }}>
             <h2 style={{ fontSize: "1.5rem", marginBottom: "var(--space-4)" }}>Other services</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "var(--space-4)" }}>
+            <ul
+              role="list"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gap: "var(--space-4)",
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+              }}
+            >
               {relatedServices.map((rel) => (
-                <Card key={rel.slug} interactive>
-                  <h3 style={{ fontSize: "1.125rem", marginBottom: "6px" }}>{rel.title}</h3>
-                  <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", marginBottom: "16px", flex: 1 }}>
-                    {rel.shortDescription}
-                  </p>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Link href={`/quote?service=${rel.slug}`} className={styles.quoteLink} style={{ fontSize: "0.875rem" }}>
-                      Get a quote &rarr;
-                    </Link>
-                    <Link href={`/services/${rel.slug}`} className={styles.learnMoreLink}>
-                      Details
-                    </Link>
-                  </div>
-                </Card>
+                <li key={rel.slug} style={{ display: "contents" }}>
+                  <Card>
+                    <h3 style={{ fontSize: "1.125rem", marginBottom: "6px" }}>{rel.title}</h3>
+                    <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", marginBottom: "16px", flex: 1 }}>
+                      {rel.shortDescription}
+                    </p>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <Link href={`/quote?service=${rel.slug}`} className={styles.quoteLink} style={{ fontSize: "0.875rem" }}>
+                        <span>
+                          Get a quote<span className="sr-only"> for {rel.title}</span> &rarr;
+                        </span>
+                      </Link>
+                      <Link href={`/services/${rel.slug}`} className={styles.learnMoreLink}>
+                        <span>
+                          Details<span className="sr-only"> for {rel.title}</span>
+                        </span>
+                      </Link>
+                    </div>
+                  </Card>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         )}
       </Container>

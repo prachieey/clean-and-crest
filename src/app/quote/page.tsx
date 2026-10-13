@@ -35,7 +35,16 @@ export default function QuotePage() {
         <div className={styles.pageLayout}>
           <Suspense
             fallback={
-              <div style={{ padding: "var(--space-8)", textAlign: "center", color: "var(--color-ink-500)" }}>
+              <div
+                className={styles.formCard}
+                style={{
+                  minHeight: "720px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "var(--color-ink-500)",
+                }}
+              >
                 Loading quote form...
               </div>
             }

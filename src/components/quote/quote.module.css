@@ -168,7 +168,8 @@
 .input:focus,
 .select:focus,
 .textarea:focus {
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
   border-color: var(--color-blue-600);
   box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
@@ -223,6 +224,11 @@
 .serviceRadioCard:hover {
   border-color: var(--color-blue-500);
   background-color: var(--color-ice-50);
+}
+
+.serviceRadioCard:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .serviceRadioCardSelected {
@@ -300,6 +306,11 @@
 .pillButton:hover {
   border-color: var(--color-blue-500);
   background-color: var(--color-ice-50);
+}
+
+.pillButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .pillButtonActive {
@@ -394,6 +405,17 @@
   accent-color: var(--color-blue-600);
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.checkboxInput:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.requiredNotice {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+  margin-bottom: var(--space-3);
 }
 
 .consentText {

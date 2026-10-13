@@ -24,6 +24,7 @@ export function Header() {
 
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstNavLinkRef = useRef<HTMLAnchorElement>(null);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll effect
   useEffect(() => {
@@ -43,12 +44,39 @@ export function Header() {
     };
   }, []);
 
-  // Handle Escape key and focus management
+  // Handle Escape key, focus trapping, and restoration
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+      if (!isOpen) return;
+
+      if (e.key === "Escape") {
         setIsOpen(false);
         menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const panel = mobilePanelRef.current;
+        if (!panel) return;
+        const focusableElements = panel.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || document.activeElement === menuButtonRef.current) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
       }
     };
 
@@ -95,7 +123,7 @@ export function Header() {
           <Link href="/" className={styles.brandLink} onClick={() => setIsOpen(false)}>
             <Image
               src="/images/clean-and-crest-logo.jpg"
-              alt="Clean & Crest"
+              alt=""
               width={44}
               height={44}
               className={styles.brandLogo}
@@ -161,7 +189,11 @@ export function Header() {
 
         {/* Mobile Full-Width Drawer Panel */}
         <div
+          ref={mobilePanelRef}
           id="mobile-navigation-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site menu"
           className={`${styles.mobilePanel} ${isOpen ? styles.mobilePanelOpen : ""}`.trim()}
           aria-hidden={!isOpen}
         >

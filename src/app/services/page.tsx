@@ -18,6 +18,8 @@ export const metadata: Metadata = generatePageMetadata({
 });
 
 
+import styles from "@/components/services/services.module.css";
+
 export default function ServicesOverviewPage() {
   const phoneHref = siteConfig.business.phoneHref || `tel:${siteConfig.business.phone}`;
 
@@ -27,7 +29,7 @@ export default function ServicesOverviewPage() {
       <Section variant="white">
         <Container>
           {/* Page Header */}
-          <div style={{ textAlign: "center", maxWidth: "720px", margin: "0 auto var(--space-8)" }}>
+          <div className={styles.headerWrapper}>
             <Eyebrow>All Services</Eyebrow>
             <h1 style={{ fontSize: "var(--font-size-h1)", marginBottom: "var(--space-2)" }}>
               Cleaning services
@@ -42,30 +44,14 @@ export default function ServicesOverviewPage() {
 
 
           {/* Not Sure Which Service Block */}
-          <div
-            style={{
-              marginTop: "var(--space-10)",
-              padding: "var(--space-6)",
-              backgroundColor: "var(--color-ice-50)",
-              borderRadius: "var(--radius-card)",
-              border: "1px solid var(--color-ice-100)",
-              textAlign: "center",
-            }}
-          >
-            <h2 style={{ fontSize: "var(--font-size-h2)", marginBottom: "var(--space-2)" }}>
+          <div className={styles.notSureBox}>
+            <h2 className={styles.notSureTitle}>
               Not sure which service you need?
             </h2>
-            <p
-              style={{
-                color: "var(--color-ink-500)",
-                maxWidth: "52ch",
-                margin: "0 auto var(--space-4)",
-                fontSize: "var(--font-size-body)",
-              }}
-            >
+            <p className={styles.notSureDesc}>
               Reach out to our team with your property size and requirements. We will recommend the right option with an upfront, free quote.
             </p>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px" }}>
+            <div className={styles.notSureBtnRow}>
               <Button variant="primary" href="/quote">
                 <span>Get a Free Quote</span>
                 <Icon icon={ArrowRight} size={18} />

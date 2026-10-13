@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Phone } from "lucide-react";
 import { siteConfig } from "@/config";
 import { Container, Icon } from "@/components/ui";
@@ -26,7 +27,20 @@ export function FinalCtaBand({
       aria-labelledby={`${id}-heading`}
       className={`${styles.ctaBandSection} ${className}`.trim()}
     >
-      <Container>
+      {/* Background illustrative photo with dark navy overlay for AA contrast */}
+      <div className={styles.bgImageWrapper} aria-hidden="true">
+        <Image
+          src="/images/cta-background.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          quality={80}
+          className={styles.bgImage}
+        />
+        <div className={styles.navyOverlay} />
+      </div>
+
+      <Container className={styles.containerRelative}>
         <div className={styles.contentWrapper}>
           <span className={styles.eyebrow}>Take the next step</span>
 

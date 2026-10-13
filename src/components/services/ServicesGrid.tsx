@@ -28,11 +28,13 @@ export function ServicesGrid({
 
   return (
     <div>
-      <div className={styles.servicesGrid} data-reveal-stagger="true">
+      <ul className={styles.servicesGrid} role="list" data-reveal-stagger="true">
         {displayServices.map((service) => (
-          <ServiceCard key={service.slug} service={service} headingLevel={headingLevel} />
+          <li key={service.slug} style={{ display: "contents" }}>
+            <ServiceCard service={service} headingLevel={headingLevel} />
+          </li>
         ))}
-      </div>
+      </ul>
 
 
       {showCustomQuotePrompt && customQuote.enabled && (

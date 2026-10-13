@@ -10,7 +10,7 @@ const headingFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["600", "700", "800"],
 });
 
 const bodyFont = Inter({
@@ -38,7 +38,7 @@ export default function RootLayout({
         <JsonLd schema={[getOrganizationJsonLd(), getWebSiteJsonLd()]} />
         <ScrollRevealInit />
         <Header />
-        <main id="main-content">{children}</main>
+        <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
         <MobileActionBar />
       </body>

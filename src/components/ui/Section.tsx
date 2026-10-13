@@ -16,7 +16,7 @@ export function Section({
   variant = "white",
   className = "",
   id,
-  reveal = true,
+  reveal = false,
   ...props
 }: SectionProps) {
   const variantClass =

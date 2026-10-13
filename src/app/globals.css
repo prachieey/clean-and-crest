@@ -5,13 +5,13 @@
    * Brand Color Tokens (Sampled & Harmonized with Logo)
    * -------------------------------------------------- */
   --color-navy-900: #0D253F;   /* Headings, dark bands, footer */
-  --color-blue-600: #1669C9;   /* Primary buttons, links, active states */
-  --color-blue-500: #2682DE;   /* Hover, secondary interactive elements */
-  --color-cyan-400: #28C5E0;   /* Accent highlights, badges, icons (NEVER body text) */
+  --color-blue-600: #1669C9;   /* Primary buttons, links, active states (contrast 5.39:1 on white) */
+  --color-blue-500: #1871D9;   /* Hover, secondary interactive elements (contrast 4.77:1 on white, WCAG AA compliant) */
+  --color-cyan-400: #28C5E0;   /* Accent highlights, badges, icons (NEVER body text on white; 7.5:1 on navy) */
   --color-ice-50: #F1F7FC;     /* Alternate section backgrounds */
   --color-ice-100: #E0ECF5;    /* Borders, dividers, subtle fills */
   --color-ink-700: #192B3C;    /* High-contrast body text */
-  --color-ink-500: #566B7F;    /* Secondary / muted body text */
+  --color-ink-500: #566B7F;    /* Secondary / muted body text (contrast 5.52:1 on white) */
   --color-white: #FFFFFF;      /* Clean dominant background */
 
   /* Semantic Color Tokens */
@@ -26,8 +26,16 @@
   --color-primary-hover: var(--color-blue-500);
   --color-accent: var(--color-cyan-400);
   --color-focus-ring: rgba(22, 105, 201, 0.4);
+  --color-focus-ring-navy: var(--color-cyan-400);
   --color-success: #15803D;    /* Success indicators (contrast >= 5:1 on white) */
+  --color-success-bg: #DCFCE7;
+  --color-success-border: #86EFAC;
   --color-error: #B91C1C;      /* Error states (contrast >= 6.4:1 on white) */
+  --color-error-bg: #FEF2F2;
+  --color-error-border: #FCA5A5;
+  --color-warning-bg: #FEF3C7;
+  --color-warning-border: #F59E0B;
+  --color-warning-text: #92400E;
 
   /* --------------------------------------------------
    * Typography Tokens
@@ -117,10 +125,43 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Accessible focus visible */
+/* Accessible focus visible on standard backgrounds */
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;
+}
+
+/* High-contrast focus visible on dark/navy sections (contrast >= 7.5:1) */
+.sectionNavy :focus-visible,
+[class*="footerWrapper"] :focus-visible,
+[class*="ctaBandSection"] :focus-visible,
+[class*="mobileBarWrapper"] :focus-visible {
+  outline: 2px solid var(--color-cyan-400);
+  outline-offset: 3px;
+}
+
+/* Programmatic skip target focus reset */
+#main-content:focus {
+  outline: none;
+}
+
+/* High contrast form input placeholders (WCAG AA >= 4.5:1) */
+::placeholder {
+  color: var(--color-ink-500);
+  opacity: 1;
+}
+
+/* Screen reader only utility (accessible text for assistive technology) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Headings */

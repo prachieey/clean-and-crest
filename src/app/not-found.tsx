@@ -1,7 +1,7 @@
-import React from "react";
-import { ArrowRight, Home } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Phone, Home } from "lucide-react";
 import type { Metadata } from "next";
-import { generatePageMetadata } from "@/config/seo";
+import { generatePageMetadata, isRealValue } from "@/config/seo";
 import { siteConfig } from "@/config";
 import { Container, Section, Eyebrow, Button, Icon } from "@/components/ui";
 
@@ -14,15 +14,12 @@ export const metadata: Metadata = generatePageMetadata({
 });
 
 export default function NotFound() {
+  const hasRealPhone = isRealValue(siteConfig.business.phone);
   const phoneHref = siteConfig.business.phoneHref || `tel:${siteConfig.business.phone}`;
+  const phoneLabel = hasRealPhone ? `Call ${siteConfig.business.phone}` : "Call Now";
 
   return (
-    <>
-      <head>
-        <meta name="robots" content="noindex, nofollow" />
-      </head>
-      <Section variant="white" id="not-found-section" aria-labelledby="not-found-heading">
-
+    <Section variant="white" id="not-found-section" aria-labelledby="not-found-heading">
       <Container>
         <div
           style={{
@@ -54,7 +51,7 @@ export default function NotFound() {
               marginBottom: "var(--space-6)",
             }}
           >
-            We couldn’t find the page you were looking for. It may have been moved, renamed, or is temporarily unavailable.
+            We couldn’t find the page you were looking for. It may have been moved, renamed, or is temporarily unavailable. Let us get you back on track.
           </p>
 
           <div
@@ -67,38 +64,39 @@ export default function NotFound() {
               marginBottom: "var(--space-6)",
             }}
           >
-            <Button variant="primary" href="/">
-              <Icon icon={Home} size={18} />
-              <span>Return to Homepage</span>
-            </Button>
-
-            <Button variant="secondary" href="/quote">
+            <Button variant="primary" href="/quote">
               <span>Get a Free Quote</span>
               <Icon icon={ArrowRight} size={18} />
             </Button>
+
+            <Button variant="secondary" href={phoneHref}>
+              <Icon icon={Phone} size={18} />
+              <span>{phoneLabel}</span>
+            </Button>
           </div>
 
-          <p style={{ fontSize: "0.9375rem", color: "var(--color-ink-500)" }}>
-            Need help right away?{" "}
-            <a
-              href={phoneHref}
+          <div>
+            <Link
+              href="/"
               style={{
-                color: "var(--color-blue-600)",
-                fontWeight: 600,
-                textDecoration: "underline",
                 display: "inline-flex",
                 alignItems: "center",
+                gap: "6px",
+                fontSize: "0.9375rem",
+                color: "var(--color-ink-500)",
+                fontWeight: 600,
+                textDecoration: "underline",
                 minHeight: "44px",
-                padding: "0 4px",
+                padding: "0 8px",
               }}
             >
-              Call us on {siteConfig.business.phone}
-            </a>
-          </p>
+              <Icon icon={Home} size={16} />
+              <span>Return to Homepage</span>
+            </Link>
+          </div>
         </div>
       </Container>
     </Section>
-    </>
   );
 }
 

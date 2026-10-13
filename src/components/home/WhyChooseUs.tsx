@@ -38,20 +38,22 @@ export function WhyChooseUs() {
         </div>
 
         {/* 4 Benefit Cards Grid */}
-        <div className={styles.benefitGrid} data-reveal-stagger="true">
+        <ul className={styles.benefitGrid} role="list" data-reveal-stagger="true">
           {benefits.map((benefit) => {
             const BenefitIcon = iconMap[benefit.icon] || FileText;
             return (
-              <Card key={benefit.id} className={styles.benefitCard}>
-                <div className={styles.iconCircle}>
-                  <Icon icon={BenefitIcon} size={22} />
-                </div>
-                <h3 className={styles.benefitTitle}>{benefit.title}</h3>
-                <p className={styles.benefitDescription}>{benefit.description}</p>
-              </Card>
+              <li key={benefit.id} style={{ display: "contents" }}>
+                <Card className={styles.benefitCard}>
+                  <div className={styles.iconCircle}>
+                    <Icon icon={BenefitIcon} size={22} />
+                  </div>
+                  <h3 className={styles.benefitTitle}>{benefit.title}</h3>
+                  <p className={styles.benefitDescription}>{benefit.description}</p>
+                </Card>
+              </li>
             );
           })}
-        </div>
+        </ul>
 
         {/* Closing Action Row */}
         <div className={styles.closingRow}>

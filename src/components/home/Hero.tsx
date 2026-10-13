@@ -1,6 +1,7 @@
 import React from "react";
 import { Phone, CheckCircle2 } from "lucide-react";
 import { siteConfig, isTrustClaimVerified } from "@/config";
+import { isRealValue } from "@/config/seo";
 import { Container, Button, Icon, Placeholder, SiteImage } from "@/components/ui";
 import { HeroQuickQuote } from "./HeroQuickQuote";
 import styles from "./hero.module.css";
@@ -11,6 +12,8 @@ interface HeroProps {
 }
 
 export function Hero({ imageSrc }: HeroProps) {
+  const isDev = process.env.NODE_ENV !== "production";
+  const hasRealRegion = isRealValue(siteConfig.business.primaryRegion);
   const phoneHref = siteConfig.business.phoneHref || `tel:${siteConfig.business.phone}`;
 
   // Safe reassurance points (no unverified claims)
@@ -49,26 +52,43 @@ export function Hero({ imageSrc }: HeroProps) {
             <div className={styles.eyebrowRow}>
               <span className={styles.locationDot} aria-hidden="true" />
               <span className={styles.eyebrowText}>
-                Cleaning services in{" "}
-                <Placeholder
-                  value={siteConfig.business.primaryRegion}
-                  label="REGION / CITY"
-                />
+                {hasRealRegion ? (
+                  <>Cleaning services in {siteConfig.business.primaryRegion}</>
+                ) : isDev ? (
+                  <>
+                    Cleaning services in{" "}
+                    <Placeholder
+                      value={siteConfig.business.primaryRegion}
+                      label="REGION / CITY"
+                    />
+                  </>
+                ) : (
+                  <>Professional cleaning services</>
+                )}
               </span>
             </div>
 
             {/* Main Single H1 */}
-            {/* DRAFT HEADLINE OPTIONS:
-              Option A (Active): "Reliable house and commercial cleaning in [REGION]"
-              Option B: "Professional cleaning for homes and businesses in [REGION]"
-            */}
             <h1 id="hero-heading" className={styles.heroTitle}>
-              Reliable house and commercial cleaning in{" "}
-              <Placeholder
-                value={siteConfig.business.primaryRegion}
-                label="REGION"
-                className={styles.regionHighlight}
-              />
+              {hasRealRegion ? (
+                <>
+                  Reliable house and commercial cleaning in{" "}
+                  <span className={styles.regionHighlight}>
+                    {siteConfig.business.primaryRegion}
+                  </span>
+                </>
+              ) : isDev ? (
+                <>
+                  Reliable house and commercial cleaning in{" "}
+                  <Placeholder
+                    value={siteConfig.business.primaryRegion}
+                    label="REGION"
+                    className={styles.regionHighlight}
+                  />
+                </>
+              ) : (
+                <>Reliable house and commercial cleaning services</>
+              )}
             </h1>
 
             {/* Plain-Language Subheading */}
@@ -107,10 +127,10 @@ export function Hero({ imageSrc }: HeroProps) {
             </ul>
           </div>
 
-          {/* Right Column: Hero Visual / Photo Placeholder */}
+          {/* Right Column: Hero Visual / Illustrative Photo */}
           <div className={styles.imageArea}>
             <SiteImage
-              slotId="hero-main"
+              slotId="hero-home"
               src={imageSrc}
               priority
               className={styles.heroImg}

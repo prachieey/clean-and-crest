@@ -45,10 +45,10 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-family-heading);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: var(--color-navy-900);
 }
 
@@ -79,7 +79,8 @@
 
 .selectInput:focus,
 .textInput:focus {
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
   background-color: var(--color-white);
   border-color: var(--color-blue-600);
   box-shadow: 0 0 0 3px var(--color-focus-ring, rgba(22, 105, 201, 0.25));

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { CheckCircle2, AlertTriangle, Send, RefreshCw } from "lucide-react";
 import { Button, Icon } from "@/components/ui";
@@ -45,6 +45,21 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const errorSummaryRef = useRef<HTMLDivElement>(null);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (submitError && errorSummaryRef.current) {
+      errorSummaryRef.current.focus();
+    }
+  }, [submitError]);
+
+  useEffect(() => {
+    if (isSubmitted && successHeadingRef.current) {
+      successHeadingRef.current.focus();
+    }
+  }, [isSubmitted]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -126,7 +141,18 @@ export function ContactForm() {
     }
 
     setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
+
+    const errorKeys = Object.keys(errors);
+    if (errorKeys.length > 0) {
+      const firstFieldId = errorKeys[0] === "consent" ? "contact-consent" : `contact-${errorKeys[0]}`;
+      const elem = document.getElementById(firstFieldId);
+      if (elem) {
+        elem.focus();
+      }
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -173,7 +199,14 @@ export function ContactForm() {
           <div className={styles.successIconWrap}>
             <Icon icon={CheckCircle2} size={32} />
           </div>
-          <h2 className={styles.successTitle}>Thanks, we’ve got your message</h2>
+          <h2
+            ref={successHeadingRef}
+            tabIndex={-1}
+            className={styles.successTitle}
+            style={{ outline: "none" }}
+          >
+            Thanks, we’ve got your message
+          </h2>
           <p className={styles.successDesc}>
             Thank you, <strong>{formData.name}</strong>. We will review your enquiry and respond to{" "}
             <strong>{formData.email}</strong> shortly.
@@ -201,8 +234,18 @@ export function ContactForm() {
         </p>
       </div>
 
+      <p className={styles.requiredNotice}>
+        Fields marked with <span aria-hidden="true">*</span> are required.
+      </p>
+
       {submitError && (
-        <div className={styles.errorSummary} role="alert">
+        <div
+          ref={errorSummaryRef}
+          tabIndex={-1}
+          className={styles.errorSummary}
+          role="alert"
+          style={{ outline: "none" }}
+        >
           <Icon icon={AlertTriangle} size={18} color="var(--color-error)" />
           <span>{submitError}</span>
         </div>
@@ -227,7 +270,7 @@ export function ContactForm() {
           {/* Name */}
           <div className={styles.fieldGroup}>
             <label htmlFor="contact-name" className={styles.label}>
-              Your Name <span aria-hidden="true">*</span>
+              Your Name <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
             </label>
             <input
               id="contact-name"
@@ -254,7 +297,7 @@ export function ContactForm() {
           {/* Email */}
           <div className={styles.fieldGroup}>
             <label htmlFor="contact-email" className={styles.label}>
-              Email Address <span aria-hidden="true">*</span>
+              Email Address <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
             </label>
             <input
               id="contact-email"
@@ -307,7 +350,7 @@ export function ContactForm() {
           {/* Message */}
           <div className={styles.fieldGroup}>
             <label htmlFor="contact-message" className={styles.label}>
-              Message <span aria-hidden="true">*</span>
+              Message <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
             </label>
             <textarea
               id="contact-message"
@@ -336,6 +379,7 @@ export function ContactForm() {
                 id="contact-consent"
                 name="consent"
                 type="checkbox"
+                required
                 checked={formData.consent}
                 onChange={handleChange}
                 className={styles.checkboxInput}
@@ -343,9 +387,13 @@ export function ContactForm() {
                 aria-describedby={fieldErrors.consent ? "contact-consent-error" : undefined}
               />
               <label htmlFor="contact-consent" className={styles.consentText}>
-                I agree to be contacted by Clean & Crest regarding this message. View our{" "}
-                <Link href="/privacy" style={{ color: "var(--color-blue-600)", textDecoration: "underline" }}>
-                  privacy policy
+                I agree to be contacted by Clean & Crest regarding this message. <span aria-hidden="true">*</span><span className="sr-only"> (required)</span> View our{" "}
+                <Link
+                  href="/privacy"
+                  style={{ color: "var(--color-blue-600)", textDecoration: "underline" }}
+                  target="_blank"
+                >
+                  privacy policy<span className="sr-only"> (opens in a new tab)</span>
                 </Link>
                 .
               </label>

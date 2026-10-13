@@ -26,52 +26,65 @@ export function TeamSection() {
           </p>
         </div>
 
-        <div className={styles.teamGrid}>
+        <ul className={styles.teamGrid} role="list">
           {team.map((member) => (
-            <div key={member.name} className={styles.teamCard}>
-              <div
-                style={{
-                  width: "72px",
-                  height: "72px",
-                  borderRadius: "50%",
-                  backgroundColor: "var(--color-ice-50)",
-                  border: "1px solid var(--color-ice-100)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  position: "relative",
-                  marginBottom: "var(--space-1)",
-                }}
-              >
-                {member.photo ? (
-                  <Image
-                    src={member.photo}
-                    alt={member.name}
-                    fill
-                    sizes="72px"
-                    style={{ objectFit: "cover" }}
-                  />
-                ) : (
-                  <Icon icon={User} size={32} color="var(--color-ink-500)" />
+            <li key={member.name} style={{ display: "contents" }}>
+              <div className={styles.teamCard}>
+                <div
+                  style={{
+                    width: "72px",
+                    height: "72px",
+                    borderRadius: "50%",
+                    backgroundColor: "var(--color-ice-50)",
+                    border: "1px solid var(--color-ice-100)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                    position: "relative",
+                    marginBottom: "var(--space-1)",
+                  }}
+                >
+                  {(() => {
+                    const isAiPhoto =
+                      member.photo &&
+                      /ai-generated|cleaner-at-work|tools-flatlay|hero|service/i.test(member.photo);
+                    if (isAiPhoto && process.env.NODE_ENV !== "production") {
+                      console.warn(
+                        `[Content Gating Warning] AI-generated image rejected for Team slot "${member.name}". Only verified real photos are permitted.`
+                      );
+                    }
+                    const validPhoto = member.photo && !isAiPhoto ? member.photo : null;
+                    return validPhoto ? (
+                      <Image
+                        src={validPhoto}
+                        alt={member.name}
+                        fill
+                        sizes="72px"
+                        style={{ objectFit: "cover" }}
+                      />
+                    ) : (
+                      <Icon icon={User} size={32} color="var(--color-ink-500)" />
+                    );
+                  })()}
+                </div>
+                <h3 style={{ fontSize: "1.125rem", color: "var(--color-navy-900)", margin: 0 }}>
+                  {member.name}
+                </h3>
+                {member.role && (
+                  <span style={{ fontSize: "0.875rem", color: "var(--color-blue-600)", fontWeight: 500 }}>
+                    {member.role}
+                  </span>
+                )}
+                {member.bio && (
+                  <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", margin: 0, lineHeight: 1.5 }}>
+                    {member.bio}
+                  </p>
                 )}
               </div>
-              <h3 style={{ fontSize: "1.125rem", color: "var(--color-navy-900)", margin: 0 }}>
-                {member.name}
-              </h3>
-              {member.role && (
-                <span style={{ fontSize: "0.875rem", color: "var(--color-blue-600)", fontWeight: 500 }}>
-                  {member.role}
-                </span>
-              )}
-              {member.bio && (
-                <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", margin: 0, lineHeight: 1.5 }}>
-                  {member.bio}
-                </p>
-              )}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
     </Section>
   );

@@ -22,14 +22,6 @@
   will-change: opacity, transform;
 }
 
-/* Progressive fade-in when JS is active */
-:global(.js-reveal) .realImage {
-  opacity: 0;
-}
-
-:global(.js-reveal) .realImage.realImageLoaded {
-  opacity: 1;
-}
 
 /* Subtle zoom (1.03) on card/frame hover */
 :global([class*="Card"]):hover .realImage,

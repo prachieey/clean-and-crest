@@ -1,37 +1,17 @@
-"use client";
-
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import { ArrowRight, Sparkles, MapPin } from "lucide-react";
 import { getServices } from "@/config";
 import { Icon } from "@/components/ui";
 import styles from "./heroQuickQuote.module.css";
 
 export function HeroQuickQuote() {
-  const router = useRouter();
   const services = getServices();
-
-  const [selectedService, setSelectedService] = useState<string>(
-    services.length > 0 ? services[0].slug : ""
-  );
-  const [postcodeOrSuburb, setPostcodeOrSuburb] = useState<string>("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const params = new URLSearchParams();
-    if (selectedService) {
-      params.set("service", selectedService);
-    }
-    if (postcodeOrSuburb.trim()) {
-      params.set("postcode", postcodeOrSuburb.trim());
-    }
-    const query = params.toString() ? `?${params.toString()}` : "";
-    router.push(`/quote${query}`);
-  };
+  const defaultService = services.length > 0 ? services[0].slug : "";
 
   return (
     <form
-      onSubmit={handleSubmit}
+      action="/quote"
+      method="GET"
       className={styles.quickQuoteBar}
       aria-label="Quick quote estimation"
     >
@@ -40,14 +20,13 @@ export function HeroQuickQuote() {
         <div className={styles.fieldGroup}>
           <label htmlFor="quick-quote-service" className={styles.label}>
             <Icon icon={Sparkles} size={15} className={styles.fieldIcon} />
-            <span>Service</span>
+            <span>Service <span className="sr-only">(required)</span></span>
           </label>
           <div className={styles.inputWrapper}>
             <select
               id="quick-quote-service"
               name="service"
-              value={selectedService}
-              onChange={(e) => setSelectedService(e.target.value)}
+              defaultValue={defaultService}
               className={styles.selectInput}
               required
             >
@@ -73,8 +52,6 @@ export function HeroQuickQuote() {
               id="quick-quote-postcode"
               type="text"
               name="postcode"
-              value={postcodeOrSuburb}
-              onChange={(e) => setPostcodeOrSuburb(e.target.value)}
               placeholder="e.g. 2150 or Parramatta"
               autoComplete="postal-code"
               className={styles.textInput}

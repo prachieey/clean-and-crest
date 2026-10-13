@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -108,6 +108,29 @@ export function QuoteForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorSummaryRef = useRef<HTMLDivElement>(null);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
+
+  // Announce step transitions via programmatic focus on step heading
+  useEffect(() => {
+    stepHeadingRef.current?.focus();
+  }, [currentStep]);
+
+  // Focus success status heading upon successful submission
+  useEffect(() => {
+    if (isSubmitted) {
+      successHeadingRef.current?.focus();
+    }
+  }, [isSubmitted]);
+
+  // Focus error summary banner upon submission failure
+  useEffect(() => {
+    if (submitError) {
+      errorSummaryRef.current?.focus();
+    }
+  }, [submitError]);
 
   const phoneHref = siteConfig.business.phoneHref || `tel:${siteConfig.business.phone}`;
   const isDev = process.env.NODE_ENV !== "production";
@@ -302,7 +325,14 @@ export function QuoteForm() {
         <div className={styles.successIconWrap}>
           <Icon icon={CheckCircle2} size={36} />
         </div>
-        <h1 className={styles.successTitle}>Thanks, we’ve got your request</h1>
+        <h2
+          ref={successHeadingRef}
+          tabIndex={-1}
+          className={styles.successTitle}
+          style={{ outline: "none" }}
+        >
+          Thanks, we’ve got your request
+        </h2>
         <p className={styles.successDesc}>
           We have received your details for <strong>{formData.service}</strong> in{" "}
           <strong>{formData.suburb}</strong>.
@@ -356,12 +386,16 @@ export function QuoteForm() {
       )}
 
       {/* Progress Indicator */}
-      <div className={styles.progressWrapper} aria-label={`Step ${currentStep} of 4: ${stepTitles[currentStep - 1]}`}>
-        <div className={styles.progressMeta}>
+      <div
+        className={styles.progressWrapper}
+        role="region"
+        aria-label="Quote request progress"
+      >
+        <div className={styles.progressMeta} aria-live="polite">
           <span className={styles.stepCounter}>Step {currentStep} of 4</span>
           <span className={styles.stepTitle}>{stepTitles[currentStep - 1]}</span>
         </div>
-        <div className={styles.progressBarTrack}>
+        <div className={styles.progressBarTrack} aria-hidden="true">
           {[1, 2, 3, 4].map((stepNum) => (
             <div
               key={stepNum}
@@ -379,7 +413,13 @@ export function QuoteForm() {
 
       {/* Error Summary Banner */}
       {submitError && (
-        <div className={styles.errorSummary} role="alert">
+        <div
+          ref={errorSummaryRef}
+          tabIndex={-1}
+          className={styles.errorSummary}
+          role="alert"
+          style={{ outline: "none" }}
+        >
           <Icon icon={AlertTriangle} size={18} />
           <div>
             {submitError}{" "}
@@ -412,11 +452,20 @@ export function QuoteForm() {
         {currentStep === 1 && (
           <section className={styles.stepSection} aria-labelledby="step-1-heading">
             <div>
-              <h2 id="step-1-heading" className={styles.stepHeading}>
+              <h2
+                id="step-1-heading"
+                ref={stepHeadingRef}
+                tabIndex={-1}
+                className={styles.stepHeading}
+                style={{ outline: "none" }}
+              >
                 Which service do you need?
               </h2>
               <p className={styles.stepSubheading}>
                 Choose the service you are looking for. You can specify room numbers or special requests in the next step.
+              </p>
+              <p className={styles.requiredNotice}>
+                Fields marked with <span aria-hidden="true">*</span><span className="sr-only">an asterisk</span> are required.
               </p>
             </div>
 
@@ -430,23 +479,24 @@ export function QuoteForm() {
             <div className={styles.servicesRadioGrid} role="radiogroup" aria-labelledby="step-1-heading">
               {servicesList.map((svc) => {
                 const isSelected = formData.service === svc.title;
+                const optId = `quote-svc-${svc.slug}`;
                 return (
-                  <div
+                  <label
                     key={svc.slug}
-                    role="radio"
-                    aria-checked={isSelected}
-                    tabIndex={0}
-                    onClick={() => setPillValue("service", svc.title)}
-                    onKeyDown={(e) => {
-                      if (e.key === " " || e.key === "Enter") {
-                        e.preventDefault();
-                        setPillValue("service", svc.title);
-                      }
-                    }}
+                    htmlFor={optId}
                     className={`${styles.serviceRadioCard} ${
                       isSelected ? styles.serviceRadioCardSelected : ""
                     }`.trim()}
                   >
+                    <input
+                      type="radio"
+                      id={optId}
+                      name="service"
+                      value={svc.title}
+                      checked={isSelected}
+                      onChange={() => setPillValue("service", svc.title)}
+                      className="sr-only"
+                    />
                     <div
                       className={`${styles.radioCircle} ${
                         isSelected ? styles.radioCircleSelected : ""
@@ -459,26 +509,26 @@ export function QuoteForm() {
                       <div className={styles.serviceCardTitle}>{svc.title}</div>
                       <div className={styles.serviceCardDesc}>{svc.shortDescription}</div>
                     </div>
-                  </div>
+                  </label>
                 );
               })}
 
               {/* Other / Not Sure Option */}
-              <div
-                role="radio"
-                aria-checked={formData.service === "Other / not sure"}
-                tabIndex={0}
-                onClick={() => setPillValue("service", "Other / not sure")}
-                onKeyDown={(e) => {
-                  if (e.key === " " || e.key === "Enter") {
-                    e.preventDefault();
-                    setPillValue("service", "Other / not sure");
-                  }
-                }}
+              <label
+                htmlFor="quote-svc-other"
                 className={`${styles.serviceRadioCard} ${
                   formData.service === "Other / not sure" ? styles.serviceRadioCardSelected : ""
                 }`.trim()}
               >
+                <input
+                  type="radio"
+                  id="quote-svc-other"
+                  name="service"
+                  value="Other / not sure"
+                  checked={formData.service === "Other / not sure"}
+                  onChange={() => setPillValue("service", "Other / not sure")}
+                  className="sr-only"
+                />
                 <div
                   className={`${styles.radioCircle} ${
                     formData.service === "Other / not sure" ? styles.radioCircleSelected : ""
@@ -491,7 +541,7 @@ export function QuoteForm() {
                   <div className={styles.serviceCardTitle}>Other / not sure</div>
                   <div className={styles.serviceCardDesc}>Custom cleans, combinations, or special requests.</div>
                 </div>
-              </div>
+              </label>
             </div>
           </section>
         )}
@@ -502,7 +552,13 @@ export function QuoteForm() {
         {currentStep === 2 && (
           <section className={styles.stepSection} aria-labelledby="step-2-heading">
             <div>
-              <h2 id="step-2-heading" className={styles.stepHeading}>
+              <h2
+                id="step-2-heading"
+                ref={stepHeadingRef}
+                tabIndex={-1}
+                className={styles.stepHeading}
+                style={{ outline: "none" }}
+              >
                 Tell us about your property
               </h2>
               <p className={styles.stepSubheading}>
@@ -513,7 +569,7 @@ export function QuoteForm() {
             {/* Property Type Pills */}
             <div className={styles.fieldGroup}>
               <label className={styles.label}>
-                Property type <span aria-hidden="true">*</span>
+                Property type <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
               </label>
               <div className={styles.pillGrid} role="radiogroup" aria-label="Property Type">
                 {siteConfig.quoteFormOptions.propertyTypes.map((type) => (
@@ -615,7 +671,13 @@ export function QuoteForm() {
         {currentStep === 3 && (
           <section className={styles.stepSection} aria-labelledby="step-3-heading">
             <div>
-              <h2 id="step-3-heading" className={styles.stepHeading}>
+              <h2
+                id="step-3-heading"
+                ref={stepHeadingRef}
+                tabIndex={-1}
+                className={styles.stepHeading}
+                style={{ outline: "none" }}
+              >
                 Where and when do you need the clean?
               </h2>
               <p className={styles.stepSubheading}>
@@ -627,7 +689,7 @@ export function QuoteForm() {
               {/* Suburb */}
               <div className={styles.fieldGroup}>
                 <label htmlFor="suburb" className={styles.label}>
-                  Suburb <span aria-hidden="true">*</span>
+                  Suburb <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
                 </label>
                 <input
                   id="suburb"
@@ -654,7 +716,7 @@ export function QuoteForm() {
               {/* Postcode */}
               <div className={styles.fieldGroup}>
                 <label htmlFor="postcode" className={styles.label}>
-                  Postcode <span aria-hidden="true">*</span>
+                  Postcode <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
                 </label>
                 <input
                   id="postcode"
@@ -760,7 +822,13 @@ export function QuoteForm() {
         {currentStep === 4 && (
           <section className={styles.stepSection} aria-labelledby="step-4-heading">
             <div>
-              <h2 id="step-4-heading" className={styles.stepHeading}>
+              <h2
+                id="step-4-heading"
+                ref={stepHeadingRef}
+                tabIndex={-1}
+                className={styles.stepHeading}
+                style={{ outline: "none" }}
+              >
                 How should we send your quote?
               </h2>
               <p className={styles.stepSubheading}>
@@ -825,7 +893,7 @@ export function QuoteForm() {
             {/* Full Name */}
             <div className={styles.fieldGroup}>
               <label htmlFor="fullName" className={styles.label}>
-                Full name <span aria-hidden="true">*</span>
+                Full name <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
               </label>
               <input
                 id="fullName"
@@ -853,7 +921,7 @@ export function QuoteForm() {
               {/* Phone */}
               <div className={styles.fieldGroup}>
                 <label htmlFor="phone" className={styles.label}>
-                  Phone / Mobile <span aria-hidden="true">*</span>
+                  Phone / Mobile <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
                 </label>
                 <input
                   id="phone"
@@ -880,7 +948,7 @@ export function QuoteForm() {
               {/* Email */}
               <div className={styles.fieldGroup}>
                 <label htmlFor="email" className={styles.label}>
-                  Email address <span aria-hidden="true">*</span>
+                  Email address <span aria-hidden="true">*</span><span className="sr-only"> (required)</span>
                 </label>
                 <input
                   id="email"
@@ -942,9 +1010,9 @@ export function QuoteForm() {
                 required
               />
               <label htmlFor="consent" className={styles.consentText}>
-                I agree to be contacted about this quote. View our{" "}
+                I agree to be contacted about this quote. <span aria-hidden="true">*</span><span className="sr-only"> (required)</span> View our{" "}
                 <Link href="/privacy" className={styles.consentLink} target="_blank">
-                  Privacy Policy
+                  Privacy Policy<span className="sr-only"> (opens in a new tab)</span>
                 </Link>
                 .
               </label>

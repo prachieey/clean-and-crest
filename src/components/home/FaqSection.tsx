@@ -30,29 +30,31 @@ export function FaqSection() {
           </p>
         </div>
 
-        <div className={styles.faqList}>
+        <ul className={styles.faqList} role="list">
           {displayFaqs.map((faq, index) => (
-            <details key={index} className={styles.faqItem}>
-              <summary className={styles.faqSummary}>
-                <span>{faq.question}</span>
-                <Icon
-                  icon={ChevronDown}
-                  size={20}
-                  className={styles.chevronIcon}
-                />
-              </summary>
-              <div className={styles.faqContent}>
-                <p className={styles.answerText}>{faq.answer}</p>
-                {!isProduction && !faq.confirmedByUser && (
-                  <div className={styles.devBadge} role="status">
-                    <Icon icon={AlertTriangle} size={14} color="#D97706" />
-                    <span>[CONFIRM WITH OWNER: Operational policy]</span>
-                  </div>
-                )}
-              </div>
-            </details>
+            <li key={index} style={{ listStyle: "none" }}>
+              <details className={styles.faqItem}>
+                <summary className={styles.faqSummary}>
+                  <span>{faq.question}</span>
+                  <Icon
+                    icon={ChevronDown}
+                    size={20}
+                    className={styles.chevronIcon}
+                  />
+                </summary>
+                <div className={styles.faqContent}>
+                  <p className={styles.answerText}>{faq.answer}</p>
+                  {!isProduction && !faq.confirmedByUser && (
+                    <div className={styles.devBadge} role="status">
+                      <Icon icon={AlertTriangle} size={14} color="#D97706" />
+                      <span>[CONFIRM WITH OWNER: Operational policy]</span>
+                    </div>
+                  )}
+                </div>
+              </details>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
     </Section>
   );

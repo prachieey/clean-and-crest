@@ -25,6 +25,8 @@ export function Footer() {
   const abn = business.abn;
   const abnIsPlaceholder = isPlaceholder(abn);
 
+  const regionIsPlaceholder = isPlaceholder(business.primaryRegion);
+
   // Confirmed services: strictly confirmed in production
   const services = isDev
     ? siteConfig.services
@@ -48,7 +50,7 @@ export function Footer() {
             <Link href="/" className={styles.logoRow} aria-label="Clean & Crest Home">
               <Image
                 src="/images/clean-and-crest-logo.jpg"
-                alt="Clean & Crest Logo"
+                alt=""
                 width={40}
                 height={40}
                 className={styles.logoImg}
@@ -77,7 +79,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.socialIconLink}
-                    aria-label={`Visit Clean & Crest on ${platform}`}
+                    aria-label={`Visit Clean & Crest on ${platform} (opens in a new tab)`}
                   >
                     <Icon icon={ExternalLink} size={16} />
                   </a>
@@ -174,7 +176,15 @@ export function Footer() {
 
               <li className={styles.contactItem}>
                 <Icon icon={MapPin} size={16} className={styles.contactIcon} />
-                <div>{business.primaryRegion}</div>
+                <div>
+                  {!regionIsPlaceholder ? (
+                    business.primaryRegion
+                  ) : isDev ? (
+                    <Placeholder value={business.primaryRegion} label="REGION / CITY" />
+                  ) : (
+                    "Australia"
+                  )}
+                </div>
               </li>
             </ul>
           </div>
