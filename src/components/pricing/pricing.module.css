@@ -520,3 +520,316 @@
 .ctaBtn {
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   7. DIY vs. Clean & Crest Comparison Section
+   ========================================================================== */
+
+.diySection {
+  background-color: var(--color-white);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-12);
+  border-top: 1px solid var(--color-ice-100);
+}
+
+.diyHeader {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto var(--space-6);
+}
+
+.diyTitle {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h2);
+  color: var(--color-navy-900);
+  margin: var(--space-1) 0 var(--space-2) 0;
+  line-height: 1.2;
+}
+
+.diySubtitle {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-ink-500);
+  margin: 0 auto;
+}
+
+/* Card Container */
+.diyCard {
+  max-width: 860px;
+  margin: 0 auto;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-left: 5px solid var(--color-blue-600);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-level-2);
+}
+
+@media (max-width: 640px) {
+  .diyCard {
+    padding: var(--space-4);
+  }
+}
+
+/* Slider */
+.sliderBlock {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto var(--space-6);
+}
+
+.sliderLabel {
+  display: block;
+  font-family: var(--font-family-heading);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--color-navy-900);
+  margin-bottom: var(--space-2);
+}
+
+.sliderValue {
+  color: var(--color-blue-600);
+  font-weight: 800;
+  font-size: 1.1875rem;
+}
+
+.sliderTrackWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 var(--space-2);
+}
+
+.rangeInput {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-badge);
+  background: var(--color-ice-100);
+  outline: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-blue-600);
+  border: 3px solid var(--color-white);
+  box-shadow: 0 2px 6px rgba(13, 37, 63, 0.25);
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.rangeInput::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: var(--color-blue-500);
+}
+
+.rangeInput::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-blue-600);
+  border: 3px solid var(--color-white);
+  box-shadow: 0 2px 6px rgba(13, 37, 63, 0.25);
+  cursor: pointer;
+}
+
+.sliderRangeLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  font-weight: 500;
+}
+
+/* 2-Column Comparison Grid */
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .comparisonGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+}
+
+.diyCol {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.crestCol {
+  background-color: #F4F9FD;
+  border: 1px solid #D0E4F5;
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(22, 105, 201, 0.05);
+}
+
+.colHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(13, 37, 63, 0.08);
+}
+
+.colTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.crestTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.crestBadge {
+  background-color: var(--color-navy-900);
+  color: var(--color-white);
+  padding: 3px 8px;
+  border-radius: var(--radius-badge);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Item Lists */
+.itemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.875rem;
+  padding: 4px 0;
+}
+
+.itemLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-ink-700);
+}
+
+.itemValue {
+  font-weight: 600;
+  color: var(--color-navy-900);
+}
+
+.includedValue {
+  font-weight: 700;
+  color: var(--color-blue-600);
+}
+
+.savedValue {
+  font-weight: 700;
+  color: var(--color-navy-900);
+}
+
+/* Total Rows */
+.totalRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--color-ice-100);
+}
+
+.totalLabel {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+}
+
+.diyTotalValue {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #DC2626;
+}
+
+.diyTotalValue s {
+  text-decoration-thickness: 2.5px;
+  text-decoration-color: #DC2626;
+  opacity: 0.85;
+}
+
+.crestTotalValue {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-blue-600);
+}
+
+/* Verdict Banner */
+.verdictBlock {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-button);
+  padding: var(--space-4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.verdictText {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.verdictIntro {
+  font-weight: 800;
+  color: var(--color-blue-600);
+}
+
+.savingsHighlight {
+  color: var(--color-blue-600);
+  font-weight: 800;
+}
+
+.verdictBtn {
+  min-width: 220px;
+}
+

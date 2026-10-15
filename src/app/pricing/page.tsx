@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { generatePageMetadata, getBreadcrumbJsonLd } from "@/config/seo";
 import { JsonLd } from "@/components/seo";
-import { PricingHero, StandardFixedPricing } from "@/components/pricing";
+import { PricingHero, StandardFixedPricing, DiyComparison } from "@/components/pricing";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Fixed Pricing & Upfront Cleaning Rates | Clean & Crest",
@@ -31,6 +31,9 @@ export default function PricingPage() {
 
       {/* 2. Standard Fixed Pricing Card & Content Area */}
       <StandardFixedPricing />
+
+      {/* 3. DIY vs. Clean & Crest Interactive Comparison */}
+      <DiyComparison />
     </>
   );
 }
