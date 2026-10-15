@@ -170,6 +170,24 @@ export const imageManifest: Record<string, ImageSlot> = {
     maxFileSizeKb: 200,
     priority: false,
   },
+  "service-general-deep-cleaning": {
+    id: "service-general-deep-cleaning",
+    location: "General Deep Cleaning (Card & Service Page)",
+    requiredAspectRatio: "4:3",
+    width: 600,
+    height: 450,
+    filePath: "/images/service-deep-cleaning.webp",
+    isPlaceholder: false,
+    source: "ai-generated",
+    illustrative: true,
+    replaceWithReal: true,
+    alt: "Clean modern bathroom with sparkling chrome tap, spotless glass shower screen, and folded towel",
+    focalPoint: "center center",
+    minResolution: "1000x750",
+    subject: "General deep clean: white tiles, spotless glass screen, and pristine surfaces",
+    maxFileSizeKb: 200,
+    priority: false,
+  },
 
   // 5. Commercial Cleaning
   "service-commercial": {

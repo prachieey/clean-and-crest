@@ -166,12 +166,14 @@ export function getOrganizationJsonLd(): Record<string, unknown> {
     };
   }
 
-  // Geographic coverage only if confirmed
-  if (isRealValue(business.primaryRegion)) {
-    schema.areaServed = {
-      "@type": "AdministrativeArea",
-      name: business.primaryRegion,
-    };
+  // Geographic coverage: City entries for confirmed service areas
+  const citiesServed = siteConfig.serviceAreas.map((area) => ({
+    "@type": "City",
+    name: area.name,
+  }));
+
+  if (citiesServed.length > 0) {
+    schema.areaServed = citiesServed;
   }
 
   // Social profiles if confirmed
@@ -234,6 +236,11 @@ export function getServiceJsonLd(slug: string): Record<string, unknown> | null {
   const service = siteConfig.services.find((s) => s.slug === slug);
   if (!service) return null;
 
+  const citiesServed = siteConfig.serviceAreas.map((area) => ({
+    "@type": "City",
+    name: area.name,
+  }));
+
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -248,11 +255,8 @@ export function getServiceJsonLd(slug: string): Record<string, unknown> | null {
     },
   };
 
-  if (isRealValue(siteConfig.business.primaryRegion)) {
-    schema.areaServed = {
-      "@type": "AdministrativeArea",
-      name: siteConfig.business.primaryRegion,
-    };
+  if (citiesServed.length > 0) {
+    schema.areaServed = citiesServed;
   }
 
   return schema;

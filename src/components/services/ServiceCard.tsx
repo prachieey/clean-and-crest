@@ -24,9 +24,7 @@ const service3DIconMap: Record<string, string> = {
   "house-cleaning": "/images/3d-icon-house.webp",
   "end-of-lease-cleaning": "/images/3d-icon-key.webp",
   "deep-cleaning": "/images/3d-icon-sparkle-sponge.webp",
-  "commercial-cleaning": "/images/3d-icon-building.webp",
-  "carpet-steam-cleaning": "/images/3d-icon-steam.webp",
-  "upholstery-cleaning": "/images/3d-icon-sofa.webp",
+  "general-deep-cleaning": "/images/3d-icon-sparkle-sponge.webp",
 };
 
 interface ServiceCardProps {
@@ -93,6 +91,17 @@ export function ServiceCard({ service, headingLevel = "h3" }: ServiceCardProps) 
             </span>
             <Icon icon={ArrowRight} size={15} />
           </Link>
+
+          {service.slug === "end-of-lease-cleaning" && (
+            <Link
+              href="/pricing"
+              className={styles.pricingLink}
+            >
+              <span>
+                See pricing<span className="sr-only"> for {service.title}</span>
+              </span>
+            </Link>
+          )}
 
           <Link
             href={`/services/${service.slug}`}

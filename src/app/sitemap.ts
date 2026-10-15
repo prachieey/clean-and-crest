@@ -67,5 +67,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  return [...coreRoutes, ...confirmedServiceRoutes];
+  const locationRoutes: MetadataRoute.Sitemap = siteConfig.cityPages
+    ? siteConfig.serviceAreas.map((area) => ({
+        url: `${baseUrl}/locations/${area.slug}`,
+        lastModified: currentDate,
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      }))
+    : [];
+
+  return [...coreRoutes, ...confirmedServiceRoutes, ...locationRoutes];
 }

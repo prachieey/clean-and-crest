@@ -73,10 +73,20 @@ export function ServiceAreasBand() {
                       ))}
                     </ul>
                   ) : (
-                    <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", margin: 0 }}>
-                      Coverage across {region.name} and surrounding postcodes.
+                    <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", margin: "0 0 12px 0", lineHeight: 1.5 }}>
+                      {region.note || "Standard rates apply within 50km of each city CBD."}
                     </p>
                   )}
+
+                  <div style={{ marginTop: "auto", paddingTop: "8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Link
+                      href={`/quote?city=${region.slug}`}
+                      style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--color-blue-600)", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                    >
+                      <span>Get a quote for {region.name}</span>
+                      <Icon icon={ArrowRight} size={14} />
+                    </Link>
+                  </div>
                 </div>
               );
             })}

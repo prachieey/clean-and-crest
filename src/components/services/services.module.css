@@ -195,6 +195,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
   padding-top: var(--space-3);
   border-top: 1px solid var(--color-ice-100);
   margin-top: auto;
@@ -216,6 +217,21 @@
   color: var(--color-blue-500);
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.pricingLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pricingLink:hover {
+  color: var(--color-blue-600);
 }
 
 .learnMoreLink {
@@ -346,4 +362,592 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 14px;
+}
+
+/* Service Detail & Quotation Layout */
+.detailHeroHeader {
+  margin-bottom: var(--space-4);
+}
+
+.serviceMetaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-ink-700);
+}
+
+.basisBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  padding: 4px 10px;
+  border-radius: var(--radius-button, 9999px);
+  font-weight: 500;
+  color: var(--color-ink-700);
+}
+
+.pricingNoteBadge {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-ink-500);
+  font-size: 0.875rem;
+}
+
+.headerActionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+@media (max-width: 639px) {
+  .headerActionRow button,
+  .headerActionRow a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Price Block */
+.priceBlockCard {
+  background: linear-gradient(135deg, #FFFFFF 0%, var(--color-ice-50) 100%);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-depth-1);
+}
+
+.priceBlockHeading {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin-bottom: 6px;
+}
+
+.priceBlockValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-blue-600);
+  margin-bottom: 4px;
+}
+
+.priceBlockText {
+  font-size: 1rem;
+  color: var(--color-ink-700);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.priceBlockNote {
+  font-size: 0.875rem;
+  color: var(--color-ink-500);
+}
+
+/* Assurance Card */
+.assuranceCard {
+  background-color: var(--color-ice-50);
+  border: 1.5px solid rgba(22, 105, 201, 0.35);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-depth-1);
+  position: relative;
+}
+
+.assuranceHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--space-2);
+}
+
+.assuranceIcon {
+  color: var(--color-blue-600);
+  flex-shrink: 0;
+}
+
+.assuranceTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.assuranceSummary {
+  font-size: 1rem;
+  color: var(--color-ink-700);
+  line-height: 1.6;
+  margin-bottom: var(--space-2);
+}
+
+.assuranceCondition {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-navy-900);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: var(--space-2);
+}
+
+.assuranceTermsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-blue-600);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  min-height: 44px;
+}
+
+/* Scope Areas Grid */
+.scopeSectionWrap {
+  margin-bottom: var(--space-6);
+}
+
+.sectionHeading {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin-bottom: var(--space-3);
+}
+
+/* Scope Areas: Desktop Grid vs Mobile Accordion */
+.desktopScopeGrid {
+  display: none;
+}
+
+.mobileScopeAccordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .desktopScopeGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  .mobileScopeAccordion {
+    display: none;
+  }
+}
+
+.scopeAreaCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-depth-1);
+}
+
+.scopeAreaTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin-bottom: var(--space-2);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-ice-100);
+}
+
+/* Mobile accordion behavior for scope cards */
+.scopeAreaDetails {
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  background-color: var(--color-white);
+  overflow: hidden;
+}
+
+.scopeAreaSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  min-height: 48px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-family-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  background-color: var(--color-ice-50);
+}
+
+.scopeAreaSummary::-webkit-details-marker {
+  display: none;
+}
+.scopeAreaSummary::marker {
+  display: none;
+}
+
+.scopeAreaSummary:focus-visible {
+  outline: 3px solid var(--color-blue-600);
+  outline-offset: -3px;
+}
+
+.scopeChevron {
+  color: var(--color-blue-600);
+  transition: transform 180ms ease;
+  flex-shrink: 0;
+}
+
+.scopeAreaDetails[open] .scopeChevron {
+  transform: rotate(180deg);
+}
+
+.scopeAreaContent {
+  padding: 14px 18px 18px;
+}
+
+
+/* Optional Add-Ons Card */
+.addOnsCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-depth-1);
+}
+
+.addOnsList {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.addOnItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+}
+
+.addOnInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.addOnTitle {
+  font-weight: 600;
+  color: var(--color-navy-900);
+  font-size: 0.9375rem;
+}
+
+.addOnNote {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+}
+
+.addOnPrice {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-blue-600);
+  white-space: nowrap;
+}
+
+/* Not Included Card */
+.notIncludedCard {
+  background-color: #F8FAFC;
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.notIncludedList {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notIncludedItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9375rem;
+  color: var(--color-ink-700);
+}
+
+.notIncludedIcon {
+  color: #94A3B8;
+  flex-shrink: 0;
+}
+
+/* Terms Accordion */
+.termsAccordionWrap {
+  margin-bottom: var(--space-6);
+}
+
+.termsDetails {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-depth-1);
+}
+
+.termsSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  min-height: 52px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-family-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+}
+
+.termsSummary::-webkit-details-marker {
+  display: none;
+}
+.termsSummary::marker {
+  display: none;
+}
+
+.termsSummary:focus-visible {
+  outline: 3px solid var(--color-blue-600);
+  outline-offset: -3px;
+}
+
+.termsDetails[open] .scopeChevron {
+  transform: rotate(180deg);
+}
+
+.termsContent {
+  padding: 0 20px 20px 20px;
+}
+
+.termsList {
+  padding-left: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--color-ink-700);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+/* Bottom CTA Band */
+.bottomCtaCard {
+  background: linear-gradient(135deg, var(--color-navy-900) 0%, #0E3A66 100%);
+  color: var(--color-white);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  text-align: center;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+  box-shadow: var(--shadow-depth-2);
+}
+
+.bottomCtaTitle {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  color: var(--color-white);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.bottomCtaDesc {
+  color: var(--color-ice-100);
+  font-size: 1rem;
+  max-width: 50ch;
+  margin: 0 auto var(--space-4);
+  line-height: 1.5;
+}
+
+.bottomCtaBtnRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* Comparison Table Styles */
+.comparisonSection {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.comparisonHeaderWrap {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto var(--space-5);
+}
+
+.comparisonTitle {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h2);
+  color: var(--color-navy-900);
+  font-weight: 800;
+  margin-bottom: var(--space-1);
+}
+
+.comparisonSubtitle {
+  font-size: var(--font-size-body);
+  color: var(--color-ink-500);
+}
+
+.tableScrollWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-depth-1);
+}
+
+.comparisonTable {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.thFeature {
+  padding: 16px 20px;
+  background-color: var(--color-ice-50);
+  border-bottom: 2px solid var(--color-ice-100);
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  width: 34%;
+}
+
+.thService {
+  padding: 16px 16px;
+  background-color: var(--color-ice-50);
+  border-bottom: 2px solid var(--color-ice-100);
+  width: 22%;
+  vertical-align: top;
+}
+
+.colHeaderInner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.colServiceTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+}
+
+.colServiceLink {
+  font-size: 0.8125rem;
+  color: var(--color-blue-600);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.trEven {
+  background-color: var(--color-white);
+}
+
+.trOdd {
+  background-color: #FAFCFE;
+}
+
+.tdFeature {
+  padding: 14px 20px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-navy-900);
+  border-bottom: 1px solid var(--color-ice-100);
+  border-right: 1px solid var(--color-ice-100);
+}
+
+.tdValue {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-ice-100);
+  border-right: 1px solid var(--color-ice-100);
+  vertical-align: middle;
+}
+
+.tdValue:last-child {
+  border-right: none;
+}
+
+.cellContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconIncluded {
+  color: #16A34A;
+  flex-shrink: 0;
+}
+
+.iconNotIncluded {
+  color: #94A3B8;
+  flex-shrink: 0;
+}
+
+.valTextIncluded {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-navy-900);
+}
+
+.valTextNotIncluded {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-ink-500);
+}
+
+.cellNote {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  margin-top: 2px;
+  margin-left: 24px;
+}
+
+.tableFootnote {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+  margin-top: 8px;
+  font-style: italic;
+  text-align: right;
 }

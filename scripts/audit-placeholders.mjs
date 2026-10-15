@@ -74,9 +74,13 @@ if (areaPlaceholders.length > 0) {
 }
 
 console.log("\n" + bold("4. UNCONFIRMED SERVICES:") + ` (${unconfirmedServices.length}/${siteConfig.services.length} unconfirmed)`);
-unconfirmedServices.forEach((s) => {
-  console.log(`   ${dim("●")} ${s.title} (${cyan(s.slug)}) — ${yellow("UNCONFIRMED")} (hidden in production)`);
-});
+if (unconfirmedServices.length === 0) {
+  console.log("   ✓ All services confirmed! (3/3 active services)");
+} else {
+  unconfirmedServices.forEach((s) => {
+    console.log(`   ${dim("●")} ${s.title} (${cyan(s.slug)}) — ${yellow("UNCONFIRMED")} (hidden in production)`);
+  });
+}
 
 console.log("\n" + bold("5. GATED TRUST CLAIMS:") + ` (${disabledTrustFlags.length} flags currently OFF)`);
 disabledTrustFlags.forEach(([flag]) => {
@@ -103,6 +107,35 @@ if (aboutPlaceholders.length > 0) {
   aboutPlaceholders.forEach(({ field, note }) => {
     console.log(`   ${yellow("●")} ${bold(field)}: ${yellow(note)}`);
   });
+}
+
+// 7. Reviews validation (Build fails if any review has source 'sample' or placeholder name)
+const reviewErrors = [];
+for (const review of siteConfig.reviews || []) {
+  const source = typeof review.source === "string" ? review.source.toLowerCase() : "";
+  if (source === "sample") {
+    reviewErrors.push(`Review "${review.id || "unspecified"}" has forbidden source "sample".`);
+  }
+  if (review.isSample === true) {
+    reviewErrors.push(`Review "${review.id || "unspecified"}" has isSample: true.`);
+  }
+  const name = typeof review.firstName === "string" ? review.firstName : "";
+  if (name.includes("[") || name.toLowerCase().includes("sample") || name.toLowerCase().includes("placeholder")) {
+    reviewErrors.push(`Review "${review.id || "unspecified"}" has placeholder or sample firstName: "${name}".`);
+  }
+}
+
+console.log("\n" + bold("7. REVIEWS INTEGRITY AUDIT:"));
+if (reviewErrors.length > 0) {
+  console.log(red(`   ❌ ${reviewErrors.length} invalid review(s) detected:`));
+  reviewErrors.forEach((err) => console.log(`   ${red("●")} ${err}`));
+  console.log(red("\nCRITICAL BUILD ERROR: Production build failed per PROJECT_RULES (no sample reviews allowed)."));
+  process.exit(1);
+} else {
+  const verifiedCount = (siteConfig.reviews || []).filter(
+    (r) => r.verified && r.permissionToPublish && !r.isSample
+  ).length;
+  console.log(`   ✓ ${verifiedCount} verified review(s) configured. No sample or placeholder reviews in config.`);
 }
 
 console.log("\n" + yellow("-".repeat(72)));

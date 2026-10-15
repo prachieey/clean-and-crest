@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Phone, Mail, Clock, MapPin, Globe, ArrowRight, ExternalLink } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Icon, Placeholder, isPlaceholder } from "@/components/ui";
+import { Icon, Placeholder, isPlaceholder, WhatsAppContactCard } from "@/components/ui";
 import styles from "./contact.module.css";
 
 export function ContactDetails() {
@@ -58,6 +58,9 @@ export function ContactDetails() {
           </div>
         </div>
       )}
+
+      {/* 2. WhatsApp Card (Direct quote chat) */}
+      <WhatsAppContactCard />
 
       {/* 2. Email Card */}
       {(!emailIsPlaceholder || isDev) && (
@@ -122,12 +125,12 @@ export function ContactDetails() {
         </div>
 
         <p className={styles.cardBodyText}>
-          Servicing homes and commercial properties across {business.primaryRegion} and surrounding areas.
+          We service within 50 km of the {business.primaryRegion} CBDs.
         </p>
 
         <div>
           <Link href="/service-areas" className={styles.serviceAreasLink}>
-            <span>View all serviced suburbs</span>
+            <span>View service areas</span>
             <Icon icon={ArrowRight} size={15} />
           </Link>
         </div>

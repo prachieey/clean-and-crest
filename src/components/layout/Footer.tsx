@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, Clock, MapPin, ExternalLink } from "lucide-react";
-import { siteConfig } from "@/config";
-import { Container, Icon, Placeholder, isPlaceholder } from "@/components/ui";
+import { siteConfig, getWhatsAppHref } from "@/config";
+import { Container, Icon, Placeholder, isPlaceholder, WhatsAppIcon } from "@/components/ui";
 import styles from "./footer.module.css";
 
 export function Footer() {
@@ -63,7 +63,7 @@ export function Footer() {
             </p>
 
             <p className={styles.serviceAreaLine}>
-              Servicing homes and workplaces across {business.primaryRegion} and surrounding suburbs.{" "}
+              We service within 50 km of the {business.primaryRegion} CBDs.{" "}
               <Link href="/service-areas" className={styles.serviceAreaLink}>
                 View service areas
               </Link>
@@ -145,6 +145,21 @@ export function Footer() {
                   </div>
                 </li>
               )}
+
+              <li className={styles.contactItem}>
+                <WhatsAppIcon size={16} className={styles.whatsAppFooterIcon} />
+                <div>
+                  <a
+                    href={getWhatsAppHref()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.contactLink}
+                    aria-label={`Chat with Clean & Crest on WhatsApp on ${phone}`}
+                  >
+                    WhatsApp: {phone}
+                  </a>
+                </div>
+              </li>
 
               {(!emailIsPlaceholder || isDev) && (
                 <li className={styles.contactItem}>

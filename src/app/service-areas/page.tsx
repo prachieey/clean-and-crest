@@ -6,9 +6,9 @@ import { FinalCtaBand } from "@/components/layout";
 import { JsonLd } from "@/components/seo";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Service Areas & Suburbs Covered | Clean & Crest",
+  title: "Service Areas | Brisbane, Melbourne & Perth | Clean & Crest",
   description:
-    "Explore the regions and suburbs covered by Clean & Crest. Check service availability and request an upfront, obligation-free cleaning quote today.",
+    "Clean & Crest provides cleaning services within 50 km of the Brisbane, Melbourne, and Perth CBDs. Check service coverage and request an upfront quote.",
   path: "/service-areas",
 });
 
@@ -26,7 +26,7 @@ export default function ServiceAreasPage() {
               Service Areas
             </h1>
             <p style={{ color: "var(--color-ink-500)", fontSize: "var(--font-size-body)", lineHeight: 1.6, margin: "0 auto" }}>
-              Explore our confirmed regional coverage and serviced suburbs. We arrive fully equipped with professional equipment and standard task checklists.
+              Professional cleaning services within 50 km of the Brisbane, Melbourne, and Perth CBDs. Arriving fully equipped with professional supplies and standard task checklists.
             </p>
           </div>
 

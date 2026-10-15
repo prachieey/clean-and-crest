@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { generatePageMetadata, getOrganizationJsonLd, getWebSiteJsonLd } from "@/config/seo";
 import { Header, Footer, MobileActionBar } from "@/components/layout";
-import { ScrollRevealInit } from "@/components/ui";
+import { ScrollRevealInit, WhatsAppFloatingButton } from "@/components/ui";
 import { JsonLd } from "@/components/seo";
 import "./globals.css";
 
@@ -41,6 +41,7 @@ export default function RootLayout({
         <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
         <MobileActionBar />
+        <WhatsAppFloatingButton />
       </body>
     </html>
   );

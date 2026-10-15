@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { generatePageMetadata, getBreadcrumbJsonLd } from "@/config/seo";
 import { Container, Section, Eyebrow } from "@/components/ui";
-import { QuoteForm, QuoteSidebar } from "@/components/quote";
+import { QuoteForm } from "@/components/quote";
 import { JsonLd } from "@/components/seo";
 import styles from "@/components/quote/quote.module.css";
 
@@ -31,29 +31,25 @@ export default function QuotePage() {
           </p>
         </div>
 
-        {/* Form and Sidebar Responsive Two-Column Layout */}
-        <div className={styles.pageLayout}>
-          <Suspense
-            fallback={
-              <div
-                className={styles.formCard}
-                style={{
-                  minHeight: "720px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--color-ink-500)",
-                }}
-              >
-                Loading quote form...
-              </div>
-            }
-          >
-            <QuoteForm />
-          </Suspense>
-
-          <QuoteSidebar />
-        </div>
+        {/* Quote Multi-Step Form with Desktop Live Estimate Sidebar */}
+        <Suspense
+          fallback={
+            <div
+              className={styles.formCard}
+              style={{
+                minHeight: "720px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "var(--color-ink-500)",
+              }}
+            >
+              Loading quote form...
+            </div>
+          }
+        >
+          <QuoteForm />
+        </Suspense>
       </Container>
     </Section>
     </>

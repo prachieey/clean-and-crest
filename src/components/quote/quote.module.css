@@ -622,9 +622,950 @@
 
 @media (prefers-reduced-motion: reduce) {
   .stepSection,
-  .successCard {
+  .successCard,
+  .termsDialog {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
   }
 }
+
+/* =========================================================================
+   TWO-COLUMN QUOTE WRAPPER & DESKTOP ESTIMATE SIDEBAR
+   ========================================================================= */
+.quoteLayoutWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+@media (min-width: 960px) {
+  .quoteLayoutWrapper {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.formColumn {
+  min-width: 0;
+}
+
+.desktopEstimateSidebar {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .desktopEstimateSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    position: sticky;
+    top: 96px;
+  }
+}
+
+/* Live Estimate Card */
+.estimateCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-level-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.estimateCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-ice-100);
+  padding-bottom: 10px;
+}
+
+.estimateTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.estimateTag {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-blue-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.estimatePriceBox {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.estimateAmount {
+  font-family: var(--font-family-heading);
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: var(--color-navy-900);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.estimateAmountPending {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-ink-700);
+  line-height: 1.3;
+}
+
+.estimateDisclaimer {
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.estimateItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.875rem;
+  padding: 4px 0;
+}
+
+.estimateItemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.estimateItemLabel {
+  color: var(--color-ink-500);
+  font-size: 0.8125rem;
+}
+
+.estimateItemValue {
+  color: var(--color-navy-900);
+  font-weight: 600;
+  text-align: right;
+}
+
+.estimateAddOnsList {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.estimateAddOnItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--color-ink-700);
+  background-color: var(--color-ice-50);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* Mobile Collapsible Estimate Summary */
+.mobileEstimateWrapper {
+  display: block;
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  background-color: var(--color-ice-50);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-3);
+  overflow: hidden;
+}
+
+@media (min-width: 960px) {
+  .mobileEstimateWrapper {
+    display: none;
+  }
+}
+
+.mobileEstimateToggle {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mobileEstimateLabel {
+  font-family: var(--font-family-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobileEstimatePriceSnippet {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-blue-600);
+}
+
+.mobileEstimateBody {
+  padding: 12px 14px;
+  border-top: 1px solid var(--color-ice-100);
+  background-color: var(--color-white);
+}
+
+/* Assurance Card */
+.assuranceCard {
+  background-color: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--space-3);
+}
+
+.assuranceHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #15803D;
+}
+
+.assuranceText {
+  font-size: 0.875rem;
+  color: #166534;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.assuranceLink {
+  font-size: 0.8125rem;
+  color: #15803D;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  align-self: flex-start;
+  min-height: 24px;
+}
+
+.assuranceLink:hover {
+  color: #14532D;
+}
+
+/* Condition Notice */
+.conditionNotice {
+  background-color: var(--color-ice-50);
+  border-left: 3px solid var(--color-blue-600);
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  color: var(--color-ink-700);
+  line-height: 1.5;
+  border-radius: 0 var(--radius-input) var(--radius-input) 0;
+  margin-top: var(--space-2);
+}
+
+/* Add-Ons Section */
+.addOnsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.addOnCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  min-height: 52px;
+}
+
+.addOnCard:hover {
+  border-color: var(--color-blue-500);
+  background-color: var(--color-ice-50);
+}
+
+.addOnCardActive {
+  border-color: var(--color-blue-600);
+  background-color: var(--color-ice-50);
+  box-shadow: 0 0 0 1px var(--color-blue-600);
+}
+
+.addOnInfo {
+  flex: 1;
+}
+
+.addOnTitle {
+  font-family: var(--font-family-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--color-navy-900);
+  line-height: 1.3;
+}
+
+.addOnNote {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+  margin-top: 2px;
+}
+
+.addOnPrice {
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--color-blue-600);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Terms Checkbox & Modal Dialog */
+.inlineTermsLink {
+  color: var(--color-blue-600);
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0 2px;
+  font-size: inherit;
+  display: inline;
+}
+
+.inlineTermsLink:hover {
+  color: var(--color-blue-500);
+}
+
+.termsDialogBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  backdrop-filter: blur(2px);
+}
+
+.termsDialog {
+  background-color: var(--color-white);
+  border-radius: var(--radius-card);
+  max-width: 620px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-level-3);
+  border: 1px solid var(--color-ice-100);
+  animation: stepFadeIn 150ms ease-out;
+}
+
+.termsDialogHeader {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-ice-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.termsDialogTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.termsDialogCloseBtn {
+  background: none;
+  border: none;
+  color: var(--color-ink-500);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-button);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.termsDialogCloseBtn:hover {
+  color: var(--color-navy-900);
+  background-color: var(--color-ice-50);
+}
+
+.termsDialogBody {
+  padding: var(--space-5);
+  overflow-y: auto;
+  font-size: 0.9375rem;
+  color: var(--color-ink-700);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.termsDialogList {
+  padding-left: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.termsDialogFooter {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-ice-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-ice-50);
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+
+/* =========================================================================
+   SUCCESS / OFFICIAL QUOTATION SUMMARY SCREEN
+   ========================================================================= */
+.quotationContainer {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-level-1);
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: left;
+  animation: successFadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  .quotationContainer {
+    padding: var(--space-8);
+  }
+}
+
+.quotationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--color-ice-100);
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.quotationBranding {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quotationCompanyName {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-navy-900);
+  margin: 0;
+}
+
+.quotationContactMeta {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+  line-height: 1.4;
+}
+
+.quotationRefBadge {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  padding: 10px 14px;
+  text-align: right;
+}
+
+.quotationRefNumber {
+  font-family: var(--font-family-heading);
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--color-navy-900);
+  letter-spacing: 0.03em;
+}
+
+.quotationDate {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+  margin-top: 2px;
+}
+
+.quotationSection {
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-ice-100);
+}
+
+.quotationSectionTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0 0 var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quotationGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 600px) {
+  .quotationGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.quotationField {
+  background-color: var(--color-ice-50);
+  padding: 10px 14px;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--color-ice-100);
+}
+
+.quotationFieldLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-ink-500);
+  letter-spacing: 0.05em;
+}
+
+.quotationFieldValue {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-navy-900);
+  margin-top: 3px;
+}
+
+.scopeGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 600px) {
+  .scopeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.scopeBox {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  padding: 12px 14px;
+}
+
+.scopeBoxTitle {
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--color-navy-900);
+  margin-bottom: 6px;
+}
+
+.scopeItemList {
+  padding-left: 18px;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-ink-700);
+  line-height: 1.5;
+}
+
+.termsListCompact {
+  padding-left: 20px;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-ink-700);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.printActionsBar {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-start;
+  margin-top: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* =========================================================================
+   PRINT STYLESHEET (A4, clean, accessible, no third-party library)
+   ========================================================================= */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 20mm 15mm;
+  }
+
+  /* Hide local action bars, sidebars, alerts */
+  .printActionsBar,
+  .urgentPhoneBox,
+  .devBanner,
+  .mobileEstimateWrapper,
+  .desktopEstimateSidebar {
+    display: none !important;
+  }
+
+  .quotationContainer {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    animation: none !important;
+  }
+
+  .quotationSection {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border-bottom: 1px solid #d1d5db !important;
+    margin-bottom: 10pt !important;
+    padding-bottom: 8pt !important;
+  }
+
+  .quotationField,
+  .scopeBox,
+  .estimatePriceBox,
+  .quotationRefBadge {
+    background-color: transparent !important;
+    border: 1px solid #d1d5db !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .quotationCompanyName {
+    color: #0f172a !important;
+  }
+
+  .quotationRefNumber {
+    color: #0f172a !important;
+  }
+}
+
+/* City Selection Grid */
+.cityRadioGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin-top: 8px;
+}
+
+@media (min-width: 600px) {
+  .cityRadioGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 840px) {
+  .cityRadioGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cityRadioCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-ice-100);
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+  min-height: 56px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cityRadioCard:hover {
+  border-color: var(--color-blue-500);
+  background-color: var(--color-ice-50);
+}
+
+.cityRadioCardSelected {
+  border-color: var(--color-blue-600);
+  background-color: #F0F7FF;
+  box-shadow: 0 0 0 1px var(--color-blue-600);
+}
+
+.cityCardContent {
+  flex: 1;
+}
+
+.cityCardTitle {
+  font-family: var(--font-family-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+}
+
+.cityCardDesc {
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  margin-top: 2px;
+}
+
+/* Info Callout Banner */
+.infoBanner {
+  background-color: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1E40AF;
+  padding: 12px 16px;
+  border-radius: var(--radius-input);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Number Stepper */
+.stepperWrapper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  background-color: var(--color-white);
+  overflow: hidden;
+}
+
+.stepperBtn {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-ice-50);
+  border: none;
+  color: var(--color-navy-900);
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  padding: 0;
+  margin: 0;
+}
+
+.stepperBtn:hover:not(:disabled) {
+  background-color: var(--color-ice-100);
+}
+
+.stepperBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.stepperBtn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.stepperValue {
+  min-width: 38px;
+  padding: 0 8px;
+  text-align: center;
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+}
+
+/* Stepper inside add-on card */
+.addOnStepperRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px dashed var(--color-ice-100);
+}
+
+.addOnStepperLabel {
+  font-size: 0.8125rem;
+  color: var(--color-ink-700);
+  font-weight: 600;
+}
+
+/* Estimate itemized breakdown */
+.breakdownSection {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-ice-100);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.breakdownLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.8125rem;
+  gap: 8px;
+}
+
+.breakdownLineLabel {
+  color: var(--color-ink-700);
+}
+
+.breakdownLineAmount {
+  font-weight: 700;
+  color: var(--color-navy-900);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.breakdownSubnote {
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  line-height: 1.4;
+  margin-top: 2px;
+  padding-left: 8px;
+  border-left: 2px solid var(--color-ice-100);
+}
+
+.estimateNotesBox {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--color-ice-100);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.estimateNoteItem {
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  line-height: 1.4;
+}
+
+.estimateReason {
+  font-size: 0.8125rem;
+  color: #B45309;
+  background-color: #FEF3C7;
+  border: 1px solid #FDE68A;
+  padding: 8px 10px;
+  border-radius: var(--radius-input);
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.addOnStepperCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.addOnStepperHelper {
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+}
+
+.checkboxCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-ice-100);
+  border-radius: var(--radius-input);
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 52px;
+  user-select: none;
+}
+
+.checkboxCard:hover {
+  border-color: var(--color-blue-500);
+  background-color: var(--color-ice-50);
+}
+
+.checkboxCardActive {
+  border-color: var(--color-blue-600);
+  background-color: var(--color-ice-50);
+  box-shadow: 0 0 0 1px var(--color-blue-600);
+}
+
+.checkboxLabelContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.checkboxLabelTitle {
+  font-family: var(--font-family-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--color-navy-900);
+  line-height: 1.3;
+}
+
+.checkboxLabelDesc {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500);
+  line-height: 1.4;
+}
+
+.gstTag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-ink-500);
+  margin-left: 6px;
+  text-transform: none;
+}
+

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { siteConfig } from "@/config";
 
 // In-memory rate limiting map: IP -> { count: number, resetTime: number }
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -115,7 +116,10 @@ export async function POST(request: NextRequest) {
     };
 
     // Check Email Provider Configuration
-    const recipientEmail = process.env.CONTACT_RECIPIENT_EMAIL || process.env.QUOTE_RECIPIENT_EMAIL || null;
+    const recipientEmail =
+      process.env.CONTACT_RECIPIENT_EMAIL ||
+      process.env.QUOTE_RECIPIENT_EMAIL ||
+      (siteConfig.business.email !== "[EMAIL ADDRESS]" ? siteConfig.business.email : null);
     const isEmailConfigured = Boolean(
       recipientEmail && (process.env.RESEND_API_KEY || process.env.SMTP_HOST || process.env.SENDGRID_API_KEY)
     );

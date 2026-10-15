@@ -5,15 +5,15 @@ import { siteConfig } from "@/config";
 import { generatePageMetadata, getBreadcrumbJsonLd } from "@/config/seo";
 
 import { Container, Section, Eyebrow, Button, Icon } from "@/components/ui";
-import { ServicesGrid } from "@/components/services";
+import { ServicesGrid, ServicesComparisonTable } from "@/components/services";
 import { HowItWorks } from "@/components/home";
 import { FinalCtaBand } from "@/components/layout";
 import { JsonLd } from "@/components/seo";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "All Cleaning Services & Packages | Clean & Crest",
+  title: "Cleaning Services in Brisbane, Melbourne & Perth | Clean & Crest",
   description:
-    "Explore professional house, end of lease, deep, and commercial cleaning services by Clean & Crest. Tailored checklists and upfront quotes for every space.",
+    "Explore professional end of lease, deep, and general deep cleaning services across Brisbane, Melbourne, and Perth. Tailored checklists and upfront quotes for every home.",
   path: "/services",
 });
 
@@ -35,12 +35,15 @@ export default function ServicesOverviewPage() {
               Cleaning services
             </h1>
             <p style={{ color: "var(--color-ink-500)", fontSize: "var(--font-size-body)", margin: "0 auto" }}>
-              From regular domestic maintenance and end of lease vacates to commercial workspace cleaning, explore our dedicated services across Australia.
+              From end of lease vacates with bond back assurance to comprehensive deep cleans, explore our dedicated residential cleaning services across Brisbane, Melbourne, and Perth.
             </p>
           </div>
 
           {/* Reusable Services Card Grid (h2 for valid semantic hierarchy below h1) */}
           <ServicesGrid headingLevel="h2" />
+
+          {/* Dynamic Services Comparison Table */}
+          <ServicesComparisonTable />
 
 
           {/* Not Sure Which Service Block */}

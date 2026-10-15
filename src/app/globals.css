@@ -273,3 +273,31 @@ button, input, select, textarea {
   }
 }
 
+/* --------------------------------------------------
+ * Global Print Stylesheet (A4 quotation layout)
+ * -------------------------------------------------- */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 20mm 15mm;
+  }
+
+  header,
+  footer,
+  nav,
+  button,
+  a[href^="tel:"],
+  [aria-label="Mobile quick actions"] {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+

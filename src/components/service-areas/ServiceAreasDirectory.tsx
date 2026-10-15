@@ -8,7 +8,10 @@ import styles from "./serviceAreas.module.css";
 
 interface FilteredRegionItem {
   name: string;
-  suburbs?: string[];
+  slug: string;
+  radiusKm: number;
+  suburbs: string[];
+  note?: string;
   matchedDirectly?: boolean;
 }
 
@@ -117,18 +120,18 @@ export function ServiceAreasDirectory() {
       {/* Search Result: No Match Message */}
       {hasRegions && searchTerm.trim() && filteredRegions.length === 0 && (
         <div className={styles.noMatchCard} role="status">
-          <h3 className={styles.noMatchTitle}>Not listed? Contact us to check</h3>
+          <h3 className={styles.noMatchTitle}>Not sure? Contact us and we&apos;ll check</h3>
           <p className={styles.noMatchText}>
-            We regularly accommodate nearby and bordering suburbs. Tell us your location and we will let you know right away.
+            We service within 50 km of the Brisbane, Melbourne and Perth CBDs, and regularly accommodate nearby locations. Tell us your suburb and we will let you know right away.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px" }}>
-            <Button variant="primary" href={`/quote?notes=${encodeURIComponent(`Checking coverage for suburb: ${searchTerm}`)}`}>
+            <Button variant="primary" href={`/quote?city=somewhere-else&notes=${encodeURIComponent(`Checking coverage for suburb: ${searchTerm}`)}`}>
               <span>Ask for a Quote</span>
               <Icon icon={ArrowRight} size={16} />
             </Button>
-            <Button variant="secondary" href={phoneHref}>
-              <Icon icon={Phone} size={16} />
-              <span>Call to Confirm</span>
+            <Button variant="secondary" href="/contact">
+              <span>Contact Us</span>
+              <Icon icon={ArrowRight} size={16} />
             </Button>
           </div>
         </div>
@@ -151,7 +154,11 @@ export function ServiceAreasDirectory() {
                   )}
                 </div>
 
-                {suburbs.length > 0 ? (
+                <p className={styles.regionCoverageText}>
+                  {region.note || "Standard rates apply within 50km of each city CBD."}
+                </p>
+
+                {suburbs.length > 0 && (
                   <ul className={styles.suburbChipsList} aria-label={`Suburbs in ${region.name}`}>
                     {suburbs.map((suburb) => {
                       const isMatch =
@@ -171,11 +178,18 @@ export function ServiceAreasDirectory() {
                       );
                     })}
                   </ul>
-                ) : (
-                  <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", margin: 0 }}>
-                    Coverage across {region.name} and surrounding postcodes.
-                  </p>
                 )}
+
+                <div className={styles.regionCardActions}>
+                  <Button
+                    variant="primary"
+                    href={`/quote?city=${region.slug}`}
+                    style={{ width: "100%", justifyContent: "center" }}
+                  >
+                    <span>Get a Free Quote for {region.name}</span>
+                    <Icon icon={ArrowRight} size={16} />
+                  </Button>
+                </div>
               </article>
             );
           })}

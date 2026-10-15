@@ -9,6 +9,7 @@
     "audit:placeholders": "node --no-warnings --experimental-strip-types scripts/audit-placeholders.mjs",
     "process:images": "node --no-warnings --experimental-strip-types scripts/process-images.mjs",
     "start": "next start",
+    "test": "node --no-warnings --experimental-strip-types scripts/test-pricing.mjs",
     "lint": "eslint"
   },
   "dependencies": {

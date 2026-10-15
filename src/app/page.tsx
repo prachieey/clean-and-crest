@@ -27,10 +27,10 @@ const region = isRealValue(siteConfig.business.primaryRegion)
 export const metadata: Metadata = generatePageMetadata({
   title: region
     ? `Cleaning Services in ${region} | Clean & Crest`
-    : "House & Commercial Cleaning Services | Clean & Crest",
+    : "Residential & End of Lease Cleaning Services | Clean & Crest",
   description: region
-    ? `Dependable residential and commercial cleaning services across ${region}. Transparent pricing, systematic checklists, and upfront quotes from Clean & Crest.`
-    : "Dependable residential and commercial cleaning services across Australia. Transparent pricing, systematic checklists, and upfront quotes from Clean & Crest.",
+    ? `Dependable residential and vacate cleaning services across ${region}. Transparent pricing, systematic checklists, and upfront quotes from Clean & Crest.`
+    : "Dependable residential and vacate cleaning services across Australia. Transparent pricing, systematic checklists, and upfront quotes from Clean & Crest.",
   path: "/",
 });
 

@@ -1,0 +1,183 @@
+/* WhatsApp Button & Floating Widget Styles — Clean & Crest Brand Theme */
+
+.floatingButton {
+  position: fixed;
+  bottom: calc(var(--space-16, 64px) + 16px);
+  right: var(--space-4, 16px);
+  z-index: 990;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-blue-600, #1669C9);
+  color: var(--color-white, #ffffff);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 20px rgba(22, 105, 201, 0.35), 0 2px 6px rgba(13, 37, 63, 0.12);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease,
+              background-color 0.2s ease;
+  justify-content: center;
+}
+
+/* On desktop, lower to standard 24px from bottom since mobile bar is hidden */
+@media (min-width: 768px) {
+  .floatingButton {
+    bottom: 24px;
+    right: 24px;
+    width: auto;
+    height: 52px;
+    padding: 0 20px 0 16px;
+    border-radius: 9999px;
+    box-shadow: 0 8px 24px rgba(22, 105, 201, 0.32), 0 2px 8px rgba(13, 37, 63, 0.15);
+  }
+}
+
+/* Adjust position when on pages without the mobile bottom bar */
+.floatingButtonNoBar {
+  bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .floatingButtonNoBar {
+    bottom: 24px;
+  }
+}
+
+.floatingButton:hover {
+  background-color: var(--color-blue-500, #1871D9);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(22, 105, 201, 0.45), 0 4px 12px rgba(13, 37, 63, 0.2);
+  color: var(--color-white, #ffffff);
+}
+
+.floatingButton:active {
+  transform: translateY(0) scale(0.98);
+  background-color: var(--color-navy-900, #0D253F);
+}
+
+.floatingButton:focus-visible {
+  outline: 3px solid var(--color-cyan-400, #28C5E0);
+  outline-offset: 3px;
+}
+
+.floatingIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-white, #ffffff);
+}
+
+.floatingTextWrap {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .floatingTextWrap {
+    display: flex;
+  }
+}
+
+.floatingTitle {
+  font-family: var(--font-heading, inherit);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-white, #ffffff);
+}
+
+.floatingSubtitle {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* Contact Page WhatsApp Card */
+.contactWhatsAppCard {
+  background: var(--color-white, #ffffff);
+  border: 1px solid var(--color-ice-100, #E0ECF5);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--space-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  box-shadow: 0 1px 3px rgba(13, 37, 63, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.contactWhatsAppCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-blue-600, #1669C9);
+  box-shadow: 0 8px 20px rgba(22, 105, 201, 0.12);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+}
+
+.iconCircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-ice-50, #F1F7FC);
+  border: 1px solid var(--color-ice-100, #E0ECF5);
+  color: var(--color-blue-600, #1669C9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-family: var(--font-heading, inherit);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900, #0D253F);
+  margin: 0;
+}
+
+.cardSubtitle {
+  font-size: 0.8125rem;
+  color: var(--color-ink-500, #566B7F);
+  margin: 2px 0 0;
+}
+
+.whatsAppLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  background-color: var(--color-blue-600, #1669C9);
+  color: var(--color-white, #ffffff);
+  font-family: var(--font-heading, inherit);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 10px 18px;
+  border-radius: var(--radius-md, 8px);
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(22, 105, 201, 0.25);
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  width: fit-content;
+}
+
+.whatsAppLink:hover {
+  background-color: var(--color-blue-500, #1871D9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 105, 201, 0.35);
+  color: var(--color-white, #ffffff);
+}
+
+.whatsAppLink:focus-visible {
+  outline: 2px solid var(--color-blue-600, #1669C9);
+  outline-offset: 2px;
+}

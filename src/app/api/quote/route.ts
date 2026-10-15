@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { siteConfig, calculateQuoteEstimate } from "@/config";
+import {
+  calculateServerEndOfLeaseEstimate,
+  PRICING_DATA_VERSION,
+} from "@/server/pricing/endOfLeasePricing";
 
 // In-memory rate limiting map: IP -> { count: number, resetTime: number }
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -71,13 +76,23 @@ export async function POST(request: NextRequest) {
 
     const {
       service,
+      city,
       propertyType,
       bedrooms,
       bathrooms,
+      hasCarpet,
+      extraCarpetZones,
+      storeys,
+      withinRadius,
+      selectedAddOns,
+      addOnQuantities,
+      vacancyAcknowledged,
+      termsAcknowledged,
       approximateSize,
       notes,
       suburb,
       postcode,
+      preferredDateOption,
       preferredDate,
       preferredTime,
       fullName,
@@ -85,6 +100,8 @@ export async function POST(request: NextRequest) {
       email,
       preferredContactMethod,
       consent,
+      heavilySoiled,
+      beyond50km,
     } = body;
 
     // 4. Server-Side Validation
@@ -94,8 +111,42 @@ export async function POST(request: NextRequest) {
       errors.service = "Please select a service.";
     }
 
+    if (!city || typeof city !== "string" || !city.trim()) {
+      errors.city = "Please select your city.";
+    }
+
     if (!propertyType || typeof propertyType !== "string" || !propertyType.trim()) {
       errors.propertyType = "Please select a property type.";
+    }
+
+    // Check if service is one of the confirmed services requiring bedrooms/bathrooms
+    const matchedService = siteConfig.services.find(
+      (s) => s.slug === service || s.title.toLowerCase() === service.toLowerCase()
+    );
+
+    const isBedBathService = Boolean(
+      matchedService && matchedService.pricingBasis === "bedrooms and bathrooms"
+    );
+
+    const isEol =
+      service === "End of Lease Cleaning" ||
+      service === "end-of-lease-cleaning" ||
+      matchedService?.slug === "end-of-lease-cleaning";
+
+    if (isBedBathService || isEol) {
+      if (!bedrooms || typeof bedrooms !== "string" || !bedrooms.trim()) {
+        errors.bedrooms = "Please select the number of bedrooms.";
+      }
+      if (!bathrooms || typeof bathrooms !== "string" || !bathrooms.trim()) {
+        errors.bathrooms = "Please select the number of bathrooms.";
+      }
+      if (matchedService?.requiresVacant && !vacancyAcknowledged) {
+        errors.vacancy = "You must acknowledge that the property will be vacant.";
+      }
+    }
+
+    if (!termsAcknowledged) {
+      errors.termsAcknowledged = "You must read and agree to the service terms and conditions.";
     }
 
     if (!suburb || typeof suburb !== "string" || !suburb.trim()) {
@@ -122,6 +173,24 @@ export async function POST(request: NextRequest) {
       errors.consent = "You must agree to be contacted regarding this quote.";
     }
 
+    // Input limit validation: quantities 0 to 50
+    if (extraCarpetZones !== null && extraCarpetZones !== undefined) {
+      const zones = Number(extraCarpetZones);
+      if (isNaN(zones) || zones < 0 || zones > 50) {
+        errors.extraCarpetZones = "Extra carpet zones must be between 0 and 50.";
+      }
+    }
+
+    if (addOnQuantities && typeof addOnQuantities === "object") {
+      for (const [id, q] of Object.entries(addOnQuantities)) {
+        const qty = Number(q);
+        if (isNaN(qty) || qty < 0 || qty > 50) {
+          errors.addOnQuantities = `Quantity for ${id} must be between 0 and 50.`;
+          break;
+        }
+      }
+    }
+
     if (Object.keys(errors).length > 0) {
       return NextResponse.json(
         {
@@ -133,29 +202,179 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 5. Check Email Provider Configuration
-    const recipientEmail = process.env.QUOTE_RECIPIENT_EMAIL || null;
+    // 5. Server-Side Estimate Recomputation
+    // Strictly computed using the shared calculation engine; client-sent prices are ignored.
+    let serverEstimate = "We'll confirm your price";
+    let estimateBreakdown: {
+      status: "priced" | "custom";
+      totalFormatted: string | null;
+      baseAmountFormatted: string | null;
+      doubleStoreyRange?: {
+        minAmount: number;
+        maxAmount: number;
+        minFormatted: string;
+        maxFormatted: string;
+      } | null;
+      extraCarpetZoneLine?: {
+        unitPrice: number;
+        quantity: number;
+        lineTotal: number;
+        lineTotalFormatted: string;
+      } | null;
+      addOnLines: Array<{
+        id: string;
+        label: string;
+        unitPrice: number;
+        quantity: number;
+        lineTotal: number;
+        unitPriceFormatted: string;
+        lineTotalFormatted: string;
+      }>;
+      notes: string[];
+      reasons: string[];
+    };
+
+    if (isEol) {
+      const addOnsPayload = (Array.isArray(selectedAddOns) ? selectedAddOns : []).map(
+        (id: string) => ({
+          id,
+          quantity:
+            addOnQuantities && typeof addOnQuantities === "object" && addOnQuantities[id]
+              ? Number(addOnQuantities[id]) || 1
+              : 1,
+        })
+      );
+
+      const pestFleaEnabled = Boolean(siteConfig.addOns?.pestFlea?.enabled);
+      const doubleStoreyDisplay = siteConfig.doubleStoreyDisplay || "range";
+
+      const eolRes = calculateServerEndOfLeaseEstimate({
+        city,
+        bedrooms,
+        bathrooms,
+        hasCarpet: Boolean(hasCarpet),
+        storeys: storeys || "Single",
+        extraCarpetZones: hasCarpet ? Number(extraCarpetZones) || 0 : 0,
+        addOns: addOnsPayload,
+        heavilySoiled: Boolean(heavilySoiled),
+        beyond50km: Boolean(beyond50km || withinRadius === "no" || withinRadius === "unsure"),
+        doubleStoreyDisplay,
+        pestFleaEnabled,
+      });
+
+      estimateBreakdown = {
+        status: eolRes.status === "exact" ? "priced" : eolRes.status === "range" ? "priced" : "custom",
+        totalFormatted: eolRes.subtotalFormatted || (eolRes.minFormatted && eolRes.maxFormatted ? `${eolRes.minFormatted} – ${eolRes.maxFormatted}` : null),
+        baseAmountFormatted: eolRes.baseAmountFormatted,
+        doubleStoreyRange: eolRes.doubleStoreyRange,
+        extraCarpetZoneLine: eolRes.extraCarpetZoneLine,
+        addOnLines: eolRes.addOnLines,
+        notes: eolRes.notes,
+        reasons: eolRes.reason ? [eolRes.reason] : [],
+      };
+
+      if (eolRes.status === "exact" && eolRes.subtotalFormatted) {
+        serverEstimate = eolRes.subtotalFormatted;
+      } else if (eolRes.status === "range" && eolRes.minFormatted && eolRes.maxFormatted) {
+        serverEstimate = `${eolRes.minFormatted} – ${eolRes.maxFormatted}`;
+      } else {
+        serverEstimate = "We'll confirm your price";
+      }
+    } else {
+      const addOnsList = Array.isArray(selectedAddOns) ? (selectedAddOns as string[]) : [];
+      const estimateCalc = calculateQuoteEstimate(
+        service,
+        bedrooms || "",
+        bathrooms || "",
+        addOnsList
+      );
+
+      estimateBreakdown = {
+        status: estimateCalc.hasPrice ? "priced" : "custom",
+        totalFormatted: estimateCalc.hasPrice ? estimateCalc.displayPrice : null,
+        baseAmountFormatted: estimateCalc.hasPrice ? `$${estimateCalc.basePrice}` : null,
+        doubleStoreyRange: null,
+        extraCarpetZoneLine: null,
+        addOnLines: [],
+        notes: ["Pricing applies to properties in normal condition."],
+        reasons: estimateCalc.hasPrice ? [] : ["Price to be confirmed upon review."],
+      };
+
+      serverEstimate = estimateCalc.hasPrice
+        ? estimateCalc.displayPrice
+        : "We'll confirm your price";
+    }
+
+    // 6. Generate Quotation Reference (CC-YYYYMMDD-XXXX)
+    const now = new Date();
+    const dateFormatted = now.toISOString().slice(0, 10).replace(/-/g, "");
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const quoteReference = `CC-${dateFormatted}-${randomSuffix}`;
+    const termsVersion = siteConfig.termsVersion || "October 2026";
+
+    // 7. Check Email Provider Configuration
+    const recipientEmail =
+      process.env.QUOTE_RECIPIENT_EMAIL ||
+      (siteConfig.business.email !== "[EMAIL ADDRESS]" ? siteConfig.business.email : null);
     const isEmailConfigured = Boolean(
       recipientEmail && (process.env.RESEND_API_KEY || process.env.SMTP_HOST || process.env.SENDGRID_API_KEY)
     );
 
     const quoteData = {
-      timestamp: new Date().toISOString(),
-      service,
+      referenceNumber: quoteReference,
+      createdAt: now.toISOString(),
+      service: matchedService?.title || service,
+      serviceSlug: matchedService?.slug || service,
+      city,
       propertyType,
-      bedrooms: bedrooms || null,
-      bathrooms: bathrooms || null,
-      approximateSize: approximateSize || null,
-      notes: notes || null,
+      bedrooms: bedrooms || "Not specified",
+      bathrooms: bathrooms || "Not specified",
+      hasCarpet: Boolean(hasCarpet),
+      extraCarpetZones: hasCarpet ? Number(extraCarpetZones) || 0 : 0,
+      storeys: storeys || "Single",
+      withinRadius: withinRadius || "yes",
+      heavilySoiled: Boolean(heavilySoiled),
+      beyond50km: Boolean(beyond50km || withinRadius === "no" || withinRadius === "unsure"),
+      selectedAddOns: Array.isArray(selectedAddOns) ? selectedAddOns : [],
+      addOnQuantities: addOnQuantities || {},
+      serverEstimate,
+      estimateBreakdown,
+      pricingDataVersion: PRICING_DATA_VERSION,
+      instantQuoteBinding: Boolean(siteConfig.instantQuoteBinding),
+      vacancyAcknowledged: Boolean(vacancyAcknowledged),
+      termsAcknowledged: Boolean(termsAcknowledged),
+      termsVersion,
       suburb,
       postcode,
-      preferredDate: preferredDate || "Flexible",
+      preferredDateOption: preferredDateOption || "flexible",
+      preferredDate: preferredDate || null,
       preferredTime: preferredTime || "Any time",
       fullName,
       phone,
       email,
       preferredContactMethod: preferredContactMethod || "Phone Call",
+      approximateSize: approximateSize || null,
+      notes: notes || null,
     };
+
+    // Client response according to pricingDisplay mode
+    const pricingDisplay = siteConfig.pricingDisplay || "estimate";
+    let clientEstimate = serverEstimate;
+    let clientBreakdown = estimateBreakdown;
+
+    if (pricingDisplay === "internal-only") {
+      clientEstimate = "We'll confirm your price";
+      clientBreakdown = {
+        status: "custom",
+        totalFormatted: null,
+        baseAmountFormatted: null,
+        doubleStoreyRange: null,
+        extraCarpetZoneLine: null,
+        addOnLines: [],
+        notes: [],
+        reasons: ["A customized quote will be prepared by our team after reviewing your property details."],
+      };
+    }
 
     if (!isEmailConfigured) {
       // DEVELOPMENT / UNCONFIGURED MODE:
@@ -170,16 +389,28 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         success: true,
+        quoteReference,
+        createdAt: quoteData.createdAt,
+        estimate: clientEstimate,
+        estimateBreakdown: clientBreakdown,
+        pricingDataVersion: PRICING_DATA_VERSION,
+        pricingDisplay,
+        termsVersion,
         emailConfigured: false,
         message: "Quote enquiry received and logged (email provider not yet configured).",
       });
     }
 
     // When an email provider is configured in future:
-    // Email dispatch handler will send email here.
-
     return NextResponse.json({
       success: true,
+      quoteReference,
+      createdAt: quoteData.createdAt,
+      estimate: clientEstimate,
+      estimateBreakdown: clientBreakdown,
+      pricingDataVersion: PRICING_DATA_VERSION,
+      pricingDisplay,
+      termsVersion,
       emailConfigured: true,
       message: "Quote enquiry received and dispatched.",
     });

@@ -183,6 +183,11 @@
   flex-shrink: 0;
 }
 
+.whatsAppFooterIcon {
+  color: var(--color-cyan-400);
+  flex-shrink: 0;
+}
+
 .contactLink {
   color: rgba(224, 236, 245, 0.85);
   text-decoration: none;

@@ -7,6 +7,7 @@
  * - Rule 6: CONTENT GATING. Trust claims default to false and require verified values.
  */
 
+
 export interface SocialLinks {
   facebook: string | null;
   instagram: string | null;
@@ -18,6 +19,8 @@ export interface BusinessConfig {
   tagline: string;
   phone: string;
   phoneHref: string;
+  whatsappNumber: string;
+  whatsappDefaultMessage: string;
   email: string;
   abn: string;
   address: string | null;
@@ -25,6 +28,28 @@ export interface BusinessConfig {
   social: SocialLinks;
   primaryRegion: string;
   leaveReviewUrl: string | null;
+  googleReviewUrl: string | null;
+  googleProfileUrl: string | null;
+  facebookReviewUrl: string | null;
+}
+
+export interface ServiceScopeArea {
+  title: string;
+  items: string[];
+}
+
+export interface ServiceAddOn {
+  id: string;
+  title: string;
+  note?: string;
+  price?: number | null;
+}
+
+export interface ServiceAssurance {
+  title: string;
+  summary: string;
+  conditions?: string;
+  workingDays?: number;
 }
 
 export interface ServiceItem {
@@ -40,6 +65,19 @@ export interface ServiceItem {
   inclusions?: string[];
   /** Short paragraph describing who the service suits best */
   whoItSuits?: string;
+
+  /** Extended Quotation & Scope Schema */
+  pricingBasis?: string;
+  pricingNote?: string | null;
+  priceMatrix?: Record<string, Record<string, number>> | null;
+  assurance?: ServiceAssurance | null;
+  scope?: ServiceScopeArea[];
+  addOns?: ServiceAddOn[];
+  terms?: string[];
+  termsHeading?: string;
+  exclusions?: string[];
+  requiresVacant?: boolean;
+  propertyTypes?: string[];
 }
 
 export interface TrustFlags {
@@ -67,14 +105,27 @@ export interface TrustConfig {
   values: TrustValues;
 }
 
+export type ReviewSource = "google" | "facebook" | "email" | "sms" | "whatsapp" | "other";
+
+export interface OwnerReply {
+  text: string;
+  date: string;
+}
+
 export interface ReviewItem {
-  name: string;
+  id: string;
+  firstName: string;
   suburb?: string;
   text: string;
-  rating?: number;
-  date?: string;
-  source?: string;
+  rating: number; // 1-5
+  date: string; // ISO date format e.g. "2026-03-15"
+  source: ReviewSource;
+  sourceUrl?: string;
+  serviceSlug?: string;
   verified: boolean;
+  permissionToPublish: boolean;
+  ownerReply?: OwnerReply;
+  isSample?: boolean;
 }
 
 export interface QuoteFormOptions {
@@ -116,7 +167,10 @@ export interface HowItWorksStep {
 
 export interface RegionItem {
   name: string;
-  suburbs?: string[];
+  slug: string;
+  radiusKm: number;
+  suburbs: string[];
+  note?: string;
 }
 
 export interface TeamMember {
@@ -195,9 +249,21 @@ export interface SiteConfig {
   business: BusinessConfig;
   services: ServiceItem[];
   serviceAreas: RegionItem[];
+  cityPages: boolean;
+  pricingDisplay: "estimate" | "after-submit" | "internal-only";
+  pricesIncludeGst: boolean | null;
+  doubleStoreyDisplay: "range" | "confirm";
+  addOns?: {
+    pestFlea: {
+      enabled: boolean;
+    };
+  };
   trust: TrustConfig;
   reviews: ReviewItem[];
+  showReviewInvite?: boolean;
   quoteFormOptions: QuoteFormOptions;
+  instantQuoteBinding?: boolean;
+  termsVersion?: string;
   seoDefaults: SeoDefaults;
   whyChooseUs: BenefitItem[];
   howItWorks: HowItWorksStep[];
@@ -217,133 +283,297 @@ export const siteConfig: SiteConfig = {
   business: {
     name: "Clean & Crest",
     tagline: "[PLACEHOLDER: Tagline]",
-    phone: "[PHONE NUMBER]",
-    phoneHref: "tel:[PHONE NUMBER]",
-    email: "[EMAIL ADDRESS]",
+    phone: "0402 129 670",
+    phoneHref: "tel:+61402129670",
+    whatsappNumber: "61402129670",
+    whatsappDefaultMessage: "Hi Clean & Crest, I would like to get a free quote for cleaning services.",
+    email: "cleanandcrest@gmail.com",
     abn: "[ABN]",
     address: null, // Service-area business (no public walk-in address)
-    openingHours: "[BUSINESS HOURS]",
+    openingHours: "Monday – Sunday (Flexible hours)",
     social: {
       facebook: null,
       instagram: null,
       googleBusiness: null,
     },
-    primaryRegion: "[REGION / CITY]",
+    primaryRegion: "Brisbane, Melbourne and Perth",
     leaveReviewUrl: null, // e.g. "https://g.page/r/.../review"
+    googleReviewUrl: null,
+    googleProfileUrl: null,
+    facebookReviewUrl: null,
   },
 
   services: [
     {
-      slug: "house-cleaning",
-      title: "House Cleaning",
-      shortDescription: "Regular and scheduled domestic cleaning for houses, units, and apartments.",
-      longDescription: "Thorough domestic cleaning covering living spaces, kitchens, bathrooms, and bedrooms using professional equipment and standard checklists.",
-      icon: "Sparkles",
-      image: "/images/service-house-cleaning.webp",
-      confirmed: true,
-      startingPriceText: null,
-      inclusions: [
-        "Dusting and wiping all accessible surfaces, benchtops, and skirting boards",
-        "Thorough vacuuming and mopping of all hard floors and carpets",
-        "Complete kitchen wipe-down including appliance exteriors, sink, and stovetop",
-        "Full bathroom sanitisation including shower recess, glass screen, and vanity",
-        "Rubbish removal and bin liner replacement",
-      ],
-      whoItSuits: "Busy homeowners, working professionals, and families seeking consistent, dependable cleaning on a regular or one-off basis.",
-    },
-    {
       slug: "end-of-lease-cleaning",
       title: "End of Lease Cleaning",
-      shortDescription: "Comprehensive vacate and bond cleaning adhering to standard property condition reports.",
-      longDescription: "Detailed vacate cleans designed to assist tenants and property managers, covering interior windows, oven, skirting boards, and sanitisation.",
+      shortDescription: "A detailed clean for end of lease, including kitchen, bathrooms, floors and carpet steam cleaning, backed by a 3-working-day Bond Back Assurance.",
+      longDescription: "A detailed clean for end of lease, including kitchen, bathrooms, floors and carpet steam cleaning, backed by a 3-working-day Bond Back Assurance.",
       icon: "ShieldCheck",
       image: "/images/service-end-of-lease.webp",
       confirmed: true,
       startingPriceText: null,
-      inclusions: [
-        "Full vacate clean aligned with standard property condition reports",
-        "Deep oven, rangehood, and stovetop degreasing and scrub",
-        "Interior window cleaning, track vacuuming, and sill wiping",
-        "Complete bathroom descaling, grout scrub, and sanitisation",
-        "Skirting boards, door frames, light switches, and spot mark removal",
+      pricingBasis: "bedrooms and bathrooms",
+      pricingNote: "Pricing is based on a property in normal condition.",
+      priceMatrix: null,
+      requiresVacant: true,
+      assurance: {
+        title: "Bond Back Assurance",
+        workingDays: 3,
+        summary: "We offer a 3-working-day Bond Back Assurance. Should your property manager or agent raise any cleaning concerns, our team will promptly return to address the reported items at no additional cost, provided notification is received within this period.",
+        conditions: "Applies when concerns are reported to us within 3 working days",
+      },
+      scope: [
+        {
+          title: "Living Areas & Bedrooms",
+          items: [
+            "Doors, frames and handles detailed",
+            "Skirting boards professionally cleaned",
+            "Inside windows cleaned",
+            "Blinds and light fittings dusted",
+            "Light switches wiped",
+            "Built-in wardrobes and cabinets cleaned",
+            "Railings cleaned",
+            "Visible cobweb removal",
+          ],
+        },
+        {
+          title: "Bathrooms, Toilets & Laundry",
+          items: [
+            "Shower screens and bathtubs cleaned",
+            "Toilets and wall tiles wiped",
+            "Vanities, sinks and mirrors cleaned",
+            "Towel rails and fittings cleaned",
+            "Cupboards cleaned internally and externally",
+            "Exhaust fans/vents dusted",
+          ],
+        },
+        {
+          title: "Kitchen",
+          items: [
+            "Oven and cooktop deep cleaned",
+            "Range-hood and filters cleaned",
+            "Splashback and benchtops cleaned",
+            "Pantry and cupboards cleaned inside and outside",
+            "Sink and tap ware cleaned",
+          ],
+        },
+        {
+          title: "Floors",
+          items: [
+            "Vacuuming of all floors",
+            "Hard floors mopped",
+            "Garage and balcony swept",
+            "Carpet steam cleaning",
+          ],
+        },
       ],
+      addOns: [
+        { id: "spot-cleaning-walls", title: "Spot Cleaning for Walls", note: "Up to 5 spots per wall", price: null },
+        { id: "outside-window-cleaning", title: "Outside Window Cleaning", price: null },
+        { id: "shower-grout-mould-removal", title: "Shower Grout Mould Removal", price: null },
+      ],
+      terms: [
+        "Payment is required upon arrival on the day of service.",
+        "Customer is responsible for arranging parking for our service vehicle.",
+        "Electricity and running hot water must be available at the property.",
+        "While every effort is made, complete removal of pet hair cannot be guaranteed.",
+        "The property must be vacant at the time of cleaning.",
+        "Pricing applies to properties in standard condition; heavily soiled properties may incur additional charges.",
+        "An invoice will be sent via email after payment is completed.",
+      ],
+      exclusions: [],
+      propertyTypes: ["House", "Apartment", "Unit", "Townhouse"],
       whoItSuits: "Renters moving out, property managers preparing homes for new tenancies, and owners preparing properties for market inspection.",
     },
     {
       slug: "deep-cleaning",
       title: "Deep Cleaning",
-      shortDescription: "Intensive top-to-bottom scrub and sanitisation for residences needing restorative care.",
-      longDescription: "Focused deep clean tackling built-up grime, wet areas, tile grout, kitchen appliances, and high-touch points throughout the property.",
+      shortDescription: "A detailed clean of living areas, bathrooms, kitchen and floors, including oven, range-hood and carpet steam cleaning.",
+      longDescription: "A detailed clean of living areas, bathrooms, kitchen and floors, including oven, range-hood and carpet steam cleaning.",
       icon: "Clock",
       image: "/images/service-deep-cleaning.webp",
       confirmed: true,
       startingPriceText: null,
-      inclusions: [
-        "Intensive scrubbing of high-traffic living spaces and bedrooms",
-        "Detailed tile grout scrub and limescale removal in bathrooms",
-        "Deep kitchen clean including splashbacks and exterior cabinetry",
-        "Under and behind accessible furniture, plus door trims and light fittings",
-        "High-touch point sanitisation throughout the entire property",
+      pricingBasis: "bedrooms and bathrooms",
+      pricingNote: "Pricing is based on a property in normal condition.",
+      priceMatrix: null,
+      requiresVacant: true,
+      assurance: null,
+      addOns: [],
+      scope: [
+        {
+          title: "Living Areas & Bedrooms",
+          items: [
+            "Doors, frames and handles detailed",
+            "Skirting boards cleaned",
+            "Interior windows cleaned",
+            "Blinds and light fittings dusted",
+            "Light switches wiped",
+            "Built-in wardrobes and cabinets cleaned (if emptied)",
+            "Railings cleaned",
+            "Visible cobweb removal",
+          ],
+        },
+        {
+          title: "Bathrooms, Toilets & Laundry",
+          items: [
+            "Shower screens and bathtubs cleaned",
+            "Toilets and wall tiles wiped",
+            "Vanities, sinks and mirrors cleaned",
+            "Towel rails and fittings cleaned",
+            "Cupboards cleaned (if emptied)",
+            "Exhaust fans/vents dusted",
+          ],
+        },
+        {
+          title: "Kitchen",
+          items: [
+            "Oven and cooktop deep cleaned",
+            "Range-hood and filters cleaned",
+            "Splashback and benchtops cleaned",
+            "Pantry and cupboards cleaned inside and outside",
+            "Sink and tap ware cleaned",
+          ],
+        },
+        {
+          title: "Floors",
+          items: [
+            "Vacuuming of all floors",
+            "Hard floors mopped",
+            "Carpet steam cleaning",
+          ],
+        },
       ],
+      terms: [
+        "Payment is required upon arrival on the day of service.",
+        "Customer is responsible for arranging parking for our service vehicle.",
+        "Electricity and running hot water must be available at the property.",
+        "While every effort is made, complete removal of pet hair cannot be guaranteed.",
+        "The property must be vacant at the time of cleaning.",
+        "Pricing applies to properties in standard condition; heavily soiled properties may incur additional charges.",
+      ],
+      exclusions: [
+        "Ceilings",
+        "Garage walls",
+      ],
+      propertyTypes: ["House", "Apartment", "Unit", "Townhouse"],
       whoItSuits: "Properties requiring thorough seasonal cleaning, spring cleans, or restorative attention after renovations or long intervals.",
     },
     {
-      slug: "commercial-cleaning",
-      title: "Commercial Cleaning",
-      shortDescription: "Scheduled cleaning services for offices, commercial premises, and workspaces.",
-      longDescription: "Reliable commercial and office cleaning solutions tailored to working hours, covering desk sanitisation, common areas, and amenities.",
-      icon: "MapPin",
-      image: "/images/service-commercial.webp",
-      confirmed: true,
-      startingPriceText: null,
-      inclusions: [
-        "Workstation, desk, and common touchpoint sanitisation",
-        "Waste and recycling bin collection with liner replacement",
-        "Staff amenities, kitchen, and tearoom thorough cleaning",
-        "Commercial vacuuming and hard floor mopping",
-        "Entryway, reception, and meeting room detailing",
-      ],
-      whoItSuits: "Offices, retail spaces, studios, and commercial facilities requiring dependable cleaning scheduled outside trading hours.",
-    },
-    {
-      slug: "carpet-steam-cleaning",
-      title: "Carpet Steam Cleaning",
-      shortDescription: "Hot water extraction and carpet sanitisation for residential and commercial flooring.",
-      longDescription: "Professional carpet cleaning removing dirt, standard spots, and everyday wear from carpets, rugs, and hallways.",
+      slug: "general-deep-cleaning",
+      title: "General Deep Cleaning",
+      shortDescription: "A general deep clean of living areas, bathrooms, kitchen and floors.",
+      longDescription: "A general deep clean of living areas, bathrooms, kitchen and floors.",
       icon: "Sparkles",
-      image: "/images/service-carpet-steam.webp",
+      image: "/images/service-deep-cleaning.webp",
       confirmed: true,
       startingPriceText: null,
-      inclusions: [
-        "Pre-inspection and target spot pre-treatment",
-        "High-temperature hot water extraction (steam clean)",
-        "Deep dirt, allergen, and surface spot removal",
-        "Deodorising treatment leaving fresh, fast-drying carpets",
-        "Suitable for high-traffic hallways, rugs, and whole-home rooms",
+      pricingBasis: "bedrooms and bathrooms",
+      pricingNote: null,
+      priceMatrix: null,
+      requiresVacant: false,
+      assurance: null,
+      scope: [
+        {
+          title: "Living Areas & Bedrooms",
+          items: [
+            "Skirting boards",
+            "Blinds (dusting)",
+            "Light switches",
+            "Wardrobes (outside only)",
+            "Railings",
+            "Visible cobweb removal",
+          ],
+        },
+        {
+          title: "Bathrooms, Toilets & Laundry",
+          items: [
+            "Shower screens",
+            "Bathtub",
+            "Toilets",
+            "Wall tiles (wiped)",
+            "Towel rails",
+            "Sinks and vanity",
+            "Mirrors",
+            "Cupboards (outside only)",
+            "Exhaust fans (dusted)",
+          ],
+        },
+        {
+          title: "Kitchen",
+          items: [
+            "Splashback",
+            "Benchtops",
+            "Pantry and cupboards (outside only)",
+            "Sinks and taps",
+          ],
+        },
+        {
+          title: "Floors",
+          items: [
+            "All floors vacuumed",
+            "Hard floors mopped",
+          ],
+        },
       ],
-      whoItSuits: "Households and businesses aiming to refresh high-traffic carpets and rugs, or tenants needing carpet receipts for bond sign-off.",
-    },
-    {
-      slug: "upholstery-cleaning",
-      title: "Upholstery Cleaning",
-      shortDescription: "Fabric cleaning and deodorisation for sofas, couches, dining chairs, and mattresses.",
-      longDescription: "Targeted upholstery steam and fabric care reviving lounge suites, chairs, and mattresses with gentle fabric-appropriate solutions.",
-      icon: "Sparkles",
-      image: "/images/service-upholstery.webp",
-      confirmed: true,
-      startingPriceText: null,
-      inclusions: [
-        "Fabric inspection and fibre-safe test",
-        "Deep vacuuming to remove embedded dust and allergens",
-        "Gentle hot-water extraction for sofas, couches, and armchairs",
-        "Fabric deodorising and spot treatment",
-        "Suitable for lounges, dining chairs, and mattresses",
+      addOns: [
+        { id: "spot-cleaning-walls", title: "Spot Cleaning for Walls", note: "Up to 5 spots per wall", price: null },
+        { id: "outside-window-cleaning", title: "Outside Window Cleaning", price: null },
+        { id: "shower-grout-mould-removal", title: "Shower Grout Mould Removal", price: null },
       ],
-      whoItSuits: "Homeowners and property owners looking to revive fabric sofas, armchairs, dining seating, and mattresses.",
+      termsHeading: "Conditions apply",
+      terms: [
+        "Payment is due upon arrival.",
+        "Parking must be arranged by the customer.",
+        "Electricity and running hot water must be available.",
+        "Cat and dog hair removal isn't guaranteed.",
+      ],
+      exclusions: [
+        "Ceilings",
+        "Garage walls",
+        "Carpet steam cleaning",
+        "Built-in cabinets cleaning",
+        "Oven and range-hood cleaning",
+      ],
+      propertyTypes: ["House", "Apartment", "Unit", "Townhouse", "Other"],
+      whoItSuits: "Households looking for a comprehensive room-by-room clean of living areas, kitchens, bathrooms, and floors.",
     },
   ],
 
-  serviceAreas: [],
+  serviceAreas: [
+    {
+      name: "Brisbane",
+      slug: "brisbane",
+      radiusKm: 50,
+      suburbs: [],
+      note: "Standard rates apply within 50km of each city CBD",
+    },
+    {
+      name: "Perth",
+      slug: "perth",
+      radiusKm: 50,
+      suburbs: [],
+      note: "Standard rates apply within 50km of each city CBD",
+    },
+    {
+      name: "Melbourne",
+      slug: "melbourne",
+      radiusKm: 50,
+      suburbs: [],
+      note: "Standard rates apply within 50km of each city CBD",
+    },
+  ],
+
+  cityPages: false,
+  pricingDisplay: "estimate",
+  pricesIncludeGst: null,
+  doubleStoreyDisplay: "range",
+  addOns: {
+    pestFlea: {
+      enabled: false,
+    },
+  },
 
     trust: {
       flags: {
@@ -367,27 +597,30 @@ export const siteConfig: SiteConfig = {
     },
 
     reviews: [],
+    showReviewInvite: false,
 
     quoteFormOptions: {
       propertyTypes: [
         "House",
-        "Apartment / Unit",
+        "Apartment",
         "Townhouse",
-        "Office",
-        "Retail",
+        "Unit",
         "Other",
       ],
       bedroomOptions: [
-        "1 Bedroom",
-        "2 Bedrooms",
-        "3 Bedrooms",
-        "4 Bedrooms",
-        "5+ Bedrooms",
+        "Studio",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "More than 5",
       ],
       bathroomOptions: [
-        "1 Bathroom",
-        "2 Bathrooms",
-        "3+ Bathrooms",
+        "1",
+        "2",
+        "3",
+        "More than 3",
       ],
       preferredContactMethods: [
         "Phone Call",
@@ -395,6 +628,8 @@ export const siteConfig: SiteConfig = {
         "Email",
       ],
     },
+    instantQuoteBinding: false,
+    termsVersion: "October 2026",
 
     seoDefaults: {
       siteName: "Clean & Crest",
@@ -626,9 +861,16 @@ export function isTrustClaimVerified<K extends keyof TrustFlags>(flagKey: K): bo
   // Map flag to corresponding value check
   switch (flagKey) {
     case "showReviews":
-      return siteConfig.reviews.length > 0 && siteConfig.reviews.some((r) => r.verified);
-    case "showRatingSummary":
-      return siteConfig.trust.values.ratingAverage !== null;
+      return (
+        siteConfig.reviews.length > 0 &&
+        siteConfig.reviews.some((r) => r.verified && r.permissionToPublish && !r.isSample)
+      );
+    case "showRatingSummary": {
+      const verifiedReviews = siteConfig.reviews.filter(
+        (r) => r.verified && r.permissionToPublish && !r.isSample
+      );
+      return verifiedReviews.length >= 5;
+    }
     case "showYearsInBusiness":
       return siteConfig.trust.values.yearsInBusiness !== null;
     case "showInsuranceBadge":
@@ -645,4 +887,106 @@ export function isTrustClaimVerified<K extends keyof TrustFlags>(flagKey: K): bo
     default:
       return false;
   }
+}
+
+/**
+ * Returns all confirmed services (used in quote flows and live services).
+ */
+export function getConfirmedServices(): ServiceItem[] {
+  return siteConfig.services.filter((s) => s.confirmed);
+}
+
+export interface QuoteEstimateCalculation {
+  hasPrice: boolean;
+  basePrice: number | null;
+  addOnsTotal: number;
+  totalPrice: number | null;
+  displayPrice: string;
+  isEstimate: boolean;
+  binding: boolean;
+}
+
+/**
+ * Computes price estimate based on siteConfig priceMatrix and addOns.
+ * If priceMatrix[bedrooms][bathrooms] exists, returns base price + any selected add-on prices.
+ * If ANY needed price is missing, returns 'We\'ll confirm your price' rather than a partial total.
+ * Never returns $0 or made-up prices.
+ */
+export function calculateQuoteEstimate(
+  serviceSlugOrTitle: string,
+  bedrooms: string,
+  bathrooms: string,
+  selectedAddOnIds: string[] = []
+): QuoteEstimateCalculation {
+  const isBinding = Boolean(siteConfig.instantQuoteBinding);
+  const fallback: QuoteEstimateCalculation = {
+    hasPrice: false,
+    basePrice: null,
+    addOnsTotal: 0,
+    totalPrice: null,
+    displayPrice: "We'll confirm your price",
+    isEstimate: !isBinding,
+    binding: isBinding,
+  };
+
+  if (!serviceSlugOrTitle) return fallback;
+
+  const service = siteConfig.services.find(
+    (s) =>
+      s.slug === serviceSlugOrTitle ||
+      s.title.toLowerCase() === serviceSlugOrTitle.toLowerCase()
+  );
+
+  if (!service || !service.priceMatrix || typeof service.priceMatrix !== "object") {
+    return fallback;
+  }
+
+  // Look up bedrooms
+  const bedRow = service.priceMatrix[bedrooms];
+  if (!bedRow || typeof bedRow !== "object") {
+    return fallback;
+  }
+
+  // Look up bathrooms
+  const basePrice = bedRow[bathrooms];
+  if (typeof basePrice !== "number" || basePrice <= 0) {
+    return fallback;
+  }
+
+  // Look up add-ons: if any selected add-on is missing a price, fallback to "We'll confirm your price"
+  let addOnsTotal = 0;
+  if (selectedAddOnIds.length > 0) {
+    for (const addOnId of selectedAddOnIds) {
+      const addOn = service.addOns?.find((a) => a.id === addOnId);
+      if (!addOn || typeof addOn.price !== "number" || addOn.price <= 0) {
+        // Missing needed price -> do not show partial total
+        return fallback;
+      }
+      addOnsTotal += addOn.price;
+    }
+  }
+
+  const totalPrice = basePrice + addOnsTotal;
+
+  return {
+    hasPrice: true,
+    basePrice,
+    addOnsTotal,
+    totalPrice,
+    displayPrice: `$${totalPrice}`,
+    isEstimate: !isBinding,
+    binding: isBinding,
+  };
+}
+
+/**
+ * Returns a direct WhatsApp click-to-chat URL pre-filled with the quote request template.
+ */
+export function getWhatsAppHref(customMessage?: string): string {
+  const number = siteConfig.business.whatsappNumber || "61402129670";
+  const message =
+    customMessage ||
+    siteConfig.business.whatsappDefaultMessage ||
+    "Hi Clean & Crest, I would like to get a free quote for cleaning services.";
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }

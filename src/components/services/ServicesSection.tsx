@@ -13,10 +13,10 @@ export function ServicesSection() {
             id="services-heading"
             style={{ fontSize: "var(--font-size-h2)", marginBottom: "var(--space-1)" }}
           >
-            Cleaning for homes and businesses
+            Professional residential cleaning
           </h2>
           <p style={{ color: "var(--color-ink-500)", fontSize: "var(--font-size-body)", margin: "0 auto" }}>
-            Regular domestic maintenance, vacate cleans, and commercial workspaces tailored to your schedule.
+            End of lease vacate cleans, comprehensive deep cleans, and general room-by-room cleaning.
           </p>
         </div>
 

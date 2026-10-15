@@ -1,65 +1,129 @@
 import React from "react";
 import { Star, ArrowRight, AlertTriangle } from "lucide-react";
 import { siteConfig, ReviewItem } from "@/config";
-import { Container, Section, Eyebrow, Icon } from "@/components/ui";
+import { Container, Section, Eyebrow, Icon, Button } from "@/components/ui";
 import { ReviewCard } from "./ReviewCard";
 import styles from "./reviews.module.css";
 
-// Sample reviews strictly used in development mode to preview layout
+// Sample reviews strictly used in local development mode to preview layout
 const DEV_SAMPLE_REVIEWS: ReviewItem[] = [
   {
-    name: "Sample Customer 1",
-    suburb: "Sample Suburb",
+    id: "sample-dev-1",
+    firstName: "Alex",
+    suburb: "Brisbane",
     text: "Sample review comment demonstrating multi-line review display, font hierarchy, and card spacing in development mode. Real reviews will appear here once verified in the central business configuration.",
     rating: 5,
-    date: "Sample Date",
-    source: "Google",
+    date: "2026-03-01",
+    source: "google",
+    serviceSlug: "end-of-lease-cleaning",
     verified: false,
+    permissionToPublish: false,
+    isSample: true,
   },
   {
-    name: "Sample Customer 2",
-    suburb: "Sample Suburb",
+    id: "sample-dev-2",
+    firstName: "Sarah",
+    suburb: "Melbourne",
     text: "Sample review comment to preview card layout and the line-clamping toggle button. When actual reviews are supplied by the business owner, genuine client comments will be displayed.",
     rating: 5,
-    date: "Sample Date",
-    source: "Google",
+    date: "2026-03-05",
+    source: "google",
+    serviceSlug: "deep-cleaning",
     verified: false,
+    permissionToPublish: false,
+    isSample: true,
   },
   {
-    name: "Sample Customer 3",
-    suburb: "Sample Suburb",
+    id: "sample-dev-3",
+    firstName: "Michael",
+    suburb: "Perth",
     text: "Sample review comment illustrating responsive card grid alignment across mobile, tablet, and desktop viewports. This card will be replaced with real reviews.",
     rating: 5,
-    date: "Sample Date",
-    source: "Google",
+    date: "2026-03-10",
+    source: "google",
+    serviceSlug: "end-of-lease-cleaning",
     verified: false,
+    permissionToPublish: false,
+    isSample: true,
   },
 ];
 
 export function Reviews() {
   const isProduction = process.env.NODE_ENV === "production";
 
-  // Check verified reviews
-  const verifiedReviews = siteConfig.reviews.filter((r) => r.verified);
+  // Production reviews MUST be verified, have permission to publish, and not be samples
+  const verifiedReviews = siteConfig.reviews.filter(
+    (r) => r.verified === true && r.permissionToPublish === true && !r.isSample
+  );
   const hasVerifiedReviews = siteConfig.trust.flags.showReviews && verifiedReviews.length > 0;
 
-  // Gating: In production, render NOTHING if not enabled or no verified reviews exist
+  // Gating in production: when there are no verified reviews, render nothing and no gap
   if (isProduction && !hasVerifiedReviews) {
+    if (siteConfig.showReviewInvite && siteConfig.business.googleReviewUrl) {
+      return (
+        <Section
+          variant="ice"
+          id="reviews"
+          aria-labelledby="review-invite-heading"
+          className={styles.reviewsSection}
+        >
+          <Container>
+            <div className={styles.reviewInviteBlock}>
+              <h2 id="review-invite-heading" className={styles.inviteHeading}>
+                Used our service? We&apos;d love your feedback
+              </h2>
+              <p className={styles.inviteText}>
+                Your honest feedback helps us maintain our high cleaning standards and helps other customers choose with confidence.
+              </p>
+              <div className={styles.inviteAction}>
+                <Button
+                  variant="primary"
+                  href={siteConfig.business.googleReviewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Leave a Google review <span className="sr-only">(opens in a new tab)</span>
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </Section>
+      );
+    }
     return null;
   }
 
-  // Determine active reviews to display
+  // Active reviews to display: in dev fallback to sample reviews if no verified reviews exist
   const isUsingSamples = !hasVerifiedReviews && !isProduction;
-  const displayReviews = hasVerifiedReviews ? verifiedReviews : DEV_SAMPLE_REVIEWS;
+  const activeReviews = hasVerifiedReviews ? verifiedReviews : DEV_SAMPLE_REVIEWS;
 
-  // Rating summary: ONLY when showRatingSummary is true AND verified numbers exist
+  // Show at most 6 reviews
+  const visibleReviews = activeReviews.slice(0, 6);
+  const hasMoreReviews = activeReviews.length > 6;
+
+  // Rating summary: show average and count ONLY if showRatingSummary is true AND at least 5 verified reviews exist
+  // Computed dynamically from verified reviews in config, never typed in manually, never rounded up
   const showSummary =
-    siteConfig.trust.flags.showRatingSummary &&
-    siteConfig.trust.values.ratingAverage !== null &&
-    siteConfig.trust.values.reviewsCount !== null;
+    siteConfig.trust.flags.showRatingSummary && verifiedReviews.length >= 5;
 
-  // Leave review link: only rendered if a valid URL is provided in config
-  const leaveReviewUrl = siteConfig.business.leaveReviewUrl || siteConfig.business.social.googleBusiness;
+  let summaryAverage = "";
+  let summaryCount = 0;
+  if (showSummary) {
+    summaryCount = verifiedReviews.length;
+    const sum = verifiedReviews.reduce((acc, r) => acc + r.rating, 0);
+    const rawAvg = sum / summaryCount;
+    // Never round up: floor to 1 decimal place
+    summaryAverage = (Math.floor(rawAvg * 10) / 10).toFixed(1);
+  }
+
+  // Centering modifier for fewer than 3 reviews
+  const gridClass = `${styles.reviewsGrid} ${
+    visibleReviews.length === 1
+      ? styles.reviewsGridSingle
+      : visibleReviews.length === 2
+        ? styles.reviewsGridDouble
+        : ""
+  }`.trim();
 
   return (
     <Section variant="ice" id="reviews" aria-labelledby="reviews-heading" className={styles.reviewsSection}>
@@ -74,70 +138,78 @@ export function Reviews() {
             What our customers say
           </h2>
 
-          {/* Rating Summary (renders ONLY with verified data, never computed from samples) */}
+          {/* Rating Summary (gated: >= 5 verified reviews) */}
           {showSummary && (
             <div className={styles.ratingSummary}>
-              <span className={styles.ratingAverage}>
-                {siteConfig.trust.values.ratingAverage?.toFixed(1)}
-              </span>
-              <div className={styles.stars} aria-hidden="true">
+              <div className={styles.summaryStars} aria-hidden="true">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
                     size={16}
                     className={
-                      i < Math.round(siteConfig.trust.values.ratingAverage || 0)
+                      i < Math.floor(Number(summaryAverage))
                         ? styles.starFilled
                         : styles.starEmpty
                     }
                   />
                 ))}
               </div>
-              <span className={styles.ratingCount}>
-                ({siteConfig.trust.values.reviewsCount} reviews)
+              <span className={styles.summaryText}>
+                {summaryAverage} out of 5 from {summaryCount} reviews
               </span>
+              {siteConfig.business.googleProfileUrl && (
+                <a
+                  href={siteConfig.business.googleProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.summaryProfileLink}
+                >
+                  Verify on Google <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              )}
             </div>
           )}
 
-          {!showSummary && (
+          {/* Subheading: only when verified reviews exist */}
+          {hasVerifiedReviews && (
             <p className={styles.subheading}>
-              Feedback from homes and workplaces we care for.
+              Reviews from customers who have used our services.
             </p>
           )}
         </div>
 
-        {/* Development Mode Notice */}
+        {/* Development Mode Notice: smaller, less intrusive */}
         {isUsingSamples && (
           <div className={styles.devNotice} role="status">
-            <Icon icon={AlertTriangle} size={18} color="#D97706" />
+            <Icon icon={AlertTriangle} size={15} color="#D97706" />
             <span>
-              <strong>DEV PREVIEW:</strong> Showing 3 sample cards. This section is automatically hidden in production until <code>showReviews: true</code> and verified reviews are added in <code>siteConfig.ts</code>.
+              <strong>DEV PREVIEW:</strong> Showing sample cards. Hidden in production until verified reviews with permission are configured in <code>siteConfig.ts</code>.
             </span>
           </div>
         )}
 
-        {/* Responsive Reviews Grid (1 column mobile, 2 tablet, 3 desktop) */}
-        <ul className={styles.reviewsGrid} role="list" data-reveal-stagger="true">
-          {displayReviews.map((review, idx) => (
-            <li key={idx} style={{ display: "contents" }}>
+        {/* Reviews Grid (3-col desktop, 2-col tablet, 1-col mobile; centered if < 3) */}
+        <ul className={gridClass} role="list" data-reveal-stagger="true">
+          {visibleReviews.map((review) => (
+            <li key={review.id} style={{ display: "contents" }}>
               <ReviewCard
                 review={review}
-                isSample={isUsingSamples}
+                isSample={isUsingSamples || Boolean(review.isSample)}
               />
             </li>
           ))}
         </ul>
 
-        {/* Optional Closing Link: only if URL configured */}
-        {leaveReviewUrl && (
-          <div className={styles.leaveReviewRow}>
+        {/* See all reviews on Google link when > 6 reviews exist */}
+        {hasMoreReviews && siteConfig.business.googleProfileUrl && (
+          <div className={styles.seeAllRow}>
             <a
-              href={leaveReviewUrl}
+              href={siteConfig.business.googleProfileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.leaveReviewLink}
+              className={styles.seeAllLink}
             >
-              <span>Leave us a review</span>
+              <span>See all reviews on Google</span>
               <span className="sr-only"> (opens in a new tab)</span>
               <Icon icon={ArrowRight} size={16} />
             </a>

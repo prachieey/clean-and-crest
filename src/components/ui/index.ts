@@ -9,3 +9,4 @@ export * from "./SiteImage";
 export * from "./ScrollRevealInit";
 export * from "./TiltCard";
 export * from "./WaveDivider";
+export * from "./WhatsAppButton";
