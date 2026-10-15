@@ -8,4 +8,5 @@ export * from "./Reviews";
 export * from "./AboutTeaser";
 export * from "./FaqSection";
 export * from "./BeforeAfter";
+export * from "./BondBackTerms";
 
