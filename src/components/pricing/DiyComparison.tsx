@@ -1,41 +1,37 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, CheckCircle2, Clock, Sparkles } from "lucide-react";
-import { Container, Button, Icon } from "@/components/ui";
-import styles from "./pricing.module.css";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import styles from "./diy-comparison.module.css";
 
-const DIY_EQUIPMENT_RENTAL = 50; // Carpet steam cleaner machine hire
-const DIY_CHEMICALS = 60; // Oven cleaner, degreasers, mould sprays, sponges
-const DIY_HOURS = 14; // Typical weekend hours spent by tenant cleaning whole property
-const CLEAN_AND_CREST_BASE = 320; // 1-bed end of lease clean base rate
+const DIY_EQUIPMENT_RENTAL = 50; // Carpet steam cleaner rental
+const DIY_CHEMICALS = 60; // Heavy-duty chemicals
+const DIY_HOURS = 14; // Typical hours required for complete DIY clean
+const FLAT_RATE_FROM = 310; // Clean & Crest base rate
 
 export function DiyComparison() {
   const [hourlyRate, setHourlyRate] = useState<number>(20);
 
   const timeCost = DIY_HOURS * hourlyRate;
   const diyTotalCost = DIY_EQUIPMENT_RENTAL + DIY_CHEMICALS + timeCost;
-  const savings = diyTotalCost - CLEAN_AND_CREST_BASE;
-  const sliderProgress = Math.max(0, Math.min(100, ((hourlyRate - 15) / (75 - 15)) * 100));
+  const savings = diyTotalCost - FLAT_RATE_FROM;
+  const progress = Math.max(0, Math.min(100, ((hourlyRate - 0) / (60 - 0)) * 100));
 
   return (
     <section className={styles.diySection} id="diy-vs-clean-and-crest" aria-labelledby="diy-heading">
-      <Container>
+      <div className={styles.innerContainer}>
+        {/* Section Heading */}
         <div className={styles.diyHeader}>
-          <div className={styles.headerBadge}>
-            <Icon icon={Sparkles} size={15} color="var(--color-blue-600)" />
-            <span>Value Comparison</span>
-          </div>
-
           <h2 id="diy-heading" className={styles.diyTitle}>
             DIY vs. Clean &amp; Crest
           </h2>
-
           <p className={styles.diySubtitle}>
             Doing it yourself isn&apos;t always cheaper. Adjust your hourly rate below to see the true cost of your time.
           </p>
         </div>
 
+        {/* Main Comparison Card */}
         <div className={styles.diyCard}>
           {/* Interactive Hourly Rate Slider */}
           <div className={styles.sliderBlock}>
@@ -48,32 +44,27 @@ export function DiyComparison() {
               <input
                 id="hourly-rate-slider"
                 type="range"
-                min={15}
-                max={75}
+                min={0}
+                max={60}
                 step={5}
                 value={hourlyRate}
                 onChange={(e) => setHourlyRate(Number(e.target.value))}
                 className={styles.rangeInput}
                 style={{
-                  background: `linear-gradient(to right, var(--color-blue-600) 0%, var(--color-blue-600) ${sliderProgress}%, var(--color-ice-200) ${sliderProgress}%, var(--color-ice-200) 100%)`,
+                  background: `linear-gradient(to right, #DE5A46 0%, #DE5A46 ${progress}%, #2C2D30 ${progress}%, #2C2D30 100%)`,
                 }}
                 aria-label="Your hourly rate"
-                aria-valuemin={15}
-                aria-valuemax={75}
+                aria-valuemin={0}
+                aria-valuemax={60}
                 aria-valuenow={hourlyRate}
                 aria-valuetext={`$${hourlyRate} per hour`}
               />
-              <div className={styles.sliderRangeLabels}>
-                <span>$15/hr</span>
-                <span>$45/hr</span>
-                <span>$75/hr</span>
-              </div>
             </div>
           </div>
 
           {/* 2-Column Comparison Grid */}
           <div className={styles.comparisonGrid}>
-            {/* Column 1: DIY */}
+            {/* Column 1: Do It Yourself */}
             <div className={styles.diyCol}>
               <div className={styles.colHeader}>
                 <h3 className={styles.colTitle}>Do It Yourself</h3>
@@ -94,11 +85,11 @@ export function DiyComparison() {
                 </li>
               </ul>
 
+              <div className={styles.totalDivider} role="separator" />
+
               <div className={styles.totalRow}>
                 <span className={styles.totalLabel}>True Cost</span>
-                <span className={styles.diyTotalValue}>
-                  <s>${diyTotalCost}</s>
-                </span>
+                <span className={styles.diyTotalValue}>${diyTotalCost}</span>
               </div>
             </div>
 
@@ -106,36 +97,29 @@ export function DiyComparison() {
             <div className={styles.crestCol}>
               <div className={styles.colHeader}>
                 <h3 className={styles.crestTitle}>Clean &amp; Crest</h3>
-                <span className={styles.crestBadge}>Best Value</span>
+                <span className={styles.crestBadge}>BARGAIN</span>
               </div>
 
               <ul className={styles.itemList} role="list">
                 <li className={styles.itemRow}>
-                  <span className={styles.itemLabel}>
-                    <Icon icon={CheckCircle2} size={16} color="var(--color-blue-600)" />
-                    3-Day Bond Back Assurance
-                  </span>
+                  <span className={styles.itemLabel}>100% Bond Back Guarantee</span>
                   <span className={styles.includedValue}>Included</span>
                 </li>
                 <li className={styles.itemRow}>
-                  <span className={styles.itemLabel}>
-                    <Icon icon={CheckCircle2} size={16} color="var(--color-blue-600)" />
-                    Oven Deep Clean
-                  </span>
+                  <span className={styles.itemLabel}>Oven Deep Clean</span>
                   <span className={styles.includedValue}>Included</span>
                 </li>
                 <li className={styles.itemRow}>
-                  <span className={styles.itemLabel}>
-                    <Icon icon={Clock} size={16} color="var(--color-blue-600)" />
-                    Your Free Time
-                  </span>
+                  <span className={styles.itemLabel}>Your Free Time</span>
                   <span className={styles.savedValue}>Saved</span>
                 </li>
               </ul>
 
+              <div className={styles.totalDivider} role="separator" />
+
               <div className={styles.totalRow}>
                 <span className={styles.totalLabel}>Flat Rate From</span>
-                <span className={styles.crestTotalValue}>${CLEAN_AND_CREST_BASE}</span>
+                <span className={styles.crestTotalValue}>${FLAT_RATE_FROM}</span>
               </div>
             </div>
           </div>
@@ -143,29 +127,18 @@ export function DiyComparison() {
           {/* Verdict Banner & Call to Action */}
           <div className={styles.verdictBlock}>
             <p className={styles.verdictText}>
-              {savings > 0 ? (
-                <>
-                  <span className={styles.verdictIntro}>Verdict:</span> You save{" "}
-                  <span className={styles.savingsHighlight}>${savings}</span> and a whole weekend of back-breaking work.
-                </>
-              ) : (
-                <>
-                  <span className={styles.verdictIntro}>Verdict:</span> You get 14 hours of your weekend back with guaranteed bond inspection approval.
-                </>
-              )}
+              {savings > 0
+                ? `Verdict: You save $${savings} and a whole weekend of back-breaking work.`
+                : "Verdict: Even if you value your time near zero, is the hassle really worth it?"}
             </p>
 
-            <Button
-              variant="primary"
-              href="/quote?service=end-of-lease-cleaning"
-              className={styles.verdictBtn}
-            >
+            <Link href="/quote?service=end-of-lease-cleaning" className={styles.quoteCtaBtn}>
               <span>Get My Fixed Price Quote</span>
-              <Icon icon={ArrowRight} size={18} />
-            </Button>
+              <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
