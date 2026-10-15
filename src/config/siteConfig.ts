@@ -195,6 +195,11 @@ export interface AboutPhotoConfig {
   isPlaceholder: boolean;
 }
 
+export interface AboutStorySection {
+  title: string;
+  text: string;
+}
+
 export interface AboutConfig {
   teaser: {
     eyebrow: string;
@@ -205,6 +210,7 @@ export interface AboutConfig {
   story: {
     heading: string;
     paragraphs: string[];
+    sections: AboutStorySection[];
     needsOwnerInput: boolean;
   };
   values: AboutValue[];
@@ -724,44 +730,58 @@ export const siteConfig: SiteConfig = {
     about: {
       teaser: {
         eyebrow: "About Clean & Crest",
-        title: "About Clean & Crest",
+        title: "Cleaning built on trust & upfront standards",
         description:
-          "Clean & Crest is a locally focused cleaning service providing reliable residential and commercial cleans across our service areas. We focus on straightforward scheduling, systematic checklists, and clear communication on every visit.",
-        needsOwnerInput: true, // [CONFIRM WITH OWNER]
+          "Moving is stressful enough without worrying about losing your bond. Clean & Crest provides dependable cleaning backed by a written Bond-Back Assurance, fully police-checked and insured cleaners, and a transparent pay-on-arrival model with no upfront deposits.",
+        needsOwnerInput: false,
       },
       story: {
-        heading: "About our business",
-        paragraphs: [
-          "[PLACEHOLDER: Business background & founding story — to be confirmed by owner]",
-          "We operate with a straightforward focus: providing thorough, reliable cleaning services for local homes and workplaces with transparent pricing and no guesswork.",
-          "Every clean is carried out using systematic checklists so that standard requirements are met consistently from arrival to pack-down.",
+        heading: "About Clean & Crest",
+        needsOwnerInput: false,
+        sections: [
+          {
+            title: "Our Story",
+            text: "Moving is stressful enough without having to worry about losing your bond over a few spots on the wall or a dusty window track. That's why we started Clean & Crest. We wanted to offer a service that tenants could completely rely on—one that speaks directly to real estate agents and property managers in the language they understand: a written Bond-Back Guarantee.",
+          },
+          {
+            title: "The Cleaners",
+            text: "When you book with us, you are getting professionals. Every single cleaner that enters your home has been fully police-checked and is fully insured. We don't cut corners on our staff, which means they don't cut corners on your clean.",
+          },
+          {
+            title: "Why We Don't Take Deposits",
+            text: "We introduced our \"Pay on Arrival\" model because we believe trust should be earned. You shouldn't have to hand over hundreds of dollars to a company before they've even arrived at your home or lifted a sponge. We don't take upfront booking deposits—payment is conveniently made upon arrival on the day of service.",
+          },
         ],
-        needsOwnerInput: true, // [CONFIRM WITH OWNER]
+        paragraphs: [
+          "Moving is stressful enough without having to worry about losing your bond over a few spots on the wall or a dusty window track. That's why we started Clean & Crest. We wanted to offer a service that tenants could completely rely on—one that speaks directly to real estate agents and property managers in the language they understand: a written Bond-Back Guarantee.",
+          "When you book with us, you are getting professionals. Every single cleaner that enters your home has been fully police-checked and is fully insured. We don't cut corners on our staff, which means they don't cut corners on your clean.",
+          "We introduced our \"Pay on Arrival\" model because we believe trust should be earned. You shouldn't have to hand over hundreds of dollars to a company before they've even arrived at your home or lifted a sponge. We don't take upfront booking deposits—payment is conveniently made upon arrival on the day of service.",
+        ],
       },
       values: [
         {
-          id: "clear-communication",
-          title: "Clear communication",
+          id: "bond-back-guarantee",
+          title: "Bond-Back Guarantee",
           description:
-            "Direct updates and prompt responses from your initial enquiry through to job completion, with no hidden surprises.",
-          icon: "MessageSquare",
-          confirmedByUser: false, // [CONFIRM WITH OWNER]
-        },
-        {
-          id: "checklists",
-          title: "Systematic task checklists",
-          description:
-            "Every clean follows a defined task checklist tailored to your property, ensuring consistent standards every time.",
-          icon: "ClipboardCheck",
-          confirmedByUser: false, // [CONFIRM WITH OWNER]
-        },
-        {
-          id: "respect-for-space",
-          title: "Respect for your space",
-          description:
-            "We treat your home or workplace with care and discretion, securing the property upon departure.",
+            "A cleaning service that tenants, property managers and real estate agents can rely on, backed by written assurance.",
           icon: "Shield",
-          confirmedByUser: false, // [CONFIRM WITH OWNER]
+          confirmedByUser: true,
+        },
+        {
+          id: "the-cleaners",
+          title: "Vetted & insured cleaners",
+          description:
+            "Every single cleaner that enters your home has been fully police-checked and is fully insured. We don't cut corners on our staff.",
+          icon: "ClipboardCheck",
+          confirmedByUser: true,
+        },
+        {
+          id: "pay-on-arrival",
+          title: "Pay on arrival (no deposits)",
+          description:
+            "Trust should be earned. You shouldn't have to hand over hundreds of dollars in advance—payment is made upon arrival.",
+          icon: "MessageSquare",
+          confirmedByUser: true,
         },
       ],
       photo: {
@@ -826,8 +846,8 @@ export const siteConfig: SiteConfig = {
       },
       {
         question: "How do I pay?",
-        answer: "Payment details and options are confirmed once your service is booked. [CONFIRM WITH OWNER: Accepted payment methods such as bank transfer, card, or invoice].",
-        confirmedByUser: false,
+        answer: "We operate on a pay-on-arrival model. You do not need to pay an upfront booking deposit—payment is made upon arrival on the day of service.",
+        confirmedByUser: true,
       },
       {
         question: "What if I need to reschedule?",

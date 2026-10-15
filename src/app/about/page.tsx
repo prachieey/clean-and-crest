@@ -49,47 +49,48 @@ export default function AboutPage() {
           </div>
 
           <div className={styles.storyGrid}>
-            {/* Story Text Column */}
-            <div className={styles.storyContent}>
-              <h2
-                style={{
-                  fontSize: "var(--font-size-h2)",
-                  color: "var(--color-navy-900)",
-                  marginBottom: "var(--space-1)",
-                }}
-              >
-                {story.heading}
-              </h2>
-
+            {/* Story Card Column */}
+            <div className={styles.storyCard}>
               {isDev && story.needsOwnerInput && (
                 <div className={styles.devAlertBox} role="status">
                   <Icon icon={AlertTriangle} size={18} color="#D97706" />
                   <div>
                     <strong>[CONFIRM WITH OWNER]:</strong> Founding story and background require owner confirmation.
-                    No fabricated history is shown.
                   </div>
                 </div>
               )}
 
-              {story.paragraphs.map((para, idx) => {
-                const isPlaceholderPara = para.includes("[PLACEHOLDER");
-                if (isPlaceholderPara && !isDev) {
-                  return null; // Never silently display raw placeholder strings in production
-                }
-                return (
-                  <p key={idx} className={styles.storyParagraph}>
-                    {isPlaceholderPara ? (
-                      <Placeholder value={para} label="Business Story Placeholder" />
-                    ) : (
-                      para
-                    )}
-                  </p>
-                );
-              })}
+              {story.sections && story.sections.length > 0 ? (
+                story.sections.map((sec, idx) => (
+                  <div key={idx} className={styles.storySectionItem}>
+                    <h2 className={styles.storySectionTitle}>{sec.title}</h2>
+                    <p className={styles.storyParagraph}>{sec.text}</p>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <h2 className={styles.storySectionTitle}>{story.heading}</h2>
+                  {story.paragraphs.map((para, idx) => {
+                    const isPlaceholderPara = para.includes("[PLACEHOLDER");
+                    if (isPlaceholderPara && !isDev) {
+                      return null;
+                    }
+                    return (
+                      <p key={idx} className={styles.storyParagraph}>
+                        {isPlaceholderPara ? (
+                          <Placeholder value={para} label="Business Story Placeholder" />
+                        ) : (
+                          para
+                        )}
+                      </p>
+                    );
+                  })}
+                </>
+              )}
             </div>
 
             {/* Visual Column */}
-            <div>
+            <div className={styles.storyImageCol}>
               <AboutImage slotId="cleaner-at-work" priority />
             </div>
           </div>
