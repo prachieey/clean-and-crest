@@ -832,8 +832,8 @@ export const siteConfig: SiteConfig = {
       },
       {
         question: "What areas do you service?",
-        answer: "We provide cleaning services across our primary service regions. [CONFIRM WITH OWNER: Confirmed list of serviced regions and suburbs].",
-        confirmedByUser: false,
+        answer: "We provide cleaning services across Melbourne, Perth, and Brisbane, covering the CBD and surrounding suburbs within a 50 km radius.",
+        confirmedByUser: true,
       },
       {
         question: "What should I do to prepare before a clean?",
