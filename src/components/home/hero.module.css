@@ -101,6 +101,15 @@
   }
 }
 
+.secondaryActionRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
 .ctaBtnPrimary {
   min-height: 48px;
   min-width: 44px;
@@ -108,15 +117,25 @@
 }
 
 .ctaBtnSecondary {
-  min-height: 48px;
+  min-height: 44px;
   min-width: 44px;
+  padding: 10px 18px;
   justify-content: center;
 }
 
+.orCallText {
+  font-size: 0.9375rem;
+  color: var(--color-ink-500);
+  font-weight: 500;
+}
+
 @media (max-width: 639px) {
-  .ctaBtnPrimary,
-  .ctaBtnSecondary {
+  .ctaBtnPrimary {
     width: 100%;
+  }
+
+  .secondaryActionRow {
+    gap: 10px;
   }
 }
 

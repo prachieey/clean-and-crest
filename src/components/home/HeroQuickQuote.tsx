@@ -17,10 +17,10 @@ export function HeroQuickQuote() {
     >
       <div className={styles.fieldsRow}>
         {/* Field 1: Service Selection */}
-        <div className={styles.fieldGroup}>
+        <div className={`${styles.fieldGroup} ${styles.fieldGroupService}`}>
           <label htmlFor="quick-quote-service" className={styles.label}>
             <Icon icon={Sparkles} size={15} className={styles.fieldIcon} />
-            <span>Service <span className="sr-only">(required)</span></span>
+            <span>Service</span>
           </label>
           <div className={styles.inputWrapper}>
             <select
@@ -42,7 +42,7 @@ export function HeroQuickQuote() {
         </div>
 
         {/* Field 2: Suburb or Postcode */}
-        <div className={styles.fieldGroup}>
+        <div className={`${styles.fieldGroup} ${styles.fieldGroupLocation}`}>
           <label htmlFor="quick-quote-postcode" className={styles.label}>
             <Icon icon={MapPin} size={15} className={styles.fieldIcon} />
             <span>Suburb or Postcode</span>
@@ -52,7 +52,7 @@ export function HeroQuickQuote() {
               id="quick-quote-postcode"
               type="text"
               name="postcode"
-              placeholder="e.g. 2150 or Parramatta"
+              placeholder="e.g. Suburb or postcode"
               autoComplete="postal-code"
               className={styles.textInput}
             />
