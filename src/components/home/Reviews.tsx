@@ -1,64 +1,19 @@
 import React from "react";
-import { Star, ArrowRight, AlertTriangle } from "lucide-react";
-import { siteConfig, ReviewItem } from "@/config";
+import { Star, ArrowRight } from "lucide-react";
+import { siteConfig } from "@/config";
 import { Container, Section, Eyebrow, Icon, Button } from "@/components/ui";
 import { ReviewCard } from "./ReviewCard";
 import styles from "./reviews.module.css";
 
-// Sample reviews strictly used in local development mode to preview layout
-const DEV_SAMPLE_REVIEWS: ReviewItem[] = [
-  {
-    id: "sample-dev-1",
-    firstName: "Alex",
-    suburb: "Brisbane",
-    text: "Sample review comment demonstrating multi-line review display, font hierarchy, and card spacing in development mode. Real reviews will appear here once verified in the central business configuration.",
-    rating: 5,
-    date: "2026-03-01",
-    source: "google",
-    serviceSlug: "end-of-lease-cleaning",
-    verified: false,
-    permissionToPublish: false,
-    isSample: true,
-  },
-  {
-    id: "sample-dev-2",
-    firstName: "Sarah",
-    suburb: "Melbourne",
-    text: "Sample review comment to preview card layout and the line-clamping toggle button. When actual reviews are supplied by the business owner, genuine client comments will be displayed.",
-    rating: 5,
-    date: "2026-03-05",
-    source: "google",
-    serviceSlug: "deep-cleaning",
-    verified: false,
-    permissionToPublish: false,
-    isSample: true,
-  },
-  {
-    id: "sample-dev-3",
-    firstName: "Michael",
-    suburb: "Perth",
-    text: "Sample review comment illustrating responsive card grid alignment across mobile, tablet, and desktop viewports. This card will be replaced with real reviews.",
-    rating: 5,
-    date: "2026-03-10",
-    source: "google",
-    serviceSlug: "end-of-lease-cleaning",
-    verified: false,
-    permissionToPublish: false,
-    isSample: true,
-  },
-];
-
 export function Reviews() {
-  const isProduction = process.env.NODE_ENV === "production";
-
-  // Production reviews MUST be verified, have permission to publish, and not be samples
+  // Only verified reviews with permission to publish can ever be displayed
   const verifiedReviews = siteConfig.reviews.filter(
     (r) => r.verified === true && r.permissionToPublish === true && !r.isSample
   );
   const hasVerifiedReviews = siteConfig.trust.flags.showReviews && verifiedReviews.length > 0;
 
-  // Gating in production: when there are no verified reviews, render nothing and no gap
-  if (isProduction && !hasVerifiedReviews) {
+  // When there are no verified reviews, render nothing
+  if (!hasVerifiedReviews) {
     if (siteConfig.showReviewInvite && siteConfig.business.googleReviewUrl) {
       return (
         <Section
@@ -93,9 +48,7 @@ export function Reviews() {
     return null;
   }
 
-  // Active reviews to display: in dev fallback to sample reviews if no verified reviews exist
-  const isUsingSamples = !hasVerifiedReviews && !isProduction;
-  const activeReviews = hasVerifiedReviews ? verifiedReviews : DEV_SAMPLE_REVIEWS;
+  const activeReviews = verifiedReviews;
 
   // Show at most 6 reviews
   const visibleReviews = activeReviews.slice(0, 6);
@@ -178,23 +131,13 @@ export function Reviews() {
           )}
         </div>
 
-        {/* Development Mode Notice: smaller, less intrusive */}
-        {isUsingSamples && (
-          <div className={styles.devNotice} role="status">
-            <Icon icon={AlertTriangle} size={15} color="#D97706" />
-            <span>
-              <strong>DEV PREVIEW:</strong> Showing sample cards. Hidden in production until verified reviews with permission are configured in <code>siteConfig.ts</code>.
-            </span>
-          </div>
-        )}
-
         {/* Reviews Grid (3-col desktop, 2-col tablet, 1-col mobile; centered if < 3) */}
         <ul className={gridClass} role="list" data-reveal-stagger="true">
           {visibleReviews.map((review) => (
             <li key={review.id} style={{ display: "contents" }}>
               <ReviewCard
                 review={review}
-                isSample={isUsingSamples || Boolean(review.isSample)}
+                isSample={Boolean(review.isSample)}
               />
             </li>
           ))}

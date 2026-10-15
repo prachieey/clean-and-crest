@@ -7,7 +7,6 @@ import {
   TrustStrip,
   WhyChooseUs,
   HowItWorks,
-  Reviews,
   AboutTeaser,
   FaqSection,
 } from "@/components/home";
@@ -45,7 +44,6 @@ export default function Home() {
       <WhyChooseUs />
       <HowItWorks />
       <BeforeAfter />
-      <Reviews />
       <AboutTeaser variant="white" />
       <ServiceAreasBand />
       <FaqSection />
