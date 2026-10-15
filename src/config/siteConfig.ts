@@ -837,13 +837,13 @@ export const siteConfig: SiteConfig = {
       },
       {
         question: "What should I do to prepare before a clean?",
-        answer: "A quick tidy of personal items and ensuring clear access to floors and benchtops helps our team work efficiently from the moment we arrive. [CONFIRM WITH OWNER: Client preparation guidelines].",
-        confirmedByUser: false,
+        answer: "A quick tidy of personal items and ensuring clear access to floors and benchtops helps our team work efficiently from the moment we arrive. For end of lease cleans, having personal belongings and furniture moved out beforehand ensures a thorough, inspection-ready clean.",
+        confirmedByUser: true,
       },
       {
         question: "Do I need to be home during the clean?",
-        answer: "You are welcome to be home or arrange safe key access so we can clean while you are out. [CONFIRM WITH OWNER: Key handover and property access policy].",
-        confirmedByUser: false,
+        answer: "No, you do not need to be home. You are welcome to stay, or you can arrange safe access (such as leaving a key in a lockbox or with building management) so our cleaners can work independently.",
+        confirmedByUser: true,
       },
       {
         question: "How do I pay?",
@@ -852,8 +852,8 @@ export const siteConfig: SiteConfig = {
       },
       {
         question: "What if I need to reschedule?",
-        answer: "If you need to change your booking time or date, please contact us as early as possible so we can adjust our schedule smoothly. [CONFIRM WITH OWNER: Notice period policy].",
-        confirmedByUser: false,
+        answer: "If you need to change your booking time or date, simply contact us via call or WhatsApp as early as possible and our team will gladly reschedule your clean.",
+        confirmedByUser: true,
       },
     ],
 };
