@@ -1,0 +1,223 @@
+/* ==========================================================================
+   Major Australian Cities Service Areas Section Styles
+   ========================================================================== */
+
+.bandSection {
+  background-color: var(--color-ice-50, #F1F7FC);
+  padding: 80px 20px 88px;
+  width: 100%;
+  border-top: 1px solid var(--color-ice-100, #E0ECF5);
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.headerWrapper {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-family-heading, sans-serif);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-blue-600, #1669C9);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-family-heading, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: clamp(2rem, 3vw + 0.5rem, 2.5rem);
+  font-weight: 800;
+  color: var(--color-navy-900, #0D253F);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px 0;
+}
+
+.subtitle {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-ink-500, #566B7F);
+  margin: 0 auto;
+}
+
+/* 3-Column Grid for Melbourne, Brisbane, Perth */
+.citiesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 640px) {
+  .citiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .citiesGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+}
+
+.cityCard {
+  background-color: var(--color-white, #FFFFFF);
+  border: 1px solid var(--color-ice-100, #E0ECF5);
+  border-radius: 18px;
+  padding: 32px 26px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 12px rgba(13, 37, 63, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.cityCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(13, 37, 63, 0.08);
+  border-color: rgba(22, 105, 201, 0.3);
+}
+
+.iconBadge {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: var(--color-ice-50, #F1F7FC);
+  border: 1px solid var(--color-ice-100, #E0ECF5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blue-600, #1669C9);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.cityCard:hover .iconBadge {
+  transform: scale(1.08);
+  background-color: #E2EFF9;
+}
+
+.cityName {
+  font-family: var(--font-family-heading, sans-serif);
+  font-size: 1.3125rem;
+  font-weight: 800;
+  color: var(--color-navy-900, #0D253F);
+  margin: 0 0 10px 0;
+}
+
+.cityDesc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-ink-500, #566B7F);
+  margin: 0 0 20px 0;
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-heading, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-blue-600, #1669C9);
+  cursor: pointer;
+  border-top: 1px solid var(--color-ice-100, #E0ECF5);
+  margin-top: auto;
+  transition: color 0.15s ease;
+}
+
+.toggleBtn:hover {
+  color: var(--color-blue-500, #1871D9);
+}
+
+.suburbsList {
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  color: var(--color-ink-500, #566B7F);
+  padding: 12px 0 16px;
+  margin: 0;
+  border-bottom: 1px solid var(--color-ice-100, #E0ECF5);
+}
+
+.quoteLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family-heading, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-blue-600, #1669C9);
+  text-decoration: none;
+  padding-top: 14px;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.quoteLink:hover {
+  color: var(--color-blue-500, #1871D9);
+  gap: 8px;
+}
+
+/* Closing CTA Card */
+.closingCtaBlock {
+  background-color: var(--color-white, #FFFFFF);
+  border: 1px solid var(--color-ice-100, #E0ECF5);
+  border-radius: 18px;
+  padding: 36px 24px;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  box-shadow: 0 4px 18px rgba(13, 37, 63, 0.04);
+}
+
+.closingCtaHeading {
+  font-family: var(--font-family-heading, sans-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-navy-900, #0D253F);
+  margin: 0 0 8px 0;
+}
+
+.closingCtaText {
+  font-size: 0.9375rem;
+  color: var(--color-ink-500, #566B7F);
+  margin: 0 auto 20px;
+  max-width: 500px;
+}
+
+.ctaButtonsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family-heading, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-blue-600, #1669C9);
+  text-decoration: none;
+  transition: color 0.15s ease, gap 0.15s ease;
+}
+
+.viewAllLink:hover {
+  color: var(--color-blue-500, #1871D9);
+  gap: 8px;
+}
+

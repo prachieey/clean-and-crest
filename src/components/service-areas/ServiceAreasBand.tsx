@@ -1,105 +1,120 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Phone, MapPin, AlertTriangle } from "lucide-react";
+import { ArrowRight, Phone, MapPin, ChevronDown, ChevronUp } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Container, Section, Eyebrow, Button, Icon } from "@/components/ui";
-import styles from "./serviceAreas.module.css";
+import { Container, Button, Icon } from "@/components/ui";
+import styles from "./city-cards.module.css";
 
 export function ServiceAreasBand() {
-  const isDev = process.env.NODE_ENV !== "production";
   const regions = siteConfig.serviceAreas;
-  const hasRegions = regions.length > 0;
   const phoneHref = siteConfig.business.phoneHref || `tel:${siteConfig.business.phone}`;
-  const primaryRegion = siteConfig.business.primaryRegion;
+
+  // Interactive toggle for suburbs on each city card, default open to showcase coverage
+  const [openSuburbs, setOpenSuburbs] = useState<Record<string, boolean>>({
+    melbourne: true,
+    brisbane: true,
+    perth: true,
+  });
+
+  const toggleSuburbs = (slug: string) => {
+    setOpenSuburbs((prev) => ({
+      ...prev,
+      [slug]: !prev[slug],
+    }));
+  };
 
   return (
-    <Section variant="ice" id="service-areas" aria-labelledby="service-areas-heading" className={styles.bandSection}>
-      <Container>
+    <section
+      id="service-areas"
+      aria-labelledby="service-areas-heading"
+      className={styles.bandSection}
+    >
+      <Container className={styles.container}>
         {/* Section Header */}
         <div className={styles.headerWrapper}>
-          <Eyebrow>Service areas</Eyebrow>
-          <h2
-            id="service-areas-heading"
-            style={{ fontSize: "var(--font-size-h2)", marginBottom: "var(--space-1)" }}
-          >
-            Where we clean
+          <span className={styles.eyebrow}>WHERE WE OPERATE</span>
+          <h2 id="service-areas-heading" className={styles.title}>
+            Bond Cleaning Across Major Australian Cities
           </h2>
-          <p className={styles.subheading}>
-            Reliable cleaning across our confirmed locations, arriving fully equipped with standard task checklists.
+          <p className={styles.subtitle}>
+            Same checklist, same standard, same fixed price — whether you&apos;re in
+            Melbourne, Brisbane or Perth. Your property manager gets the same
+            thorough result wherever you are.
           </p>
         </div>
 
-        {/* Empty State: Dev Callout vs Prod Neutral Line */}
-        {!hasRegions && isDev && (
-          <div className={styles.devNotice} role="status">
-            <Icon icon={AlertTriangle} size={18} color="#D97706" />
-            <span>
-              <strong>SERVICE AREAS NOT SET:</strong> Add confirmed regions and suburbs to <code>siteConfig.serviceAreas</code> in <code>src/config/siteConfig.ts</code>.
-            </span>
-          </div>
-        )}
+        {/* 3 City Cards: Melbourne, Brisbane, Perth */}
+        <div className={styles.citiesGrid}>
+          {regions.map((region) => {
+            const isOpen = openSuburbs[region.slug] ?? false;
+            const suburbs = region.suburbs || [];
 
-        {!hasRegions && !isDev && (
-          <div className={styles.neutralCoverageBox}>
-            <p className={styles.neutralCoverageText}>
-              Servicing homes and workplaces across {primaryRegion} and surrounding suburbs.
-            </p>
-          </div>
-        )}
-
-        {/* Populated Region Columns */}
-        {hasRegions && (
-          <div className={styles.regionsGrid}>
-            {regions.map((region) => {
-              const suburbs = region.suburbs || [];
-              return (
-                <div key={region.name} className={styles.regionCard}>
-                  <div className={styles.regionHeader}>
-                    <h3 className={styles.regionTitle}>
-                      <Icon icon={MapPin} size={18} color="var(--color-blue-600)" />
-                      <span>{region.name}</span>
-                    </h3>
-                    {suburbs.length > 0 && (
-                      <span className={styles.suburbCount}>{suburbs.length} suburbs</span>
-                    )}
-                  </div>
-
-                  {suburbs.length > 0 ? (
-                    <ul className={styles.suburbChipsList}>
-                      {suburbs.map((suburb) => (
-                        <li key={suburb}>
-                          <span className={styles.suburbChip}>{suburb}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p style={{ fontSize: "0.875rem", color: "var(--color-ink-500)", margin: "0 0 12px 0", lineHeight: 1.5 }}>
-                      {region.note || "Standard rates apply within 50km of each city CBD."}
-                    </p>
-                  )}
-
-                  <div style={{ marginTop: "auto", paddingTop: "8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Link
-                      href={`/quote?city=${region.slug}`}
-                      style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--color-blue-600)", display: "inline-flex", alignItems: "center", gap: "4px" }}
-                    >
-                      <span>Get a quote for {region.name}</span>
-                      <Icon icon={ArrowRight} size={14} />
-                    </Link>
-                  </div>
+            return (
+              <div key={region.slug} className={styles.cityCard}>
+                <div className={styles.iconBadge} aria-hidden="true">
+                  <Icon icon={MapPin} size={22} color="var(--color-blue-600)" />
                 </div>
-              );
-            })}
-          </div>
-        )}
 
-        {/* Closing CTA Block */}
+                <h3 className={styles.cityName}>{region.name}</h3>
+
+                <p className={styles.cityDesc}>
+                  {region.description ||
+                    region.note ||
+                    "Inner city and surrounding suburbs with morning and afternoon slots."}
+                </p>
+
+                {suburbs.length > 0 && (
+                  <>
+                    <button
+                      type="button"
+                      className={styles.toggleBtn}
+                      onClick={() => toggleSuburbs(region.slug)}
+                      aria-expanded={isOpen}
+                      aria-controls={`suburbs-${region.slug}`}
+                    >
+                      <span>
+                        {isOpen ? "Hide Covered Suburbs" : "View Covered Suburbs"}
+                      </span>
+                      <Icon
+                        icon={isOpen ? ChevronUp : ChevronDown}
+                        size={16}
+                        color="var(--color-blue-600)"
+                      />
+                    </button>
+
+                    {isOpen && (
+                      <p
+                        id={`suburbs-${region.slug}`}
+                        className={styles.suburbsList}
+                      >
+                        {suburbs.join(" · ")}
+                      </p>
+                    )}
+                  </>
+                )}
+
+                <Link
+                  href={`/quote?city=${region.slug}`}
+                  className={styles.quoteLink}
+                >
+                  <span>Get a quote for {region.name}</span>
+                  <Icon icon={ArrowRight} size={15} />
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Closing CTA Card */}
         <div className={styles.closingCtaBlock}>
           <h3 className={styles.closingCtaHeading}>
             Not sure if we cover you? Ask for a quote
           </h3>
           <p className={styles.closingCtaText}>
-            Send us your suburb and postcode. We will confirm availability and provide an upfront estimate.
+            Send us your suburb and postcode. We will confirm availability and
+            provide an upfront estimate.
           </p>
 
           <div className={styles.ctaButtonsRow}>
@@ -114,7 +129,7 @@ export function ServiceAreasBand() {
             </Button>
           </div>
 
-          <div style={{ marginTop: "var(--space-3)" }}>
+          <div style={{ marginTop: "18px" }}>
             <Link href="/service-areas" className={styles.viewAllLink}>
               <span>View full service areas directory</span>
               <Icon icon={ArrowRight} size={14} />
@@ -122,6 +137,6 @@ export function ServiceAreasBand() {
           </div>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }
