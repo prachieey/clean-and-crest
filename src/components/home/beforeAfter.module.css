@@ -15,7 +15,7 @@
   margin: 0 auto;
   position: relative;
   aspect-ratio: 16 / 10;
-  border-radius: var(--radius-card, 12px);
+  border-radius: var(--radius-card, 14px);
   overflow: hidden;
   border: 1px solid var(--color-ice-100);
   box-shadow: var(--shadow-level-2);

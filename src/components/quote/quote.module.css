@@ -723,6 +723,8 @@
   color: var(--color-navy-900);
   line-height: 1.1;
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .estimateAmountPending {
@@ -764,6 +766,8 @@
   color: var(--color-navy-900);
   font-weight: 600;
   text-align: right;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .estimateAddOnsList {

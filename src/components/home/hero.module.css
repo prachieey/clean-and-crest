@@ -62,13 +62,14 @@
 /* Main Heading */
 .heroTitle {
   font-family: var(--font-family-heading);
-  font-size: clamp(1.75rem, 3.8vw + 0.8rem, 3.25rem);
+  font-size: var(--font-size-h1);
   color: var(--color-navy-900);
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
   margin-top: 4px;
-  margin-bottom: var(--space-2);
+  margin-bottom: 16px;
 }
 
 .regionHighlight {
@@ -81,7 +82,8 @@
   font-size: var(--font-size-body);
   color: var(--color-ink-500);
   line-height: var(--line-height-body);
-  max-width: 52ch;
+  max-width: 54ch;
+  text-wrap: pretty;
   margin-bottom: var(--space-4);
 }
 

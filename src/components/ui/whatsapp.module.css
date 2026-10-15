@@ -2,15 +2,15 @@
 
 .floatingButton {
   position: fixed;
-  bottom: calc(var(--space-16, 64px) + 16px);
+  bottom: calc(56px + env(safe-area-inset-bottom, 0px) + 14px);
   right: var(--space-4, 16px);
-  z-index: 990;
+  z-index: 950;
   display: flex;
   align-items: center;
   gap: var(--space-2, 8px);
   padding: 0;
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background-color: var(--color-blue-600, #1669C9);
   color: var(--color-white, #ffffff);
@@ -30,7 +30,7 @@
     bottom: 24px;
     right: 24px;
     width: auto;
-    height: 52px;
+    height: 50px;
     padding: 0 20px 0 16px;
     border-radius: 9999px;
     box-shadow: 0 8px 24px rgba(22, 105, 201, 0.32), 0 2px 8px rgba(13, 37, 63, 0.15);
@@ -39,7 +39,7 @@
 
 /* Adjust position when on pages without the mobile bottom bar */
 .floatingButtonNoBar {
-  bottom: 20px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
 }
 
 @media (min-width: 768px) {
