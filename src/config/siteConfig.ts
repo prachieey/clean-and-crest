@@ -798,6 +798,7 @@ export const siteConfig: SiteConfig = {
      */
     navigation: [
       { label: "Services", href: "/services" },
+      { label: "Pricing", href: "/pricing" },
       { label: "About", href: "/about" },
       { label: "Service Areas", href: "/service-areas" },
       { label: "Contact", href: "/contact" },
