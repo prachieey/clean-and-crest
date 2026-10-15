@@ -51,7 +51,7 @@ export function DiyComparison() {
                 onChange={(e) => setHourlyRate(Number(e.target.value))}
                 className={styles.rangeInput}
                 style={{
-                  background: `linear-gradient(to right, #DE5A46 0%, #DE5A46 ${progress}%, #2C2D30 ${progress}%, #2C2D30 100%)`,
+                  background: `linear-gradient(to right, var(--color-blue-600, #1669C9) 0%, var(--color-blue-600, #1669C9) ${progress}%, var(--color-navy-900, #0D253F) ${progress}%, var(--color-navy-900, #0D253F) 100%)`,
                 }}
                 aria-label="Your hourly rate"
                 aria-valuemin={0}
@@ -97,7 +97,7 @@ export function DiyComparison() {
             <div className={styles.crestCol}>
               <div className={styles.colHeader}>
                 <h3 className={styles.crestTitle}>Clean &amp; Crest</h3>
-                <span className={styles.crestBadge}>BARGAIN</span>
+                <span className={styles.crestBadge}>BEST VALUE</span>
               </div>
 
               <ul className={styles.itemList} role="list">
@@ -127,9 +127,16 @@ export function DiyComparison() {
           {/* Verdict Banner & Call to Action */}
           <div className={styles.verdictBlock}>
             <p className={styles.verdictText}>
-              {savings > 0
-                ? `Verdict: You save $${savings} and a whole weekend of back-breaking work.`
-                : "Verdict: Even if you value your time near zero, is the hassle really worth it?"}
+              {savings > 0 ? (
+                <>
+                  <span className={styles.verdictLead}>Verdict:</span> You save{" "}
+                  <span className={styles.savingsHighlight}>${savings}</span> and a whole weekend of back-breaking work.
+                </>
+              ) : (
+                <>
+                  <span className={styles.verdictLead}>Verdict:</span> Even if you value your time near zero, is the hassle really worth it?
+                </>
+              )}
             </p>
 
             <Link href="/quote?service=end-of-lease-cleaning" className={styles.quoteCtaBtn}>
