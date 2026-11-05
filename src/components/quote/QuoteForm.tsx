@@ -18,6 +18,7 @@ import {
   Plus,
   Minus,
   Info,
+  MessageCircle,
 } from "lucide-react";
 import {
   siteConfig,
@@ -980,8 +981,32 @@ export function QuoteForm() {
           </div>
         )}
 
-        {/* Action Buttons: Print/PDF and Return */}
+        {/* Action Buttons: WhatsApp Chat, Print/PDF and Return */}
         <div className={styles.printActionsBar}>
+          <a
+            href={`https://wa.me/${siteConfig.business.whatsappNumber}?text=${encodeURIComponent(
+              `Hi Clean & Crest, I have submitted quote request ${referenceNumber} for ${submittedData.service} in ${submittedData.suburb || submittedData.city}. Please confirm my booking details.`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              backgroundColor: "#25D366",
+              color: "#FFFFFF",
+              padding: "10px 20px",
+              borderRadius: "var(--radius-button, 8px)",
+              fontWeight: 600,
+              textDecoration: "none",
+              fontSize: "0.9375rem",
+              boxShadow: "0 2px 8px rgba(37, 211, 102, 0.25)",
+            }}
+          >
+            <Icon icon={MessageCircle} size={18} />
+            <span>Chat on WhatsApp</span>
+          </a>
+
           <Button
             type="button"
             variant="primary"
@@ -996,6 +1021,7 @@ export function QuoteForm() {
             Return to Home
           </Button>
         </div>
+
       </div>
     );
   }

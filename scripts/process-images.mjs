@@ -25,6 +25,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "../public/images");
 
 const cyan = (s) => `\x1b[36m${s}\x1b[0m`;
 const green = (s) => `\x1b[32m${s}\x1b[0m`;
+
 const yellow = (s) => `\x1b[33m${s}\x1b[0m`;
 const red = (s) => `\x1b[31m${s}\x1b[0m`;
 const bold = (s) => `\x1b[1m${s}\x1b[0m`;
@@ -41,22 +42,11 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-// Aliases mapping between user-requested canonical names and internal slot IDs
-const ALIAS_MAP = {
-  "hero-home": ["hero-main"],
-  "service-end-of-lease": ["service-end-of-lease-cleaning"],
-  "service-commercial": ["service-commercial-cleaning"],
-  "service-carpet-steam": ["service-carpet-steam-cleaning"],
-  "service-upholstery": ["service-upholstery-cleaning"],
-  "cleaner-at-work": ["about-main"],
-  "cta-background": ["cta-band-bg"],
-};
-
 const files = fs.readdirSync(INCOMING_DIR).filter((f) => !f.startsWith(".") && f !== "README.md");
 
 if (files.length === 0) {
   console.log(`\n${yellow("● No incoming photos found in assets/incoming-photos/")}`);
-  console.log("  To add photos, place high-res originals in that directory matching any of:");
+  console.log("  To add real photos, place high-res originals in that directory matching any of:");
   Object.keys(imageManifest).forEach((id) => {
     if (id !== "brand-logo") {
       console.log(`    - ${bold(id + ".jpg")} (${imageManifest[id].requiredAspectRatio}) -> ${imageManifest[id].subject}`);
@@ -66,7 +56,7 @@ if (files.length === 0) {
   process.exit(0);
 }
 
-console.log(`\nProcessing incoming file(s) from ${INCOMING_DIR}...\n`);
+console.log(`\nProcessing ${files.length} incoming file(s)...\n`);
 
 let processedCount = 0;
 
@@ -79,6 +69,7 @@ for (const file of files) {
   const slot = imageManifest[baseName];
 
   if (!slot) {
+    console.log(`  ${yellow("⚠️ Skipped:")} ${file} (no matching slot in imageManifest.ts)`);
     continue;
   }
 
@@ -89,12 +80,11 @@ for (const file of files) {
     const originalStats = fs.statSync(inputPath);
     const originalSizeKb = (originalStats.size / 1024).toFixed(1);
 
-    // Target width:
-    // Hero & CTA background: up to 1600px; Cards & details: up to 1200px
-    const isHeroOrCta = baseName.includes("hero") || baseName.includes("cta");
-    const targetWidth = isHeroOrCta ? 1600 : 1200;
+    // Target width based on slot type:
+    // Hero: up to 1600px wide; Cards: up to 1280px wide
+    const targetWidth = baseName === "hero-main" ? 1600 : 1280;
 
-    // Process with sharp: auto-orient, resize without enlargement, strip metadata, convert to webp
+    // Process with sharp: resize, strip metadata (default in sharp), convert to webp
     const imagePipeline = sharp(inputPath)
       .rotate() // auto-orient based on EXIF before stripping
       .resize({
@@ -115,14 +105,6 @@ for (const file of files) {
     console.log(`  ${green("✓")} ${bold(file)} -> ${cyan(outputFileName)}`);
     console.log(`     Original: ${originalSizeKb} KB  -->  Optimized: ${bold(newSizeKb + " KB")} (${slot.requiredAspectRatio})`);
     console.log(`     Metadata stripped: YES  |  Budget: ${slot.maxFileSizeKb} KB ${isWithinBudget ? green("[PASS]") : red("[OVER BUDGET]")}`);
-
-    // If an alias exists, copy the optimized WebP to the alias filename as well
-    const aliases = ALIAS_MAP[baseName] || [];
-    for (const alias of aliases) {
-      const aliasOutputPath = path.join(OUTPUT_DIR, `${alias}.webp`);
-      fs.copyFileSync(outputPath, aliasOutputPath);
-      console.log(`     ↳ Alias synced: ${cyan(`${alias}.webp`)}`);
-    }
 
     processedCount++;
   } catch (err) {

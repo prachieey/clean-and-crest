@@ -4,6 +4,10 @@ import {
   calculateServerEndOfLeaseEstimate,
   PRICING_DATA_VERSION,
 } from "@/server/pricing/endOfLeasePricing";
+import {
+  sendLeadToGoogleSheets,
+  sendQuoteEmails,
+} from "@/server/leadDispatch";
 
 // In-memory rate limiting map: IP -> { count: number, resetTime: number }
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -312,14 +316,6 @@ export async function POST(request: NextRequest) {
     const quoteReference = `CC-${dateFormatted}-${randomSuffix}`;
     const termsVersion = siteConfig.termsVersion || "October 2026";
 
-    // 7. Check Email Provider Configuration
-    const recipientEmail =
-      process.env.QUOTE_RECIPIENT_EMAIL ||
-      (siteConfig.business.email !== "[EMAIL ADDRESS]" ? siteConfig.business.email : null);
-    const isEmailConfigured = Boolean(
-      recipientEmail && (process.env.RESEND_API_KEY || process.env.SMTP_HOST || process.env.SENDGRID_API_KEY)
-    );
-
     const quoteData = {
       referenceNumber: quoteReference,
       createdAt: now.toISOString(),
@@ -376,32 +372,22 @@ export async function POST(request: NextRequest) {
       };
     }
 
-    if (!isEmailConfigured) {
-      // DEVELOPMENT / UNCONFIGURED MODE:
-      // Log submission cleanly to server console without pretending email was sent
-      console.log("\n=======================================================");
-      console.log("📋 [QUOTE ENQUIRY RECEIVED — EMAIL NOT YET CONFIGURED]");
-      console.log("-------------------------------------------------------");
-      console.log(JSON.stringify(quoteData, null, 2));
-      console.log("-------------------------------------------------------");
-      console.log("Configure QUOTE_RECIPIENT_EMAIL and email provider API keys to enable live dispatch.");
-      console.log("=======================================================\n");
+    // 8. Live Dispatch: Google Sheets Webhook & Transactional Email
+    console.log("\n=======================================================");
+    console.log(`📋 [QUOTE ENQUIRY RECEIVED: ${quoteReference}]`);
+    console.log("-------------------------------------------------------");
+    console.log(JSON.stringify(quoteData, null, 2));
+    console.log("=======================================================\n");
 
-      return NextResponse.json({
-        success: true,
-        quoteReference,
-        createdAt: quoteData.createdAt,
-        estimate: clientEstimate,
-        estimateBreakdown: clientBreakdown,
-        pricingDataVersion: PRICING_DATA_VERSION,
-        pricingDisplay,
-        termsVersion,
-        emailConfigured: false,
-        message: "Quote enquiry received and logged (email provider not yet configured).",
-      });
-    }
+    // Asynchronously dispatch lead to Google Sheets & Email without blocking failure
+    const [sheetsResult, emailResult] = await Promise.allSettled([
+      sendLeadToGoogleSheets(quoteData),
+      sendQuoteEmails(quoteData),
+    ]);
 
-    // When an email provider is configured in future:
+    const isSheetsSynced = sheetsResult.status === "fulfilled" && sheetsResult.value.success;
+    const isEmailDispatched = emailResult.status === "fulfilled" && emailResult.value.adminSent;
+
     return NextResponse.json({
       success: true,
       quoteReference,
@@ -411,9 +397,11 @@ export async function POST(request: NextRequest) {
       pricingDataVersion: PRICING_DATA_VERSION,
       pricingDisplay,
       termsVersion,
-      emailConfigured: true,
-      message: "Quote enquiry received and dispatched.",
+      emailConfigured: isEmailDispatched,
+      sheetsSynced: isSheetsSynced,
+      message: "Quote enquiry received and recorded.",
     });
+
   } catch (error) {
     console.error("Error processing quote submission:", error);
     return NextResponse.json(

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { siteConfig } from "@/config";
+import {
+  sendLeadToGoogleSheets,
+  sendContactEmail,
+} from "@/server/leadDispatch";
 
 // In-memory rate limiting map: IP -> { count: number, resetTime: number }
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -115,29 +118,25 @@ export async function POST(request: NextRequest) {
       message: message.trim(),
     };
 
-    // Check Email Provider Configuration
-    const recipientEmail =
-      process.env.CONTACT_RECIPIENT_EMAIL ||
-      process.env.QUOTE_RECIPIENT_EMAIL ||
-      (siteConfig.business.email !== "[EMAIL ADDRESS]" ? siteConfig.business.email : null);
-    const isEmailConfigured = Boolean(
-      recipientEmail && (process.env.RESEND_API_KEY || process.env.SMTP_HOST || process.env.SENDGRID_API_KEY)
-    );
+    // Dispatch to Google Sheets & Resend
+    const [sheetsResult, emailResult] = await Promise.allSettled([
+      sendLeadToGoogleSheets(contactData),
+      sendContactEmail(contactData),
+    ]);
 
-    // Clean logging to server console in development / unconfigured provider mode
+    const isSheetsSynced = sheetsResult.status === "fulfilled" && sheetsResult.value.success;
+    const isEmailDispatched = emailResult.status === "fulfilled" && emailResult.value.success;
+
     console.log("\n=======================================================");
-    console.log(`📬 [CONTACT MESSAGE RECEIVED — ${isEmailConfigured ? "EMAIL DISPATCHED" : "EMAIL NOT YET CONFIGURED"}]`);
+    console.log(`📬 [CONTACT MESSAGE RECEIVED — Email: ${isEmailDispatched ? "SENT" : "FAILED/SKIPPED"}, Sheets: ${isSheetsSynced ? "SYNCED" : "SKIPPED"}]`);
     console.log("-------------------------------------------------------");
     console.log(JSON.stringify(contactData, null, 2));
-    if (!isEmailConfigured) {
-      console.log("-------------------------------------------------------");
-      console.log("Configure CONTACT_RECIPIENT_EMAIL and email provider API keys to enable live dispatch.");
-    }
     console.log("=======================================================\n");
 
     return NextResponse.json({
       success: true,
-      emailConfigured: isEmailConfigured,
+      emailConfigured: isEmailDispatched,
+      sheetsSynced: isSheetsSynced,
       message: "Message received successfully. We will get back to you shortly.",
     });
   } catch (error) {
