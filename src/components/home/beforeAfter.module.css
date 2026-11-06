@@ -1,92 +1,50 @@
 /* Before/After Comparison Slider Styles — Clean & Crest */
 
 .sliderSection {
-  padding: 64px 0;
-  background-color: var(--color-white);
-  border-top: 1px solid var(--color-ice-100);
+  padding: 64px 0 72px;
+  background-color: var(--color-ice-50, #f8fafc);
+  border-top: 1px solid var(--color-ice-200, #e2e8f0);
 }
 
 .headerWrapper {
   text-align: center;
-  max-width: 720px;
-  margin: 0 auto 32px;
+  max-width: 680px;
+  margin: 0 auto 28px;
 }
 
 .sectionHeading {
   font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.75rem, 4vw, 2.375rem);
   font-weight: 800;
-  color: var(--color-navy-900);
-  margin: 8px 0 12px;
-  line-height: 1.2;
+  color: var(--color-navy-900, #0f172a);
+  margin: 8px 0 10px;
+  line-height: 1.25;
 }
 
-.helperText {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9375rem;
-  color: var(--color-ink-500);
-  margin: 0 0 20px;
-}
-
-.helperIcon {
-  color: var(--color-blue-600);
-}
-
-/* Category Tab Switcher */
-.tabSwitcher {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-ice-100);
-  padding: 4px;
-  border-radius: 9999px;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.tabButton {
-  background: none;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 9999px;
-  font-family: var(--font-heading);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-ink-600, #475569);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tabButton:hover {
-  color: var(--color-navy-900);
-}
-
-.tabButtonActive {
-  background-color: var(--color-white);
-  color: var(--color-blue-700);
-  font-weight: 700;
-  box-shadow: 0 2px 6px rgba(13, 37, 63, 0.08);
+.instructionText {
+  font-size: 1rem;
+  color: var(--color-ink-500, #64748b);
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* Slider Card Container */
-.sliderCard {
-  max-width: 920px;
+.sliderContainer {
+  max-width: 880px;
   margin: 0 auto;
   position: relative;
   aspect-ratio: 16 / 10;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 12px 36px rgba(13, 37, 63, 0.12), 0 2px 8px rgba(13, 37, 63, 0.04);
+  box-shadow: 0 14px 40px rgba(13, 37, 63, 0.12), 0 2px 8px rgba(13, 37, 63, 0.05);
   border: 1px solid rgba(13, 37, 63, 0.08);
   user-select: none;
   touch-action: pan-y;
-  background-color: var(--color-ice-100);
+  background-color: #e2e8f0;
 }
 
 @media (max-width: 640px) {
-  .sliderCard {
+  .sliderContainer {
     aspect-ratio: 4 / 3;
     border-radius: 16px;
   }
@@ -114,14 +72,14 @@
   will-change: clip-path;
 }
 
-/* Authentic Pill Badges */
+/* Badges matching reference screenshot */
 .badgeBefore,
 .badgeAfter {
   position: absolute;
   top: 18px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   padding: 6px 14px;
   border-radius: 9999px;
   font-family: var(--font-heading);
@@ -129,29 +87,31 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   z-index: 5;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   pointer-events: none;
-  backdrop-filter: blur(4px);
 }
 
 /* Red "✕ Before" Pill */
 .badgeBefore {
   left: 18px;
-  background-color: #EF4444;
+  background-color: #E25444;
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Green "✓ After" Pill */
+/* Dark Green "✓ After" Pill */
 .badgeAfter {
   right: 18px;
-  background-color: #10B981;
+  background-color: #1E4638;
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.badgeIcon {
-  stroke-width: 3;
+.crossIcon,
+.checkIcon {
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 /* Divider Line */
@@ -159,16 +119,16 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 3px;
+  width: 2.5px;
   background-color: #FFFFFF;
   z-index: 6;
   pointer-events: none;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
   will-change: left;
 }
 
-/* Round Center Handle */
-.handleButton {
+/* Center Handle Circle */
+.handleCircle {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -177,16 +137,32 @@
   height: 48px;
   border-radius: 50%;
   background-color: #FFFFFF;
-  color: var(--color-navy-900);
-  border: 2px solid rgba(13, 37, 63, 0.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.15);
+  color: #334155;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 2px;
+  user-select: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Accessible Interactive Range Input Layer */
+.handleArrowLeft,
+.handleArrowRight {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #475569;
+}
+
+.handleDivider {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  line-height: 1;
+  margin: 0 1px;
+}
+
+/* Range Input Layer */
 .rangeInput {
   position: absolute;
   inset: 0;
@@ -199,16 +175,16 @@
   padding: 0;
 }
 
-.sliderCard:hover .handleButton {
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+.sliderContainer:hover .handleCircle {
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
 }
 
-.descriptionText {
+.captionText {
   text-align: center;
   font-size: 0.9375rem;
-  color: var(--color-ink-500);
-  max-width: 640px;
+  color: var(--color-ink-500, #64748b);
+  max-width: 680px;
   margin: 20px auto 0;
-  line-height: 1.5;
+  line-height: 1.6;
 }

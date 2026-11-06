@@ -879,12 +879,12 @@ export const siteConfig: SiteConfig = {
     beforeAfter: [
       {
         id: "kitchen-restoration",
-        title: "Kitchen & Oven Deep Clean",
-        description: "Grease, splashback splatters, and baked-on grime detailed to inspection readiness.",
-        beforeImage: "/images/before-kitchen.webp",
-        beforeAlt: "Kitchen counter and cooking area before deep cleaning",
-        afterImage: "/images/after-kitchen.webp",
-        afterAlt: "Spotless sanitized kitchen counter and cooktop after deep clean",
+        title: "Kitchen & Double Sink Deep Clean",
+        description: "Heavy grease, sauce splatters on splashback, unwashed dishes, and stained surfaces transformed to a spotless, inspection-ready finish.",
+        beforeImage: "/images/before-kitchen-dirty.webp",
+        beforeAlt: "Dirty kitchen with unwashed dishes, stained tiles and greasy benchtop before bond clean",
+        afterImage: "/images/after-kitchen-clean.webp",
+        afterAlt: "Spotless gleaming kitchen sink, descaled tapware, and sparkling clean tiles after bond clean",
         serviceSlug: "end-of-lease-cleaning",
         verified: true,
       },

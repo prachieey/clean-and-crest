@@ -3,13 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { siteConfig } from "@/config";
-import { Container, Section, Eyebrow, Icon } from "@/components/ui";
-import { Check, X, ArrowLeftRight } from "lucide-react";
+import { Container, Section, Eyebrow } from "@/components/ui";
 import styles from "./beforeAfter.module.css";
 
 export function BeforeAfter() {
   const [sliderPos, setSliderPos] = useState<number>(50);
-  const [activeIdx, setActiveIdx] = useState<number>(0);
   const isProduction = process.env.NODE_ENV === "production";
   const items = siteConfig.beforeAfter || [];
 
@@ -21,49 +19,27 @@ export function BeforeAfter() {
     return null;
   }
 
-  const currentItem = displayItems[activeIdx] || displayItems[0];
+  const currentItem = displayItems[0];
 
   return (
-    <Section variant="white" id="results" aria-labelledby="results-heading" className={styles.sliderSection}>
+    <Section variant="ice" id="results" aria-labelledby="results-heading" className={styles.sliderSection}>
       <Container>
         <div className={styles.headerWrapper}>
-          <Eyebrow>Real Transformations</Eyebrow>
+          <Eyebrow>Real Results</Eyebrow>
           <h2 id="results-heading" className={styles.sectionHeading}>
             {currentItem.title || "Before & After Results"}
           </h2>
-          <p className={styles.helperText}>
-            <Icon icon={ArrowLeftRight} size={16} className={styles.helperIcon} />
-            <span>Drag the slider left and right to see the transformation</span>
+          <p className={styles.instructionText}>
+            Slide left and right to see the transformation.
           </p>
-
-          {/* Room / Category Switcher */}
-          {displayItems.length > 1 && (
-            <div className={styles.tabSwitcher} role="tablist" aria-label="Before and after categories">
-              {displayItems.map((item, idx) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeIdx === idx}
-                  onClick={() => {
-                    setActiveIdx(idx);
-                    setSliderPos(50);
-                  }}
-                  className={`${styles.tabButton} ${activeIdx === idx ? styles.tabButtonActive : ""}`}
-                >
-                  {item.title}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
 
         <div
-          className={styles.sliderCard}
+          className={styles.sliderContainer}
           role="region"
           aria-label="Before and after photo comparison slider"
         >
-          {/* Layer 1: Before Image (Base layer) */}
+          {/* Layer 1: Before Image (Dirty uncleaned state) */}
           <div className={styles.imageLayer}>
             <Image
               src={currentItem.beforeImage}
@@ -71,16 +47,16 @@ export function BeforeAfter() {
               fill
               className={styles.image}
               sizes="(max-width: 960px) 100vw, 960px"
-              priority={activeIdx === 0}
+              priority
             />
-            {/* Red Before Pill Badge */}
+            {/* ✕ Before Red Badge */}
             <span className={styles.badgeBefore} aria-hidden="true">
-              <Icon icon={X} size={14} className={styles.badgeIcon} />
+              <span className={styles.crossIcon}>✕</span>
               <span>Before</span>
             </span>
           </div>
 
-          {/* Layer 2: After Image (Clipped layer revealing from left) */}
+          {/* Layer 2: After Image (Clean sparkling state revealed by slider) */}
           <div
             className={styles.afterLayer}
             style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
@@ -91,16 +67,16 @@ export function BeforeAfter() {
               fill
               className={styles.image}
               sizes="(max-width: 960px) 100vw, 960px"
-              priority={activeIdx === 0}
+              priority
             />
-            {/* Green After Pill Badge */}
+            {/* ✓ After Dark Green Badge */}
             <span className={styles.badgeAfter} aria-hidden="true">
-              <Icon icon={Check} size={14} className={styles.badgeIcon} />
+              <span className={styles.checkIcon}>✓</span>
               <span>After</span>
             </span>
           </div>
 
-          {/* Full-Surface Accessible Range Slider for Touch, Mouse & Keyboard */}
+          {/* Range Slider for Touch, Mouse & Keyboard Interaction */}
           <input
             type="range"
             min="0"
@@ -115,34 +91,22 @@ export function BeforeAfter() {
             aria-valuetext={`${sliderPos}% after clean revealed`}
           />
 
-          {/* Center Vertical Divider Line & Round Handle */}
+          {/* Center Divider Line & Circular Drag Handle */}
           <div
             className={styles.dividerLine}
             style={{ left: `${sliderPos}%` }}
             aria-hidden="true"
           >
-            <div className={styles.handleButton}>
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <polyline points="8 7 3 12 8 17" />
-                <polyline points="16 7 21 12 16 17" />
-                <line x1="3" y1="12" x2="21" y2="12" strokeWidth="1.5" />
-              </svg>
+            <div className={styles.handleCircle}>
+              <span className={styles.handleArrowLeft}>‹</span>
+              <span className={styles.handleDivider}>|</span>
+              <span className={styles.handleArrowRight}>›</span>
             </div>
           </div>
         </div>
 
         {currentItem.description && (
-          <p className={styles.descriptionText}>
+          <p className={styles.captionText}>
             {currentItem.description}
           </p>
         )}
