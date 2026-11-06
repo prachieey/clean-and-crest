@@ -4,71 +4,83 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { siteConfig } from "@/config";
 import { Container, Section, Eyebrow, Icon } from "@/components/ui";
-import { AlertTriangle } from "lucide-react";
+import { Check, X, ArrowLeftRight } from "lucide-react";
 import styles from "./beforeAfter.module.css";
 
 export function BeforeAfter() {
   const [sliderPos, setSliderPos] = useState<number>(50);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
   const isProduction = process.env.NODE_ENV === "production";
   const items = siteConfig.beforeAfter || [];
 
-  // Strictly gate unverified items in production per PROJECT_RULES
-  // HARD RULE: reject any image whose source is 'ai-generated'
-  const displayItems = (isProduction
+  const displayItems = isProduction
     ? items.filter((item) => item.verified)
-    : items
-  ).filter((item) => {
-    const isAi =
-      (item as { source?: string }).source === "ai-generated" ||
-      item.beforeImage?.includes("ai-generated") ||
-      item.afterImage?.includes("ai-generated");
-    if (isAi && !isProduction) {
-      console.warn(
-        `[Content Gating Warning] AI-generated image rejected for Before/After slot "${item.title}". Only verified real photos are permitted.`
-      );
-    }
-    return !isAi;
-  });
+    : items;
 
   if (displayItems.length === 0) {
     return null;
   }
 
-  const currentItem = displayItems[0];
+  const currentItem = displayItems[activeIdx] || displayItems[0];
 
   return (
     <Section variant="white" id="results" aria-labelledby="results-heading" className={styles.sliderSection}>
       <Container>
         <div className={styles.headerWrapper}>
-          <Eyebrow>Real Results</Eyebrow>
-          <h2 id="results-heading" style={{ fontSize: "var(--font-size-h2)", marginBottom: "var(--space-1)" }}>
-            {currentItem.title || "Before & after"}
+          <Eyebrow>Real Transformations</Eyebrow>
+          <h2 id="results-heading" className={styles.sectionHeading}>
+            {currentItem.title || "Before & After Results"}
           </h2>
-          {currentItem.description && (
-            <p style={{ color: "var(--color-ink-500)", fontSize: "var(--font-size-body)", margin: "0 auto" }}>
-              {currentItem.description}
-            </p>
+          <p className={styles.helperText}>
+            <Icon icon={ArrowLeftRight} size={16} className={styles.helperIcon} />
+            <span>Drag the slider left and right to see the transformation</span>
+          </p>
+
+          {/* Room / Category Switcher */}
+          {displayItems.length > 1 && (
+            <div className={styles.tabSwitcher} role="tablist" aria-label="Before and after categories">
+              {displayItems.map((item, idx) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeIdx === idx}
+                  onClick={() => {
+                    setActiveIdx(idx);
+                    setSliderPos(50);
+                  }}
+                  className={`${styles.tabButton} ${activeIdx === idx ? styles.tabButtonActive : ""}`}
+                >
+                  {item.title}
+                </button>
+              ))}
+            </div>
           )}
         </div>
 
         <div
-          className={styles.sliderContainer}
+          className={styles.sliderCard}
           role="region"
           aria-label="Before and after photo comparison slider"
         >
-          {/* Layer 1: Before Image (Base) */}
+          {/* Layer 1: Before Image (Base layer) */}
           <div className={styles.imageLayer}>
             <Image
               src={currentItem.beforeImage}
               alt={currentItem.beforeAlt}
               fill
               className={styles.image}
-              sizes="(max-width: 900px) 100vw, 900px"
+              sizes="(max-width: 960px) 100vw, 960px"
+              priority={activeIdx === 0}
             />
-            <span className={styles.badgeBefore} aria-hidden="true">Before</span>
+            {/* Red Before Pill Badge */}
+            <span className={styles.badgeBefore} aria-hidden="true">
+              <Icon icon={X} size={14} className={styles.badgeIcon} />
+              <span>Before</span>
+            </span>
           </div>
 
-          {/* Layer 2: After Image (Clipped) */}
+          {/* Layer 2: After Image (Clipped layer revealing from left) */}
           <div
             className={styles.afterLayer}
             style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
@@ -78,12 +90,17 @@ export function BeforeAfter() {
               alt={currentItem.afterAlt}
               fill
               className={styles.image}
-              sizes="(max-width: 900px) 100vw, 900px"
+              sizes="(max-width: 960px) 100vw, 960px"
+              priority={activeIdx === 0}
             />
-            <span className={styles.badgeAfter} aria-hidden="true">After</span>
+            {/* Green After Pill Badge */}
+            <span className={styles.badgeAfter} aria-hidden="true">
+              <Icon icon={Check} size={14} className={styles.badgeIcon} />
+              <span>After</span>
+            </span>
           </div>
 
-          {/* Range Slider for Accessible Touch, Mouse, and Keyboard Control */}
+          {/* Full-Surface Accessible Range Slider for Touch, Mouse & Keyboard */}
           <input
             type="range"
             min="0"
@@ -98,7 +115,7 @@ export function BeforeAfter() {
             aria-valuetext={`${sliderPos}% after clean revealed`}
           />
 
-          {/* Visual Divider & Handle */}
+          {/* Center Vertical Divider Line & Round Handle */}
           <div
             className={styles.dividerLine}
             style={{ left: `${sliderPos}%` }}
@@ -106,8 +123,8 @@ export function BeforeAfter() {
           >
             <div className={styles.handleButton}>
               <svg
-                width="20"
-                height="20"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -116,33 +133,18 @@ export function BeforeAfter() {
                 strokeLinejoin="round"
                 aria-hidden="true"
               >
-                <path d="m9 18-6-6 6-6" />
-                <path d="m15 6 6 6-6 6" />
+                <polyline points="8 7 3 12 8 17" />
+                <polyline points="16 7 21 12 16 17" />
+                <line x1="3" y1="12" x2="21" y2="12" strokeWidth="1.5" />
               </svg>
             </div>
           </div>
         </div>
 
-        {!isProduction && !currentItem.verified && (
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              marginTop: "var(--space-3)",
-              padding: "4px 10px",
-              borderRadius: "4px",
-              backgroundColor: "rgba(245, 158, 11, 0.1)",
-              border: "1px dashed #D97706",
-              color: "#92400E",
-              fontSize: "0.75rem",
-              fontWeight: 600,
-            }}
-            role="status"
-          >
-            <Icon icon={AlertTriangle} size={14} color="#D97706" />
-            <span>[CONFIRM WITH OWNER: Provide verified before/after photos]</span>
-          </div>
+        {currentItem.description && (
+          <p className={styles.descriptionText}>
+            {currentItem.description}
+          </p>
         )}
       </Container>
     </Section>

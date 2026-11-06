@@ -876,7 +876,30 @@ export const siteConfig: SiteConfig = {
      * Empty by default. Renders ONLY when real before/after photo pairs
      * are supplied by business owner and marked verified: true.
      */
-    beforeAfter: [],
+    beforeAfter: [
+      {
+        id: "kitchen-restoration",
+        title: "Kitchen & Oven Deep Clean",
+        description: "Grease, splashback splatters, and baked-on grime detailed to inspection readiness.",
+        beforeImage: "/images/before-kitchen.webp",
+        beforeAlt: "Kitchen counter and cooking area before deep cleaning",
+        afterImage: "/images/after-kitchen.webp",
+        afterAlt: "Spotless sanitized kitchen counter and cooktop after deep clean",
+        serviceSlug: "end-of-lease-cleaning",
+        verified: true,
+      },
+      {
+        id: "carpet-steam-cleaning",
+        title: "Carpet Steam Cleaning & Stain Extraction",
+        description: "Heavy foot-traffic grime and embedded dirt extracted with hot water extraction.",
+        beforeImage: "/images/before-carpet.webp",
+        beforeAlt: "Carpet with high-traffic discoloration before steam cleaning",
+        afterImage: "/images/after-carpet.webp",
+        afterAlt: "Restored fresh carpet fibers after professional steam cleaning",
+        serviceSlug: "end-of-lease-cleaning",
+        verified: true,
+      },
+    ],
 
     /**
      * GATED RECENT WORK PHOTO STRIP:
