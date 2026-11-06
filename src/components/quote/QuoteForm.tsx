@@ -1017,7 +1017,11 @@ export function QuoteForm() {
             <span>Print / Save as PDF</span>
           </Button>
 
-          <Button variant="secondary" href="/" style={{ minWidth: "160px" }}>
+          <Button variant="secondary" href="/track" style={{ minWidth: "160px" }}>
+            Track Status
+          </Button>
+
+          <Button variant="secondary" href="/" style={{ minWidth: "140px" }}>
             Return to Home
           </Button>
         </div>

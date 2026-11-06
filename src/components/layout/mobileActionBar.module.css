@@ -21,26 +21,37 @@
     padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
     height: calc(56px + env(safe-area-inset-bottom, 0px));
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
-  .callButton {
+  .callButton,
+  .whatsappButton {
     flex: 1;
-    min-height: 44px;
-    height: 44px;
+    min-height: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     background-color: var(--color-white);
-    border: 1.5px solid var(--color-blue-600);
-    color: var(--color-blue-600);
+    border: 1.5px solid var(--color-ice-200, #cbd5e1);
+    color: var(--color-navy-800, #0f172a);
     font-family: var(--font-family-heading);
-    font-size: 0.9375rem;
+    font-size: 0.8125rem;
     font-weight: 700;
     border-radius: var(--radius-button, 8px);
     text-decoration: none;
     transition: background-color 0.15s ease;
+  }
+
+  .whatsappButton {
+    border-color: #25D366;
+    color: #128C7E;
+    background-color: #F0FDF4;
+  }
+
+  .whatsappButton:active {
+    background-color: #DCFCE7;
   }
 
   .callButton:active {
@@ -48,18 +59,18 @@
   }
 
   .quoteButton {
-    flex: 1;
-    min-height: 44px;
-    height: 44px;
+    flex: 1.2;
+    min-height: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     background-color: var(--color-blue-600);
     border: 1.5px solid var(--color-blue-600);
     color: var(--color-white);
     font-family: var(--font-family-heading);
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 700;
     border-radius: var(--radius-button, 8px);
     text-decoration: none;

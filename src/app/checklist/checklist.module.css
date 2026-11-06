@@ -1,0 +1,368 @@
+/* Bond Cleaning Checklist Page Styles */
+
+.pageWrapper {
+  background-color: var(--color-ice-50);
+  min-height: 100vh;
+}
+
+/* Printable Header - hidden on screen, visible when printing */
+.printHeader {
+  display: none;
+}
+
+@media print {
+  .printHeader {
+    display: block;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+  .printHeader h1 {
+    font-size: 18pt;
+    margin: 0 0 4px;
+  }
+  .printHeader p {
+    font-size: 10pt;
+    margin: 0;
+    color: #444;
+  }
+  .actionsBar,
+  .progressCard,
+  .bottomCallout,
+  :global(header),
+  :global(footer),
+  :global(nav) {
+    display: none !important;
+  }
+  .pageWrapper {
+    background: #fff !important;
+  }
+  .categoryCard {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+    margin-bottom: 16px !important;
+  }
+  .itemRow {
+    border-bottom: 1px solid #eee !important;
+  }
+}
+
+.heroSection {
+  padding: 40px 0 24px;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-ice-200);
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pageTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--color-navy-900);
+  margin: 12px 0 16px;
+  line-height: 1.2;
+}
+
+.pageSubtitle {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-ink-500);
+  margin-bottom: 24px;
+}
+
+.actionsBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.printButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-ice-300);
+  color: var(--color-navy-800);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 10px 18px;
+  border-radius: var(--radius-button, 8px);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.printButton:hover {
+  background-color: var(--color-ice-50);
+  border-color: var(--color-blue-500);
+  color: var(--color-blue-600);
+}
+
+.quoteLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 10px 20px;
+  border-radius: var(--radius-button, 8px);
+  text-decoration: none;
+  box-shadow: var(--shadow-level-1, 0 1px 3px rgba(0, 0, 0, 0.08));
+  transition: background-color 0.15s ease;
+}
+
+.quoteLink:hover {
+  background-color: var(--color-blue-500);
+}
+
+.progressCard {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-200);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: left;
+}
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.progressTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--color-navy-900);
+}
+
+.progressCounter {
+  font-size: 0.875rem;
+  color: var(--color-ink-500);
+}
+
+.progressBarTrack {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-ice-200);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: var(--color-blue-600);
+  border-radius: 9999px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.checklistSection {
+  padding: 40px 0 60px;
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  .categoriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.categoryCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-200);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(13, 37, 63, 0.04);
+}
+
+.categoryTitle {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-ice-100);
+}
+
+.itemsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.itemRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.itemRow:hover {
+  background-color: var(--color-ice-50);
+}
+
+.itemCompleted {
+  opacity: 0.7;
+}
+
+.itemCompleted .itemLabel {
+  text-decoration: line-through;
+  color: var(--color-ink-400);
+}
+
+.checkboxButton {
+  background: none;
+  border: none;
+  padding: 2px 0 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.itemTextWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.itemLabel {
+  font-size: 0.9375rem;
+  color: var(--color-navy-800);
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.itemTip {
+  font-size: 0.75rem;
+  color: var(--color-blue-700);
+  background-color: var(--color-ice-100);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.bottomCallout {
+  background: linear-gradient(135deg, var(--color-navy-900) 0%, var(--color-navy-800) 100%);
+  color: var(--color-white);
+  border-radius: 16px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .bottomCallout {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+  }
+}
+
+.calloutIconWrap {
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.calloutTextWrap {
+  flex: 1;
+}
+
+.calloutTextWrap h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--color-white);
+}
+
+.calloutTextWrap p {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-ice-200);
+  margin: 0;
+}
+
+.calloutButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .calloutButtons {
+    flex-direction: row;
+    width: auto;
+  }
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 12px 24px;
+  border-radius: var(--radius-button, 8px);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.primaryButton:hover {
+  background-color: var(--color-blue-500);
+}
+
+.whatsappButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #25D366;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 12px 20px;
+  border-radius: var(--radius-button, 8px);
+  text-decoration: none;
+  white-space: nowrap;
+}

@@ -100,6 +100,16 @@ export function Footer() {
                 </li>
               ))}
               <li>
+                <Link href="/checklist" className={styles.footerLink}>
+                  Bond Cleaning Checklist
+                </Link>
+              </li>
+              <li>
+                <Link href="/track" className={styles.footerLink}>
+                  Track Quote Status
+                </Link>
+              </li>
+              <li>
                 <Link href="/quote" className={styles.footerLink}>
                   Request a Free Quote
                 </Link>

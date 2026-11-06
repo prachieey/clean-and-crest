@@ -1,7 +1,9 @@
 import React from "react";
 import { ChevronDown, AlertTriangle } from "lucide-react";
 import { siteConfig } from "@/config";
+import { getFaqJsonLd } from "@/config/seo";
 import { Container, Section, Eyebrow, Icon } from "@/components/ui";
+import { JsonLd } from "@/components/seo";
 import styles from "./faq.module.css";
 
 export function FaqSection() {
@@ -19,6 +21,7 @@ export function FaqSection() {
 
   return (
     <Section variant="white" id="faq" aria-labelledby="faq-heading" className={styles.faqSection}>
+      <JsonLd schema={getFaqJsonLd(displayFaqs)} />
       <Container>
         <div className={styles.headerWrapper}>
           <Eyebrow>Common Questions</Eyebrow>

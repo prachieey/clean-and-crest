@@ -261,3 +261,24 @@ export function getServiceJsonLd(slug: string): Record<string, unknown> | null {
 
   return schema;
 }
+
+/**
+ * Builds validated JSON-LD for FAQPage rich snippets in Google Search results.
+ */
+export function getFaqJsonLd(
+  faqs: { question: string; answer: string }[]
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
