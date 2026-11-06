@@ -1,0 +1,335 @@
+/* City Location Page Styles — Clean & Crest */
+
+.heroSection {
+  padding: 48px 0 40px;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-ice-200);
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cityTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--color-navy-900);
+  margin: 12px 0 16px;
+  line-height: 1.2;
+}
+
+.citySubtitle {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-ink-500);
+  margin-bottom: 28px;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.quoteBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 12px 24px;
+  border-radius: var(--radius-button, 8px);
+  text-decoration: none;
+  box-shadow: var(--shadow-level-1, 0 1px 3px rgba(0, 0, 0, 0.08));
+  transition: background-color 0.15s ease;
+}
+
+.quoteBtn:hover {
+  background-color: var(--color-blue-500);
+}
+
+.whatsappBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #25D366;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 12px 20px;
+  border-radius: var(--radius-button, 8px);
+  text-decoration: none;
+}
+
+.callBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-ice-300);
+  color: var(--color-navy-800);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 12px 20px;
+  border-radius: var(--radius-button, 8px);
+  text-decoration: none;
+}
+
+/* Feature Badges */
+.featureBadges {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+@media (min-width: 640px) {
+  .featureBadges {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featureBadgeCard {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-200);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.badgeIconWrap {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badgeTitle {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 0 0 2px;
+}
+
+.badgeDesc {
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
+  margin: 0;
+}
+
+/* Section Common */
+.sectionHeader {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 36px;
+}
+
+.sectionHeader h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 800;
+  color: var(--color-navy-900);
+  margin: 8px 0 12px;
+}
+
+.sectionHeader p {
+  font-size: 1rem;
+  color: var(--color-ink-500);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Suburbs Grid */
+.suburbsSection {
+  padding: 56px 0;
+  background-color: var(--color-ice-50);
+}
+
+.suburbsCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-ice-200);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(13, 37, 63, 0.04);
+}
+
+.suburbsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+
+.suburbChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-200);
+  color: var(--color-navy-900);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.suburbChip:hover {
+  background-color: var(--color-blue-600);
+  border-color: var(--color-blue-600);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
+
+.suburbNote {
+  font-size: 0.875rem;
+  color: var(--color-ink-400);
+  margin: 0;
+  text-align: center;
+}
+
+/* Services Grid */
+.servicesSection {
+  padding: 56px 0;
+  background-color: var(--color-white);
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .servicesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.serviceCard {
+  background-color: var(--color-ice-50);
+  border: 1px solid var(--color-ice-200);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.serviceCard:hover {
+  border-color: var(--color-blue-400);
+  transform: translateY(-2px);
+}
+
+.serviceCardHeader h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  margin: 12px 0 8px;
+}
+
+.serviceCardHeader p {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-ink-500);
+  margin: 0 0 20px;
+}
+
+.serviceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-blue-600);
+  text-decoration: none;
+}
+
+.serviceLink:hover {
+  text-decoration: underline;
+}
+
+/* Tenancy Standards Section */
+.complianceSection {
+  padding: 56px 0;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-ice-200);
+}
+
+.complianceCard {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid var(--color-ice-200);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.complianceHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.complianceTitle {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-navy-900);
+  margin: 0 0 6px;
+}
+
+.complianceDesc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-ink-500);
+  margin: 0;
+}
+
+.standardsList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .standardsList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.standardItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9375rem;
+  color: var(--color-navy-800);
+  font-weight: 500;
+}

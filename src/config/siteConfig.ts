@@ -638,7 +638,7 @@ export const siteConfig: SiteConfig = {
     },
   ],
 
-  cityPages: false,
+  cityPages: true,
   pricingDisplay: "estimate",
   pricesIncludeGst: null,
   doubleStoreyDisplay: "range",

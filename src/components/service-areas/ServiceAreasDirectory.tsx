@@ -189,6 +189,23 @@ export function ServiceAreasDirectory() {
                     <span>Get a Free Quote for {region.name}</span>
                     <Icon icon={ArrowRight} size={16} />
                   </Button>
+                  <div style={{ marginTop: "10px", textAlign: "center" }}>
+                    <a
+                      href={`/locations/${region.slug}`}
+                      style={{
+                        fontSize: "0.875rem",
+                        fontWeight: 600,
+                        color: "var(--color-blue-600)",
+                        textDecoration: "none",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px",
+                      }}
+                    >
+                      <span>Explore {region.name} Suburbs & Guide</span>
+                      <Icon icon={ArrowRight} size={14} />
+                    </a>
+                  </div>
                 </div>
               </article>
             );
