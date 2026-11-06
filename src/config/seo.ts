@@ -14,7 +14,7 @@ export function isRealValue(val?: string | null): val is string {
 
 /**
  * Returns the sanitized canonical base URL for the site.
- * Defaults to "https://cleanandcrest.com.au" if siteUrl is still a placeholder.
+ * Defaults to "https://cleanandcrest.au" if siteUrl is still a placeholder.
  */
 export function getBaseUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL && isRealValue(process.env.NEXT_PUBLIC_SITE_URL)) {
@@ -23,7 +23,7 @@ export function getBaseUrl(): string {
   if (isRealValue(siteConfig.seoDefaults.siteUrl)) {
     return siteConfig.seoDefaults.siteUrl.replace(/\/+$/, "");
   }
-  return "https://cleanandcrest.com.au";
+  return "https://cleanandcrest.au";
 }
 
 export interface PageMetadataOptions {
