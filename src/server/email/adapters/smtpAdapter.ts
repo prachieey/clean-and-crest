@@ -23,7 +23,6 @@ export async function sendViaSmtp(
     try {
       const moduleName = "nodemailer";
       // Use dynamic function invocation to prevent static bundler resolution when package is optional
-      // eslint-disable-next-line @typescript-eslint/no-implied-eval
       const importDynamic = new Function("specifier", "return import(specifier)");
       nodemailer = await importDynamic(moduleName);
     } catch {

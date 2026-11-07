@@ -697,7 +697,10 @@ export function QuoteForm() {
           <div className={styles.quotationBranding}>
             <div className={styles.quotationCompanyName}>{siteConfig.business.name}</div>
             <div className={styles.quotationContactMeta}>
-              ABN: {siteConfig.business.abn} • Tel: {siteConfig.business.phone} • Email: {siteConfig.business.email}
+              {siteConfig.business.abn && !siteConfig.business.abn.includes("[") && (
+                <>ABN: {siteConfig.business.abn} • </>
+              )}
+              Tel: {siteConfig.business.phone} • Email: {siteConfig.business.email}
             </div>
             <div className={styles.quotationContactMeta}>
               Specialist End of Lease, Deep & General Cleaning Services

@@ -88,3 +88,4 @@ Add a DMARC policy record to protect your brand from email spoofing:
 - **Per-Email Rate Limiting:** Enforces a maximum of 5 quote requests per hour per unique email address.
 - **Non-Blocking Customer Failures:** In the rare event that an email provider outage occurs, the quote submission still records successfully in the database / Google Sheets and returns an official reference to the user.
 - **Business Alert Retry:** If the initial notification to the business inbox fails, the system automatically retries once after a 1-second delay.
+

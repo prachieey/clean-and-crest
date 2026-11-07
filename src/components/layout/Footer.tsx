@@ -223,9 +223,9 @@ export function Footer() {
           <div className={styles.bottomBarInner}>
             <div>
               <span>© {currentYear} Clean & Crest. All rights reserved.</span>
-              {(!abnIsPlaceholder || isDev) && (
+              {!abnIsPlaceholder && abn && (
                 <span className={styles.abnBadge}>
-                  • ABN: {abnIsPlaceholder ? <Placeholder value={abn} label="ABN" /> : abn}
+                  • ABN: {abn}
                 </span>
               )}
             </div>

@@ -22,7 +22,7 @@ export interface BusinessConfig {
   whatsappNumber: string;
   whatsappDefaultMessage: string;
   email: string;
-  abn: string;
+  abn: string | null;
   address: string | null;
   openingHours: string;
   social: SocialLinks;
@@ -295,7 +295,7 @@ export const siteConfig: SiteConfig = {
     whatsappNumber: "61402129670",
     whatsappDefaultMessage: "Hi Clean & Crest, I would like to get a free quote for cleaning services.",
     email: "cleanandcrest@gmail.com",
-    abn: "[ABN]",
+    abn: null,
     address: null, // Service-area business (no public walk-in address)
     openingHours: "Monday – Sunday (Flexible hours)",
     social: {
