@@ -2,7 +2,7 @@ import React from "react";
 import { ChevronDown, AlertTriangle } from "lucide-react";
 import { siteConfig } from "@/config";
 import { getFaqJsonLd } from "@/config/seo";
-import { Container, Section, Eyebrow, Icon, Em } from "@/components/ui";
+import { Container, Section, Eyebrow, Icon, Em, SectionBackdrop } from "@/components/ui";
 import { JsonLd } from "@/components/seo";
 import styles from "./faq.module.css";
 
@@ -21,6 +21,15 @@ export function FaqSection() {
 
   return (
     <Section variant="white" id="faq" aria-labelledby="faq-heading" className={styles.faqSection}>
+      <SectionBackdrop
+        image="/images/backdrops/bg-water-sparkle.webp"
+        opacity={0.06}
+        mobileOpacity={0.03}
+        position="right bottom"
+        mask="radial-gradient(circle at 85% 85%, black 0%, black 25%, transparent 70%)"
+        dividerBottom="curve"
+        dividerFill="var(--color-navy-950)"
+      />
       <JsonLd schema={getFaqJsonLd(displayFaqs)} />
       <Container>
         <div className={styles.headerWrapper}>

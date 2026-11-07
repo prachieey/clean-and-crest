@@ -1,12 +1,13 @@
 /* Homepage Hero Section Styles */
 
 .heroSection {
-  background-color: var(--color-white);
+  background-color: var(--color-ice-50);
   background-image: radial-gradient(ellipse 70% 50% at 75% 20%, rgba(34, 211, 238, 0.08), transparent 70%);
   padding-top: clamp(20px, 4vw, 56px);
   padding-bottom: clamp(36px, 6vw, 80px);
   position: relative;
-  overflow-x: clip;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .heroGrid {
@@ -42,18 +43,18 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--color-blue-600);
+  background-color: var(--color-royal-600);
   display: inline-block;
   flex-shrink: 0;
 }
 
 .eyebrowText {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-xs);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-blue-600);
+  letter-spacing: 0.12em;
+  color: var(--color-navy-900);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -65,7 +66,7 @@
   font-family: var(--font-family-heading);
   font-size: var(--font-size-h1);
   color: var(--color-navy-900);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.08;
   letter-spacing: -0.02em;
   text-wrap: balance;

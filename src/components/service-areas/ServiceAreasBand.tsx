@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Phone, MapPin, ChevronDown, ChevronUp } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Container, Button, Icon, Eyebrow, Em } from "@/components/ui";
+import { Container, Button, Icon, Eyebrow, Em, SectionBackdrop } from "@/components/ui";
 import styles from "./city-cards.module.css";
 
 export function ServiceAreasBand() {
@@ -31,6 +31,14 @@ export function ServiceAreasBand() {
       aria-labelledby="service-areas-heading"
       className={styles.bandSection}
     >
+      <SectionBackdrop
+        image="/images/backdrops/bg-white-flowers.webp"
+        opacity={0.08}
+        mobileOpacity={0.04}
+        position="right center"
+        mask="radial-gradient(circle at 90% 50%, black 0%, black 30%, transparent 75%)"
+        hairlineTop="subtle"
+      />
       <Container className={styles.container}>
         {/* Section Header */}
         <div className={styles.headerWrapper}>

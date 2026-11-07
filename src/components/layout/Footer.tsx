@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, Clock, MapPin, ExternalLink } from "lucide-react";
 import { siteConfig, getWhatsAppHref } from "@/config";
-import { Container, Icon, Placeholder, isPlaceholder, WhatsAppIcon } from "@/components/ui";
+import { Container, Icon, Placeholder, isPlaceholder, WhatsAppIcon, SectionBackdrop } from "@/components/ui";
 import styles from "./footer.module.css";
 
 export function Footer() {
@@ -39,6 +39,14 @@ export function Footer() {
 
   return (
     <footer className={styles.footerWrapper} aria-labelledby="footer-heading">
+      <SectionBackdrop
+        image="/images/backdrops/bg-footer-wide.webp"
+        opacity={0.06}
+        mobileOpacity={0.03}
+        position="center bottom"
+        mask="linear-gradient(to top, black 0%, black 20%, transparent 80%)"
+        grayscale={1}
+      />
       <h2 id="footer-heading" className="sr-only">
         Clean & Crest Footer
       </h2>

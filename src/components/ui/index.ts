@@ -11,3 +11,4 @@ export * from "./ScrollRevealInit";
 export * from "./TiltCard";
 export * from "./WaveDivider";
 export * from "./WhatsAppButton";
+export * from "./SectionBackdrop";

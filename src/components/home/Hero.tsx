@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Phone, CheckCircle2 } from "lucide-react";
 import { siteConfig, isTrustClaimVerified } from "@/config";
 import { isRealValue } from "@/config/seo";
-import { Container, Button, Icon, Placeholder, Em } from "@/components/ui";
+import { Container, Button, Icon, Placeholder, Em, SectionBackdrop } from "@/components/ui";
 import { HeroQuickQuote } from "./HeroQuickQuote";
 import { HeroVisual } from "./HeroVisual";
 import styles from "./hero.module.css";
@@ -46,6 +46,15 @@ export function Hero({ imageSrc }: HeroProps) {
 
   return (
     <section className={styles.heroSection} aria-labelledby="hero-heading">
+      <SectionBackdrop
+        image="/images/backdrops/bg-hero-curtains.webp"
+        opacity={0.12}
+        mobileOpacity={0.08}
+        blur={2}
+        position="right center"
+        mask="linear-gradient(to left, black 0%, black 35%, transparent 75%)"
+        pattern="aqua-glow"
+      />
       <Container>
         <div className={styles.heroGrid}>
           {/* Left Column: Text & Conversion CTAs */}

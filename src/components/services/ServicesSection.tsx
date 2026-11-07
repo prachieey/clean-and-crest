@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { Container, Section, Eyebrow, Em } from "@/components/ui";
+import { Container, Section, Eyebrow, Em, SectionBackdrop } from "@/components/ui";
 import styles from "./inspection-services.module.css";
 
 interface ServiceItem {
@@ -68,6 +68,19 @@ const SERVICES_DATA: ServiceItem[] = [
 export function ServicesSection() {
   return (
     <Section variant="white" id="services" aria-labelledby="services-heading">
+      <SectionBackdrop
+        image="/images/backdrops/bg-timber-floor-light.webp"
+        opacity={0.07}
+        mobileOpacity={0.04}
+        position="right top"
+        grayscale={0.3}
+        mask="radial-gradient(circle at 85% 15%, black 0%, black 25%, transparent 70%)"
+        ghostWord="Services"
+        ghostWordPosition="left"
+        ghostWordVariant="royal"
+        dividerBottom="curve"
+        dividerFill="var(--color-navy-950)"
+      />
       <Container>
         {/* Section Header */}
         <div className={styles.headerWrapper}>

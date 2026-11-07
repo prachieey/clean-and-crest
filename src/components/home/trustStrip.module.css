@@ -1,9 +1,9 @@
 /* Slim Trust Strip Styles */
 
 .trustStrip {
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-ice-100);
-  padding: 14px 0;
+  background-color: var(--color-navy-950);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 0;
   width: 100%;
 }
 
@@ -22,14 +22,14 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--color-navy-900);
+  color: var(--color-white);
 }
 
 .trustIcon {
-  color: var(--color-blue-600);
+  color: var(--color-aqua-300);
   flex-shrink: 0;
 }
 

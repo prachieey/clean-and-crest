@@ -40,9 +40,12 @@ export function FinalCtaBand({
         <div className={styles.contentWrapper}>
           <span className={styles.eyebrow}>Take the next step</span>
 
-          <h2 id={`${id}-heading`} className={styles.heading}>
-            Ready for an <Em variant="aqua">immaculate space</Em>?
-          </h2>
+          <div className={styles.headingWrapper}>
+            <div className={styles.headingGlow} aria-hidden="true" />
+            <h2 id={`${id}-heading`} className={styles.heading}>
+              Ready for an <Em variant="aqua">immaculate space</Em>?
+            </h2>
+          </div>
 
           <p className={styles.subline}>
             Receive an upfront itemised quote tailored to your property or call our team today.

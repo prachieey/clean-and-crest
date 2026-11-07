@@ -64,7 +64,35 @@
   margin-bottom: 4px;
 }
 
+.headingWrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.headingGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 520px;
+  height: 110px;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(34, 211, 238, 0.22) 0%,
+    rgba(123, 231, 245, 0.08) 45%,
+    transparent 75%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .heading {
+  position: relative;
+  z-index: 1;
   color: var(--color-white);
   font-family: var(--font-family-heading);
   font-size: var(--font-size-h2);
