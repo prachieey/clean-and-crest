@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Phone, CheckCircle2 } from "lucide-react";
-import { siteConfig, isTrustClaimVerified } from "@/config";
+import { siteConfig, isTrustClaimVerified, BACKDROP_SETTINGS } from "@/config";
 import { isRealValue } from "@/config/seo";
 import { Container, Button, Icon, Placeholder, Em, SectionBackdrop } from "@/components/ui";
 import { HeroQuickQuote } from "./HeroQuickQuote";
@@ -47,12 +47,19 @@ export function Hero({ imageSrc }: HeroProps) {
   return (
     <section className={styles.heroSection} aria-labelledby="hero-heading">
       <SectionBackdrop
-        image="/images/backdrops/bg-hero-curtains.webp"
-        opacity={0.12}
-        mobileOpacity={0.08}
-        blur={2}
-        position="right center"
-        mask="linear-gradient(to left, black 0%, black 35%, transparent 75%)"
+        image={BACKDROP_SETTINGS.hero.image}
+        opacity={BACKDROP_SETTINGS.hero.opacity}
+        mobileOpacity={BACKDROP_SETTINGS.hero.mobileOpacity}
+        blur={BACKDROP_SETTINGS.hero.blur}
+        grayscale={BACKDROP_SETTINGS.hero.grayscale}
+        position={BACKDROP_SETTINGS.hero.position}
+        mask={BACKDROP_SETTINGS.hero.mask}
+        scrim={{
+          color: "#EDF6FF",
+          direction: "to right",
+          strength: BACKDROP_SETTINGS.hero.scrimStrength,
+          width: "65%",
+        }}
         pattern="aqua-glow"
       />
       <Container>

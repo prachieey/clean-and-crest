@@ -12,8 +12,8 @@
   --color-aqua-400: #22D3EE;   /* Bright accent (eyebrow marks, light badges) */
   --color-aqua-300: #7BE7F5;   /* Luminous accent on dark navy sections (contrast 12.6:1 on navy-950) */
   --color-cyan-400: var(--color-aqua-400); /* Alias for backward compatibility */
-  --color-ice-50: #F3F9FF;     /* Soft alternating section background */
-  --color-sky-100: #E4F1FF;    /* Refined card borders, fine dividers */
+  --color-ice-50: #EDF6FF;     /* Soft alternating section background (richer tone) */
+  --color-sky-100: #DCEBFF;    /* Refined card borders, fine dividers (richer tone) */
   --color-ice-100: var(--color-sky-100); /* Alias for backward compatibility */
   --color-champagne-400: #C9A96A; /* Fine hairlines, small ornaments, star ratings on light */
   --color-champagne-200: #EAD9B5; /* Fine hairlines & subtle numerals on dark navy (contrast 13:1) */

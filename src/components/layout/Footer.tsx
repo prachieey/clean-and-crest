@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, Clock, MapPin, ExternalLink } from "lucide-react";
-import { siteConfig, getWhatsAppHref } from "@/config";
+import { siteConfig, getWhatsAppHref, BACKDROP_SETTINGS } from "@/config";
 import { Container, Icon, Placeholder, isPlaceholder, WhatsAppIcon, SectionBackdrop } from "@/components/ui";
 import styles from "./footer.module.css";
 
@@ -40,12 +40,12 @@ export function Footer() {
   return (
     <footer className={styles.footerWrapper} aria-labelledby="footer-heading">
       <SectionBackdrop
-        image="/images/backdrops/bg-footer-wide.webp"
-        opacity={0.06}
-        mobileOpacity={0.03}
-        position="center bottom"
-        mask="linear-gradient(to top, black 0%, black 20%, transparent 80%)"
-        grayscale={1}
+        image={BACKDROP_SETTINGS.footer.image}
+        opacity={BACKDROP_SETTINGS.footer.opacity}
+        mobileOpacity={BACKDROP_SETTINGS.footer.mobileOpacity}
+        position={BACKDROP_SETTINGS.footer.position}
+        mask={BACKDROP_SETTINGS.footer.mask}
+        grayscale={BACKDROP_SETTINGS.footer.grayscale}
       />
       <h2 id="footer-heading" className="sr-only">
         Clean & Crest Footer

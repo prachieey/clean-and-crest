@@ -1,6 +1,6 @@
 import React from "react";
 import { ChevronDown, AlertTriangle } from "lucide-react";
-import { siteConfig } from "@/config";
+import { siteConfig, BACKDROP_SETTINGS } from "@/config";
 import { getFaqJsonLd } from "@/config/seo";
 import { Container, Section, Eyebrow, Icon, Em, SectionBackdrop } from "@/components/ui";
 import { JsonLd } from "@/components/seo";
@@ -22,11 +22,19 @@ export function FaqSection() {
   return (
     <Section variant="white" id="faq" aria-labelledby="faq-heading" className={styles.faqSection}>
       <SectionBackdrop
-        image="/images/backdrops/bg-water-sparkle.webp"
-        opacity={0.06}
-        mobileOpacity={0.03}
-        position="right bottom"
-        mask="radial-gradient(circle at 85% 85%, black 0%, black 25%, transparent 70%)"
+        image={BACKDROP_SETTINGS.faq.image}
+        opacity={BACKDROP_SETTINGS.faq.opacity}
+        mobileOpacity={BACKDROP_SETTINGS.faq.mobileOpacity}
+        position={BACKDROP_SETTINGS.faq.position}
+        grayscale={BACKDROP_SETTINGS.faq.grayscale}
+        blur={BACKDROP_SETTINGS.faq.blur}
+        mask={BACKDROP_SETTINGS.faq.mask}
+        scrim={{
+          color: "#FFFFFF",
+          direction: "to right",
+          strength: BACKDROP_SETTINGS.faq.scrimStrength,
+          width: "55%",
+        }}
         dividerBottom="curve"
         dividerFill="var(--color-navy-950)"
       />
@@ -37,7 +45,7 @@ export function FaqSection() {
           <h2 id="faq-heading" style={{ fontSize: "var(--font-size-h2)", marginBottom: "var(--space-1)" }}>
             Frequently asked <Em>questions</Em>
           </h2>
-          <p style={{ color: "var(--color-ink-500)", fontSize: "var(--font-size-body)", margin: "0 auto" }}>
+          <p style={{ color: "var(--color-ink-800)", fontSize: "var(--font-size-body)", margin: "0 auto" }}>
             Clear answers to help you plan your cleaning service.
           </p>
         </div>

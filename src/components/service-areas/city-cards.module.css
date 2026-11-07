@@ -60,7 +60,7 @@
 .subtitle {
   font-size: 1.0625rem;
   line-height: 1.6;
-  color: var(--color-ink-500, #566B7F);
+  color: var(--color-ink-800);
   margin: 0 auto;
 }
 

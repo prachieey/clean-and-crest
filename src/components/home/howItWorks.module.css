@@ -23,7 +23,7 @@
 }
 
 .subheading {
-  color: var(--color-ink-500);
+  color: var(--color-ink-800);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   margin: 0 auto;
@@ -97,7 +97,7 @@
 .stepDesc {
   font-size: 0.875rem;
   line-height: 1.6;
-  color: var(--color-ink-500);
+  color: var(--color-ink-800);
   margin: 0;
   max-width: 28ch;
 }

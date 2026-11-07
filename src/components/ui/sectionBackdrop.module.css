@@ -28,6 +28,13 @@
   pointer-events: none;
 }
 
+.scrimLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .vignetteLayer {
   position: absolute;
   inset: 0;
@@ -110,13 +117,13 @@
 .ghostWord {
   position: absolute;
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(5rem, 15vw, 13rem);
+  font-size: clamp(4.5rem, 12vw, 10rem);
   font-weight: 700;
   line-height: 0.85;
   letter-spacing: -0.04em;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--color-royal-600);
-  opacity: 0.06;
+  -webkit-text-stroke: 1.25px var(--color-royal-600);
+  opacity: 0.04;
   pointer-events: none;
   white-space: nowrap;
   user-select: none;
@@ -124,18 +131,18 @@
 }
 
 .ghostWordLight {
-  -webkit-text-stroke: 1.5px var(--color-aqua-300);
-  opacity: 0.05;
+  -webkit-text-stroke: 1.25px var(--color-aqua-300);
+  opacity: 0.04;
 }
 
 .ghostWordLeft {
-  left: -2%;
-  top: 10px;
+  left: 2%;
+  top: -20px;
 }
 
 .ghostWordRight {
-  right: -2%;
-  top: 20px;
+  right: 2%;
+  top: -15px;
 }
 
 .ghostWordCenter {

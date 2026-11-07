@@ -26,6 +26,7 @@
 .bgImage {
   object-fit: cover;
   object-position: center center;
+  filter: saturate(1.06) contrast(1.04);
 }
 
 /* Rich subtle gradient from navy-950 to royal-600 */
@@ -99,14 +100,16 @@
   line-height: var(--line-height-heading);
   letter-spacing: -0.015em;
   margin: 0;
+  text-shadow: 0 2px 14px rgba(6, 22, 43, 0.65);
 }
 
 .subline {
-  color: var(--color-sky-100);
+  color: rgba(255, 255, 255, 0.94);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   max-width: var(--prose-max-width);
   margin: 0 0 var(--space-3) 0;
+  text-shadow: 0 1px 8px rgba(6, 22, 43, 0.45);
 }
 
 .buttonsRow {

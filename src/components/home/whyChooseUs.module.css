@@ -38,6 +38,7 @@
   object-fit: cover;
   display: block;
   transition: transform 0.5s ease;
+  filter: saturate(1.06) contrast(1.04);
 }
 
 .imageFrame:hover .portraitImg {

@@ -21,6 +21,12 @@ export interface SectionBackdropProps {
   ghostWordVariant?: "royal" | "aqua";
   pattern?: "dots" | "bubbles" | "aqua-glow";
   vignette?: boolean;
+  scrim?: {
+    color?: string;
+    direction?: string;
+    strength?: number;
+    width?: string;
+  };
   hairlineTop?: "champagne" | "subtle";
   dividerBottom?: "curve" | "wave" | "blend";
   dividerFill?: string;
@@ -45,6 +51,7 @@ export function SectionBackdrop({
   ghostWordVariant = "royal",
   pattern,
   vignette = false,
+  scrim,
   hairlineTop,
   dividerBottom,
   dividerFill = "var(--color-white)",
@@ -116,6 +123,21 @@ export function SectionBackdrop({
         <div
           className={styles.tintLayer}
           style={{ backgroundColor: tint, opacity: tintOpacity }}
+        />
+      )}
+
+      {/* Local Text Scrim */}
+      {scrim && (
+        <div
+          className={styles.scrimLayer}
+          style={{
+            background: `linear-gradient(${
+              scrim.direction || "to right"
+            }, ${scrim.color || "#FFFFFF"} 0%, ${
+              scrim.color || "#FFFFFF"
+            } 40%, transparent ${scrim.width || "85%"})`,
+            opacity: scrim.strength ?? 0.88,
+          }}
         />
       )}
 

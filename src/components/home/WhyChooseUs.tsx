@@ -9,7 +9,7 @@ import {
   Phone,
   LucideIcon,
 } from "lucide-react";
-import { siteConfig } from "@/config";
+import { siteConfig, BACKDROP_SETTINGS } from "@/config";
 import { Container, Section, Eyebrow, Button, Icon, Em, SectionBackdrop } from "@/components/ui";
 import styles from "./whyChooseUs.module.css";
 
@@ -53,15 +53,14 @@ export function WhyChooseUs() {
   return (
     <Section variant="navy" id="why-choose-us" aria-labelledby="why-choose-heading">
       <SectionBackdrop
-        image="/images/backdrops/bg-why-clean.webp"
-        opacity={0.16}
-        mobileOpacity={0.08}
+        image={BACKDROP_SETTINGS.whyChooseUs.image}
+        opacity={BACKDROP_SETTINGS.whyChooseUs.opacity}
+        mobileOpacity={BACKDROP_SETTINGS.whyChooseUs.mobileOpacity}
         tint="var(--color-navy-900)"
-        tintOpacity={0.85}
-        grayscale={0.6}
-        position="right center"
-        mask="linear-gradient(to left, black 0%, black 25%, transparent 75%)"
-        blendMode="soft-light"
+        tintOpacity={BACKDROP_SETTINGS.whyChooseUs.overlayOpacity}
+        grayscale={BACKDROP_SETTINGS.whyChooseUs.grayscale}
+        position={BACKDROP_SETTINGS.whyChooseUs.position}
+        mask={BACKDROP_SETTINGS.whyChooseUs.mask}
         hairlineTop="champagne"
         dividerBottom="curve"
         dividerFill="var(--color-ice-50)"

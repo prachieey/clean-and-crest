@@ -82,7 +82,7 @@
 /* Subheading */
 .heroDescription {
   font-size: var(--font-size-body);
-  color: var(--color-ink-500);
+  color: var(--color-ink-800);
   line-height: var(--line-height-body);
   max-width: 54ch;
   text-wrap: pretty;
@@ -295,6 +295,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: saturate(1.06) contrast(1.04);
 }
 
 /* Visual / Image Frame with Soft 3D Accents */

@@ -21,7 +21,7 @@
 .sectionSubtitle {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  color: var(--color-ink-500);
+  color: var(--color-ink-800);
   margin: 0 auto;
   max-width: var(--prose-max-width);
 }
@@ -62,6 +62,7 @@
 .galleryImg {
   object-fit: cover;
   transition: transform 0.4s ease;
+  filter: saturate(1.06) contrast(1.04);
 }
 
 .photoCard:hover .galleryImg {
