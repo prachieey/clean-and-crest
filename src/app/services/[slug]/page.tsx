@@ -24,7 +24,9 @@ import {
   Card,
   Icon,
   SiteImage,
+  Em,
 } from "@/components/ui";
+import { ServiceScopeHighlights } from "@/components/services";
 import { JsonLd } from "@/components/seo";
 import styles from "@/components/services/services.module.css";
 
@@ -203,52 +205,13 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 </div>
               )}
 
-              {/* 4. 'What's included' Section (one per scope area) */}
+              {/* 4. 'What's included' Section (Highlights View with Expandable Full Scope) */}
               {service.scope && service.scope.length > 0 ? (
                 <div className={styles.scopeSectionWrap}>
-                  <h2 className={styles.sectionHeading}>What’s included</h2>
-                  {/* Desktop: Two-column grid of area cards (always open, never collapsed behind clicks) */}
-                  <div className={styles.desktopScopeGrid}>
-                    {service.scope.map((area, areaIdx) => (
-                      <div key={areaIdx} className={styles.scopeAreaCard}>
-                        <h3 className={styles.scopeAreaTitle}>{area.title}</h3>
-                        <ul className={styles.checklist}>
-                          {area.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className={styles.checklistItem}>
-                              <Icon icon={CheckCircle2} size={18} className={styles.checkIcon} />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Mobile: Accordions with first open */}
-                  <div className={styles.mobileScopeAccordion}>
-                    {service.scope.map((area, areaIdx) => (
-                      <details
-                        key={areaIdx}
-                        className={styles.scopeAreaDetails}
-                        open={areaIdx === 0}
-                      >
-                        <summary className={styles.scopeAreaSummary}>
-                          <span className={styles.scopeSummaryHeading}>{area.title}</span>
-                          <Icon icon={ChevronDown} size={18} className={styles.scopeChevron} />
-                        </summary>
-                        <div className={styles.scopeAreaContent}>
-                          <ul className={styles.checklist}>
-                            {area.items.map((item, itemIdx) => (
-                              <li key={itemIdx} className={styles.checklistItem}>
-                                <Icon icon={CheckCircle2} size={18} className={styles.checkIcon} />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </details>
-                    ))}
-                  </div>
+                  <h2 className={styles.sectionHeading}>
+                    What’s <Em>included</Em>
+                  </h2>
+                  <ServiceScopeHighlights scope={service.scope} />
                 </div>
               ) : (
                 /* Fallback to flat inclusions if no scope provided */

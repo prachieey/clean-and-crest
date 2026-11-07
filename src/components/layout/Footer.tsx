@@ -55,7 +55,9 @@ export function Footer() {
                 height={40}
                 className={styles.logoImg}
               />
-              <span className={styles.brandName}>{business.name}</span>
+              <span className={styles.brandName}>
+                Clean <em className={styles.brandAmpersand}>&amp;</em> Crest
+              </span>
             </Link>
 
             <p className={styles.brandDesc}>

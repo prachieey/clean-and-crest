@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { siteConfig } from "@/config";
-import { Container, Section, Eyebrow } from "@/components/ui";
+import { Container, Section, Eyebrow, Em } from "@/components/ui";
 import styles from "./beforeAfter.module.css";
 
 export function BeforeAfter() {
@@ -25,12 +25,12 @@ export function BeforeAfter() {
     <Section variant="ice" id="results" aria-labelledby="results-heading" className={styles.sliderSection}>
       <Container>
         <div className={styles.headerWrapper}>
-          <Eyebrow>Real Results</Eyebrow>
+          <Eyebrow>Results</Eyebrow>
           <h2 id="results-heading" className={styles.sectionHeading}>
-            {currentItem.title || "Before & After Results"}
+            Documented before and after <Em>transformations</Em>
           </h2>
           <p className={styles.instructionText}>
-            Slide left and right to see the transformation.
+            Slide left and right to inspect the finished clean.
           </p>
         </div>
 

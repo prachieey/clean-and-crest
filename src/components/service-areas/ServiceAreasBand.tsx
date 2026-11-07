@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Phone, MapPin, ChevronDown, ChevronUp } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Container, Button, Icon } from "@/components/ui";
+import { Container, Button, Icon, Eyebrow, Em } from "@/components/ui";
 import styles from "./city-cards.module.css";
 
 export function ServiceAreasBand() {
@@ -34,14 +34,12 @@ export function ServiceAreasBand() {
       <Container className={styles.container}>
         {/* Section Header */}
         <div className={styles.headerWrapper}>
-          <span className={styles.eyebrow}>WHERE WE OPERATE</span>
+          <Eyebrow number="06">Locations</Eyebrow>
           <h2 id="service-areas-heading" className={styles.title}>
-            Bond Cleaning Across Major Australian Cities
+            Cleaning across <Em>major Australian cities</Em>
           </h2>
           <p className={styles.subtitle}>
-            Same checklist, same standard, same fixed price — whether you&apos;re in
-            Melbourne, Brisbane or Perth. Your property manager gets the same
-            thorough result wherever you are.
+            Uniform checklists and upfront pricing across Brisbane, Melbourne and Perth.
           </p>
         </div>
 

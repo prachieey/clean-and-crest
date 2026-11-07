@@ -2,31 +2,40 @@
 
 :root {
   /* --------------------------------------------------
-   * Brand Color Tokens (Sampled & Harmonized with Logo)
+   * Brand Color Tokens (Editorial Australian Coastal Modern)
    * -------------------------------------------------- */
-  --color-navy-900: #0D253F;   /* Headings, dark bands, footer */
-  --color-blue-600: #1669C9;   /* Primary buttons, links, active states (contrast 5.39:1 on white) */
-  --color-blue-500: #1871D9;   /* Hover, secondary interactive elements (contrast 4.77:1 on white, WCAG AA compliant) */
-  --color-cyan-400: #28C5E0;   /* Accent highlights, badges, icons (NEVER body text on white; 7.5:1 on navy) */
-  --color-ice-50: #F1F7FC;     /* Alternate section backgrounds */
-  --color-ice-100: #E0ECF5;    /* Borders, dividers, subtle fills */
-  --color-ink-700: #192B3C;    /* High-contrast body text */
-  --color-ink-500: #566B7F;    /* Secondary / muted body text (contrast 5.52:1 on white) */
+  --color-navy-950: #06162B;   /* Deepest backgrounds, footer, dark mood sections */
+  --color-navy-900: #0A2342;   /* Headings, high-contrast dark sections */
+  --color-royal-600: #1D6FE5;  /* Primary interactive, links, bold accent */
+  --color-blue-600: var(--color-royal-600); /* Alias for backward compatibility */
+  --color-blue-500: #3A8DFF;   /* Hover, highlights (contrast >= 4.7:1) */
+  --color-aqua-400: #22D3EE;   /* Bright accent (eyebrow marks, light badges) */
+  --color-aqua-300: #7BE7F5;   /* Luminous accent on dark navy sections (contrast 12.6:1 on navy-950) */
+  --color-cyan-400: var(--color-aqua-400); /* Alias for backward compatibility */
+  --color-ice-50: #F3F9FF;     /* Soft alternating section background */
+  --color-sky-100: #E4F1FF;    /* Refined card borders, fine dividers */
+  --color-ice-100: var(--color-sky-100); /* Alias for backward compatibility */
+  --color-champagne-400: #C9A96A; /* Fine hairlines, small ornaments, star ratings on light */
+  --color-champagne-200: #EAD9B5; /* Fine hairlines & subtle numerals on dark navy (contrast 13:1) */
+  --color-ink-800: #0F1F36;    /* Deep crisp body text (contrast 16.6:1 on white) */
+  --color-ink-700: var(--color-ink-800); /* Alias for backward compatibility */
+  --color-ink-500: #566A82;    /* Secondary / muted body text (contrast 5.55:1 on white) */
   --color-white: #FFFFFF;      /* Clean dominant background */
+  --color-rating: var(--color-champagne-400);
 
   /* Semantic Color Tokens */
   --color-background: var(--color-white);
   --color-surface: var(--color-white);
   --color-surface-ice: var(--color-ice-50);
-  --color-text: var(--color-ink-700);
+  --color-text: var(--color-ink-800);
   --color-text-heading: var(--color-navy-900);
   --color-text-muted: var(--color-ink-500);
-  --color-border: var(--color-ice-100);
-  --color-primary: var(--color-blue-600);
+  --color-border: var(--color-sky-100);
+  --color-primary: var(--color-royal-600);
   --color-primary-hover: var(--color-blue-500);
-  --color-accent: var(--color-cyan-400);
-  --color-focus-ring: rgba(22, 105, 201, 0.4);
-  --color-focus-ring-navy: var(--color-cyan-400);
+  --color-accent: var(--color-aqua-400);
+  --color-focus-ring: rgba(29, 111, 229, 0.4);
+  --color-focus-ring-navy: var(--color-aqua-300);
   --color-success: #15803D;    /* Success indicators (contrast >= 5:1 on white) */
   --color-success-bg: #DCFCE7;
   --color-success-border: #86EFAC;
@@ -38,23 +47,23 @@
   --color-warning-text: #92400E;
 
   /* --------------------------------------------------
-   * Typography Tokens
+   * Typography Tokens (Fraunces Serif + Inter Sans)
    * -------------------------------------------------- */
-  --font-family-heading: var(--font-heading), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-heading: var(--font-heading), "Playfair Display", Georgia, serif;
   --font-family-body: var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* Fluid Type Scale (clamp: 360px mobile -> 1440px desktop) */
-  --font-size-h1: clamp(2.25rem, 3.5vw + 1.25rem, 3.75rem);       /* 36px mobile to 60px desktop */
-  --font-size-h2: clamp(1.75rem, 1.8vw + 1.34rem, 2.625rem);      /* 28px mobile to 42px desktop */
-  --font-size-h3: clamp(1.25rem, 0.8vw + 1.07rem, 1.625rem);      /* 20px mobile to 26px desktop */
-  --font-size-h4: clamp(1.125rem, 0.35vw + 1.0375rem, 1.25rem);   /* 18px to 20px */
-  --font-size-body: clamp(1rem, 0.25vw + 0.9375rem, 1.125rem);    /* 16px mobile to 18px desktop */
-  --font-size-sm: 0.875rem;                                        /* 14px */
-  --font-size-xs: 0.8125rem;                                       /* 13px */
+  /* Fluid Editorial Type Scale (clamp: 360px mobile -> 1440px desktop) */
+  --font-size-h1: clamp(2.5rem, 3.8vw + 1.25rem, 4.5rem);      /* 40px mobile to 72px desktop */
+  --font-size-h2: clamp(1.875rem, 2.2vw + 1.2rem, 3.25rem);    /* 30px mobile to 52px desktop */
+  --font-size-h3: clamp(1.375rem, 0.9vw + 1.1rem, 1.75rem);    /* 22px mobile to 28px desktop */
+  --font-size-h4: clamp(1.125rem, 0.4vw + 1.025rem, 1.25rem);  /* 18px to 20px */
+  --font-size-body: clamp(1.0625rem, 0.15vw + 1.025rem, 1.125rem); /* 17px mobile to 18px desktop */
+  --font-size-sm: 0.875rem;                                     /* 14px */
+  --font-size-xs: 0.875rem;                                     /* 14px minimum */
 
-  --line-height-heading: 1.15;
+  --line-height-heading: 1.1;
   --line-height-body: 1.65;
-  --prose-max-width: 65ch;
+  --prose-max-width: 60ch;
 
   /* --------------------------------------------------
    * Spacing Tokens (8px Base Scale)
@@ -79,24 +88,34 @@
   /* --------------------------------------------------
    * Radii Tokens
    * -------------------------------------------------- */
-  --radius-button: 9px;
-  --radius-card: 14px;
-  --radius-input: 8px;
+  --radius-button: 10px;
+  --radius-card: 16px;
+  --radius-input: 10px;
   --radius-badge: 9999px;
 
   /* --------------------------------------------------
-   * Soft 3D Depth Shadows (Multi-layered, Blue-tinted)
+   * Unified Z-Index Scale (No Collisions)
    * -------------------------------------------------- */
-  --shadow-depth-1: 0 2px 6px -1px rgba(13, 37, 63, 0.07), 0 1px 3px 0 rgba(22, 105, 201, 0.04), 0 0 0 1px rgba(13, 37, 63, 0.04);
-  --shadow-depth-2: 0 6px 16px -2px rgba(13, 37, 63, 0.09), 0 2px 6px -1px rgba(22, 105, 201, 0.06), 0 0 0 1px rgba(13, 37, 63, 0.05);
-  --shadow-depth-3: 0 16px 32px -4px rgba(13, 37, 63, 0.12), 0 6px 12px -2px rgba(22, 105, 201, 0.08), 0 0 0 1px rgba(13, 37, 63, 0.06);
-  --shadow-depth-lift: 0 12px 24px -2px rgba(13, 37, 63, 0.10), 0 4px 10px -1px rgba(22, 105, 201, 0.08), 0 0 0 1px rgba(22, 105, 201, 0.14);
-  --shadow-floating: 0 20px 40px -8px rgba(13, 37, 63, 0.18), 0 8px 16px -4px rgba(22, 105, 201, 0.12);
-  --shadow-chip: 0 2px 6px rgba(13, 37, 63, 0.12), 0 1px 2px rgba(22, 105, 201, 0.08);
-  --shadow-button-depth: 0 2px 4px rgba(13, 37, 63, 0.08), 0 4px 12px rgba(22, 105, 201, 0.20);
-  --shadow-button-depth-hover: 0 4px 8px rgba(13, 37, 63, 0.10), 0 8px 18px rgba(22, 105, 201, 0.28);
-  --shadow-button-depth-active: 0 1px 2px rgba(13, 37, 63, 0.12), 0 2px 6px rgba(22, 105, 201, 0.18);
-  --shadow-icon-3d: 0 8px 16px -2px rgba(13, 37, 63, 0.12), 0 2px 6px rgba(22, 105, 201, 0.08);
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-header: 500;
+  --z-mobile-bar: 900;
+  --z-whatsapp: 950;
+  --z-modal: 1000;
+
+  /* --------------------------------------------------
+   * Depth Shadows (Oceanic Blue Tinted, Never Black)
+   * -------------------------------------------------- */
+  --shadow-depth-1: 0 2px 8px -1px rgba(6, 22, 43, 0.06), 0 1px 3px 0 rgba(29, 111, 229, 0.04), 0 0 0 1px var(--color-sky-100);
+  --shadow-depth-2: 0 8px 20px -3px rgba(6, 22, 43, 0.09), 0 3px 8px -1px rgba(29, 111, 229, 0.06), 0 0 0 1px rgba(29, 111, 229, 0.08);
+  --shadow-depth-3: 0 20px 40px -6px rgba(6, 22, 43, 0.14), 0 8px 16px -2px rgba(29, 111, 229, 0.10);
+  --shadow-depth-lift: 0 14px 28px -3px rgba(6, 22, 43, 0.12), 0 6px 12px -2px rgba(29, 111, 229, 0.10), 0 0 0 1px rgba(29, 111, 229, 0.18);
+  --shadow-floating: 0 24px 48px -8px rgba(6, 22, 43, 0.20), 0 8px 20px -4px rgba(29, 111, 229, 0.14);
+  --shadow-chip: 0 2px 6px rgba(6, 22, 43, 0.08), 0 1px 2px rgba(29, 111, 229, 0.05);
+  --shadow-button-depth: 0 2px 6px rgba(6, 22, 43, 0.08), 0 6px 16px rgba(29, 111, 229, 0.22);
+  --shadow-button-depth-hover: 0 4px 10px rgba(6, 22, 43, 0.10), 0 10px 24px rgba(29, 111, 229, 0.32);
+  --shadow-button-depth-active: 0 1px 2px rgba(6, 22, 43, 0.12), 0 2px 6px rgba(29, 111, 229, 0.18);
+  --shadow-icon-3d: 0 8px 16px -2px rgba(6, 22, 43, 0.12), 0 2px 6px rgba(29, 111, 229, 0.08);
 
   /* Backwards compatibility aliases */
   --shadow-level-1: var(--shadow-depth-1);
@@ -195,7 +214,7 @@ body {
   border: 0;
 }
 
-/* Headings with balance wrapping and strict typography scale */
+/* Headings with balance wrapping, Fraunces serif and strict typography scale */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
   color: var(--color-text-heading);
@@ -204,29 +223,29 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: var(--font-size-h1);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.08;
   letter-spacing: -0.02em;
 }
 
 h2 {
   font-size: var(--font-size-h2);
-  font-weight: 700;
-  line-height: 1.15;
+  font-weight: 500;
+  line-height: 1.12;
   letter-spacing: -0.015em;
 }
 
 h3 {
   font-size: var(--font-size-h3);
-  font-weight: 700;
-  line-height: 1.25;
+  font-weight: 600;
+  line-height: 1.20;
   letter-spacing: -0.01em;
 }
 
 h4 {
   font-size: var(--font-size-h4);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.30;
   letter-spacing: -0.005em;
 }
 

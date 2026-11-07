@@ -36,6 +36,12 @@
 .summaryStars {
   display: inline-flex;
   gap: 2px;
+  color: var(--color-champagne-400);
+}
+
+.summaryStars svg {
+  fill: var(--color-champagne-400);
+  color: var(--color-champagne-400);
 }
 
 .summaryText {
@@ -256,8 +262,8 @@
 }
 
 .starFilled {
-  color: #F59E0B;
-  fill: #F59E0B;
+  color: var(--color-champagne-400);
+  fill: var(--color-champagne-400);
 }
 
 .starEmpty {

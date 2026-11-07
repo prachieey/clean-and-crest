@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, AlertTriangle } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Container, Section, Eyebrow, Button, Icon, SectionVariant } from "@/components/ui";
+import { Container, Section, Eyebrow, Button, Icon, SectionVariant, Em } from "@/components/ui";
 import { AboutImage } from "@/components/about";
 import styles from "./aboutTeaser.module.css";
 
@@ -25,10 +25,10 @@ export function AboutTeaser({ variant = "white", className = "" }: AboutTeaserPr
         <div className={styles.teaserGrid}>
           {/* Text Column */}
           <div className={styles.textContent}>
-            <Eyebrow>{teaser.eyebrow}</Eyebrow>
+            <Eyebrow number="05">Company</Eyebrow>
 
             <h2 id="about-teaser-heading" className={styles.heading}>
-              {teaser.title}
+              Cleaning built on <Em>upfront standards</Em>
             </h2>
 
             {isDev && teaser.needsOwnerInput && (
@@ -39,12 +39,12 @@ export function AboutTeaser({ variant = "white", className = "" }: AboutTeaserPr
             )}
 
             <p className={styles.description}>
-              {teaser.description}
+              Clean &amp; Crest provides dependable residential and commercial cleaning across Australia, built on systematic checklists, clear communication, and upfront quotes without hidden fees.
             </p>
 
             <div className={styles.actionRow}>
-              <Button variant="tertiary" href="/about">
-                <span>About us</span>
+              <Button variant="secondary" href="/about">
+                <span>About our team</span>
                 <Icon icon={ArrowRight} size={16} />
               </Button>
             </div>

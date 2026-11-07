@@ -1,8 +1,9 @@
 import React from "react";
+import Link from "next/link";
 import { Phone, CheckCircle2 } from "lucide-react";
 import { siteConfig, isTrustClaimVerified } from "@/config";
 import { isRealValue } from "@/config/seo";
-import { Container, Button, Icon, Placeholder } from "@/components/ui";
+import { Container, Button, Icon, Placeholder, Em } from "@/components/ui";
 import { HeroQuickQuote } from "./HeroQuickQuote";
 import { HeroVisual } from "./HeroVisual";
 import styles from "./hero.module.css";
@@ -69,18 +70,17 @@ export function Hero({ imageSrc }: HeroProps) {
               </span>
             </div>
 
-            {/* Main Single H1 */}
+            {/* Main Single H1 with Fraunces Italic Accent */}
             <h1 id="hero-heading" className={styles.heroTitle}>
               {hasRealRegion ? (
                 <>
-                  Reliable house and commercial cleaning in{" "}
-                  <span className={styles.regionHighlight}>
-                    {siteConfig.business.primaryRegion}
-                  </span>
+                  Reliable cleaning for homes{" "}
+                  <Em>and workplaces</Em> in {siteConfig.business.primaryRegion}
                 </>
               ) : isDev ? (
                 <>
-                  Reliable house and commercial cleaning in{" "}
+                  Reliable cleaning for homes{" "}
+                  <Em>and workplaces</Em> in{" "}
                   <Placeholder
                     value={siteConfig.business.primaryRegion}
                     label="REGION"
@@ -88,17 +88,34 @@ export function Hero({ imageSrc }: HeroProps) {
                   />
                 </>
               ) : (
-                <>Reliable house and commercial cleaning services</>
+                <>
+                  Reliable cleaning for homes{" "}
+                  <Em>and workplaces</Em>
+                </>
               )}
             </h1>
 
-            {/* Plain-Language Subheading */}
+            {/* Plain-Language Subheading (Word Budget: <= 18 words) */}
             <p className={styles.heroDescription}>
-              Dependable regular, deep, and end of lease cleaning for households and commercial spaces. Request an upfront quote online with no obligation.
+              Dependable house, vacate and commercial cleaning with upfront quotes and systematic checklists.
             </p>
 
             {/* Primary Action: Hero Quick-Quote Bar */}
             <HeroQuickQuote />
+
+            {/* Service Areas Pill Row */}
+            <div className={styles.servicePillRow} aria-label="Service areas">
+              <span className={styles.servicePillLabel}>Coverage:</span>
+              <Link href="/locations/brisbane" className={styles.servicePill}>
+                Brisbane
+              </Link>
+              <Link href="/locations/melbourne" className={styles.servicePill}>
+                Melbourne
+              </Link>
+              <Link href="/locations/perth" className={styles.servicePill}>
+                Perth
+              </Link>
+            </div>
 
             {/* Secondary Action: Direct Phone Link */}
             <div className={styles.secondaryActionRow}>
@@ -128,7 +145,7 @@ export function Hero({ imageSrc }: HeroProps) {
             </ul>
           </div>
 
-          {/* Right Column: Hero Visual / Illustrative Photo with Soft 3D Accents */}
+          {/* Right Column: Hero Visual / Illustrative Photo Suite */}
           <HeroVisual imageSrc={imageSrc} />
         </div>
       </Container>

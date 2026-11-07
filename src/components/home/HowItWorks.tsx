@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, Phone } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Container, Section, Eyebrow, Button, Icon, SectionVariant } from "@/components/ui";
+import { Container, Section, Eyebrow, Button, Icon, Em, SectionVariant } from "@/components/ui";
 import styles from "./howItWorks.module.css";
 
 interface HowItWorksProps {
@@ -10,13 +10,35 @@ interface HowItWorksProps {
   className?: string;
 }
 
+const STEPS_DATA = [
+  {
+    stepNumber: "01",
+    title: "Request a Quote",
+    description: "Submit property details and service options online in minutes.",
+  },
+  {
+    stepNumber: "02",
+    title: "Receive Upfront Pricing",
+    description: "Get a clear itemised quote before confirming your booking.",
+  },
+  {
+    stepNumber: "03",
+    title: "Systematic Clean",
+    description: "Cleaners arrive on schedule with checklists and equipment.",
+  },
+  {
+    stepNumber: "04",
+    title: "Final Review",
+    description: "Review spotless results and receive your detailed tax invoice.",
+  },
+];
+
 export function HowItWorks({
   id = "how-it-works",
-  variant = "white",
+  variant = "ice",
   className = "",
 }: HowItWorksProps) {
   const phoneHref = siteConfig.business.phoneHref || `tel:${siteConfig.business.phone}`;
-  const steps = siteConfig.howItWorks;
 
   return (
     <Section
@@ -28,43 +50,25 @@ export function HowItWorks({
       <Container>
         {/* Section Header */}
         <div className={styles.headerWrapper}>
-          <Eyebrow>How it works</Eyebrow>
-          <h2
-            id="how-it-works-heading"
-            style={{ fontSize: "var(--font-size-h2)", marginBottom: "var(--space-1)" }}
-          >
-            Getting a clean is simple
+          <Eyebrow number="03">Process</Eyebrow>
+          <h2 id="how-it-works-heading" className={styles.title}>
+            Straightforward cleaning from <Em>quote to completion</Em>
           </h2>
           <p className={styles.subheading}>
-            From your initial enquiry to the completed clean, here is what to expect.
+            Clear steps and upfront pricing with zero surprises.
           </p>
         </div>
 
-        {/* Semantic Ordered List of Steps */}
-        <ol className={styles.stepsList} aria-label="How it works process steps" data-reveal-stagger="true">
-          {steps.map((step) => (
-            <li key={step.stepNumber} className={styles.stepItem}>
-              {/* Step Marker Column */}
-              <div className={styles.markerCol}>
-                <div className={styles.numberCircle}>
-                  <span>{step.stepNumber}</span>
-                  <span className={styles.cyanAccentDot} aria-hidden="true" />
-                </div>
-
-                {/* Mobile Vertical Connector Line */}
-                <div className={styles.verticalLine} aria-hidden="true" />
-
-                {/* Tablet / Desktop Horizontal Connector Line */}
-                <div className={styles.horizontalLine} aria-hidden="true">
-                  <span className={styles.horizontalLineDot} aria-hidden="true" />
-                </div>
+        {/* 4-Step Process with Oversized Fraunces Numerals */}
+        <ol className={styles.stepsGrid} aria-label="Process steps">
+          {STEPS_DATA.map((step) => (
+            <li key={step.stepNumber} className={styles.stepCard}>
+              <div className={styles.numeralRow}>
+                <span className={styles.oversizedNumeral}>{step.stepNumber}</span>
+                <span className={styles.connectingLine} aria-hidden="true" />
               </div>
-
-              {/* Step Text Content */}
-              <div className={styles.stepContent}>
-                <h3 className={styles.stepTitle}>{step.title}</h3>
-                <p className={styles.stepDescription}>{step.description}</p>
-              </div>
+              <h3 className={styles.stepTitle}>{step.title}</h3>
+              <p className={styles.stepDesc}>{step.description}</p>
             </li>
           ))}
         </ol>

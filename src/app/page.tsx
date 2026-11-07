@@ -10,6 +10,8 @@ import {
   BondBackTerms,
   AboutTeaser,
   FaqSection,
+  ImageBand,
+  DetailGalleryStrip,
 } from "@/components/home";
 
 const BeforeAfter = dynamic(
@@ -45,8 +47,10 @@ export default function Home() {
       <WhyChooseUs />
       <HowItWorks />
       <BeforeAfter />
+      <ImageBand />
       <BondBackTerms />
       <AboutTeaser variant="white" />
+      <DetailGalleryStrip />
       <ServiceAreasBand />
       <FaqSection />
       <FinalCtaBand />

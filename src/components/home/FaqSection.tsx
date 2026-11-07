@@ -2,7 +2,7 @@ import React from "react";
 import { ChevronDown, AlertTriangle } from "lucide-react";
 import { siteConfig } from "@/config";
 import { getFaqJsonLd } from "@/config/seo";
-import { Container, Section, Eyebrow, Icon } from "@/components/ui";
+import { Container, Section, Eyebrow, Icon, Em } from "@/components/ui";
 import { JsonLd } from "@/components/seo";
 import styles from "./faq.module.css";
 
@@ -24,9 +24,9 @@ export function FaqSection() {
       <JsonLd schema={getFaqJsonLd(displayFaqs)} />
       <Container>
         <div className={styles.headerWrapper}>
-          <Eyebrow>Common Questions</Eyebrow>
+          <Eyebrow number="07">FAQ</Eyebrow>
           <h2 id="faq-heading" style={{ fontSize: "var(--font-size-h2)", marginBottom: "var(--space-1)" }}>
-            Frequently asked questions
+            Frequently asked <Em>questions</Em>
           </h2>
           <p style={{ color: "var(--color-ink-500)", fontSize: "var(--font-size-body)", margin: "0 auto" }}>
             Clear answers to help you plan your cleaning service.

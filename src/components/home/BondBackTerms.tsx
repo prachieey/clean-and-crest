@@ -9,6 +9,7 @@ import {
   AlertTriangle,
   LucideIcon,
 } from "lucide-react";
+import { Em } from "@/components/ui";
 import styles from "./bond-back-terms.module.css";
 
 interface GuaranteeTerm {
@@ -73,12 +74,12 @@ export function BondBackTerms() {
       <div className={styles.container}>
         {/* Section Header */}
         <div className={styles.headerWrapper}>
-          <span className={styles.eyebrow}>The Fine Print</span>
+          <span className={styles.eyebrow}>Assurance Terms</span>
           <h2 id="bond-back-terms-heading" className={styles.title}>
-            Our Bond Back Guarantee — Full Terms
+            Our Bond Back Assurance <Em>conditions</Em>
           </h2>
           <p className={styles.subtitle}>
-            We stand behind every clean. If your property manager identifies a cleaning issue, we&apos;ll return and re-clean it free of charge, subject to the terms below.
+            Clear guidelines for free re-cleans if a property manager flags any items within 72 hours.
           </p>
         </div>
 

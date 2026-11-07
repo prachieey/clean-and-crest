@@ -1,118 +1,64 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { SiteImage } from "@/components/ui";
 import styles from "./hero.module.css";
-
-/**
- * CONFIG FLAGS for Hero 3D / Floating Decorations:
- *
- * 1. ENABLE_HERO_3D_SCENE:
- *    Set to false per user instruction to disable the real-time WebGL/canvas
- *    scene that generated flat opaque circles and thin diamond slivers.
- *
- * 2. HAS_TRANSPARENT_HERO_3D_ASSETS:
- *    Set to false until transparent PNG assets (with genuine alpha channel)
- *    are supplied to replace the current opaque-background JPEG/WebP files.
- *    Prevents rendering white/grey rectangular cards over the hero photo.
- */
-export const ENABLE_HERO_3D_SCENE = false;
-export const HAS_TRANSPARENT_HERO_3D_ASSETS = false;
 
 interface HeroVisualProps {
   imageSrc?: string;
 }
 
+/**
+ * HeroVisual — Staggered Three-Image Editorial Composition
+ *
+ * Implements Pass 4 requirements:
+ * - One tall portrait photo (Serene bedroom with crisp linen & brass lamp)
+ * - One wide architectural photo (Sunlit open-plan coastal living room & kitchen)
+ * - One small detail square (Polished stone benchtop detail with fresh flowers)
+ * - 16px radii, blue-tinted depth shadows, and slight offsets
+ * - On mobile (<768px): gracefully folds into single primary hero image plus overlapping detail square
+ */
 export function HeroVisual({ imageSrc }: HeroVisualProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [Scene3DComponent, setScene3DComponent] = useState<React.ComponentType | null>(null);
-
-  useEffect(() => {
-    // Disabled behind config flag: do not load or execute WebGL scene
-    if (!ENABLE_HERO_3D_SCENE) return;
-
-    if (typeof window === "undefined") return;
-    if (window.innerWidth < 768) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    import("./HeroScene3D")
-      .then((mod) => {
-        setScene3DComponent(() => mod.HeroScene3D);
-      })
-      .catch((err) => {
-        console.warn("[3D Hero] Failed to load 3D scene:", err);
-      });
-  }, []);
-
   return (
-    <div ref={containerRef} className={styles.imageArea}>
-      {/* Base Photo Frame */}
-      <div className={styles.imageFrame}>
-        <SiteImage
-          slotId="hero-home"
-          src={imageSrc}
+    <div className={styles.staggeredComposition} aria-label="Editorial photography showcase">
+      {/* 1. Tall Portrait Main (Desktop/Tablet) */}
+      <div className={styles.staggerPortrait}>
+        <Image
+          src="/images/lux-hero-portrait.webp"
+          alt="Serene bedroom with crisp white hotel linen, velvet cushion, and brass bedside lamp"
+          width={440}
+          height={586}
           priority
-          className={styles.heroImg}
+          className={styles.staggerImg}
+          sizes="(max-width: 768px) 100vw, 440px"
         />
       </div>
 
-      {/* Real-Time 3D WebGL Canvas Layer (Disabled behind ENABLE_HERO_3D_SCENE flag) */}
-      {ENABLE_HERO_3D_SCENE && Scene3DComponent && (
-        <div className={styles.canvas3DLayer} aria-hidden="true">
-          <Scene3DComponent />
-        </div>
-      )}
+      {/* 2. Wide Open-Plan Photo (Overlapping Desktop, Primary on Mobile) */}
+      <div className={styles.staggerWide}>
+        <Image
+          src={imageSrc || "/images/lux-hero-wide.webp"}
+          alt="Bright open-plan living room and kitchen with white oak floors and white stone island"
+          width={440}
+          height={295}
+          priority
+          className={styles.staggerImg}
+          sizes="(max-width: 768px) 100vw, 440px"
+        />
+      </div>
 
-      {/* Floating 3D Decorative Assets:
-          Only displayed when genuine transparent cutouts are supplied (HAS_TRANSPARENT_HERO_3D_ASSETS === true).
-          Never displayed as opaque rectangular cards.
-      */}
-      {HAS_TRANSPARENT_HERO_3D_ASSETS && (
-        <>
-          {/* Floating Accent 1: Soap Bubbles Cluster (Top-Right Corner: Desktop, Tablet, Mobile) */}
-          <div className={`${styles.floatingElement} ${styles.floatingBubbles}`} aria-hidden="true">
-            <div className={styles.floatInner1}>
-              <Image
-                src="/images/3d-bubbles-cluster.webp"
-                alt=""
-                width={140}
-                height={140}
-                className={styles.floatingImg}
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          {/* Floating Accent 2: Sparkle (Bottom-Left Corner: Desktop and Tablet only) */}
-          <div className={`${styles.floatingElement} ${styles.floatingSparkle}`} aria-hidden="true">
-            <div className={styles.floatInner2}>
-              <Image
-                src="/images/3d-sparkle.webp"
-                alt=""
-                width={64}
-                height={64}
-                className={styles.floatingImg}
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          {/* Floating Accent 3: Spray Bottle (Bottom-Right Corner: Desktop only) */}
-          <div className={`${styles.floatingElement} ${styles.floatingSpray}`} aria-hidden="true">
-            <div className={styles.floatInner3}>
-              <Image
-                src="/images/3d-spray-bottle.webp"
-                alt=""
-                width={110}
-                height={110}
-                className={styles.floatingImg}
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </>
-      )}
+      {/* 3. Detail Square (Macro polished stone benchtop reflection & linen) */}
+      <div className={styles.staggerDetail}>
+        <Image
+          src="/images/lux-hero-detail.webp"
+          alt="Polished white stone benchtop detail with fresh white flowers and folded linen cloth"
+          width={180}
+          height={180}
+          loading="lazy"
+          className={styles.staggerImg}
+          sizes="(max-width: 768px) 110px, 180px"
+        />
+      </div>
     </div>
   );
 }

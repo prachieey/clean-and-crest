@@ -78,11 +78,19 @@
 
 .brandText {
   font-family: var(--font-family-heading);
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--color-navy-900);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--color-navy-950);
   line-height: 1;
+}
+
+.brandAmpersand {
+  font-family: var(--font-family-heading);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-royal-600);
+  margin: 0 1px;
 }
 
 /* Desktop Navigation */

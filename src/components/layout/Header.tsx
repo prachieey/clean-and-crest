@@ -129,7 +129,9 @@ export function Header() {
               className={styles.brandLogo}
               priority
             />
-            <span className={styles.brandText}>{siteConfig.business.name}</span>
+            <span className={styles.brandText}>
+              Clean <em className={styles.brandAmpersand}>&amp;</em> Crest
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
