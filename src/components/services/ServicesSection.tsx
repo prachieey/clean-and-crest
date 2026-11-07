@@ -24,12 +24,12 @@ const SERVICES_DATA: ServiceItem[] = [
     href: "/services/end-of-lease-cleaning",
   },
   {
-    id: "house-cleaning",
-    title: "House Cleaning",
+    id: "general-cleaning",
+    title: "General Cleaning",
     description: "Systematic room-by-room maintenance for active Australian households.",
     image: "/images/lux-service-house.webp",
     alt: "Sunlit living room with linen sofa and polished timber floor",
-    href: "/quote?service=house-cleaning",
+    href: "/services/general-deep-cleaning",
   },
   {
     id: "deep-cleaning",
@@ -38,30 +38,6 @@ const SERVICES_DATA: ServiceItem[] = [
     image: "/images/lux-service-deep.webp",
     alt: "Immaculate marble bathroom with streak-free glass shower and brass tapware",
     href: "/services/deep-cleaning",
-  },
-  {
-    id: "commercial-cleaning",
-    title: "Commercial Cleaning",
-    description: "Scheduled cleaning for offices, boutique studios and retail suites.",
-    image: "/images/lux-service-commercial.webp",
-    alt: "Boutique office lobby with polished floor, glass walls, and reception desk",
-    href: "/quote?service=commercial-cleaning",
-  },
-  {
-    id: "carpet-steam-cleaning",
-    title: "Carpet Steam Cleaning",
-    description: "Hot-water extraction removing embedded soil, traffic marks and stains.",
-    image: "/images/lux-service-carpet.webp",
-    alt: "Plush pale bedroom carpet with clean vacuum-line texture and soft light",
-    href: "/quote?service=end-of-lease-cleaning",
-  },
-  {
-    id: "upholstery-cleaning",
-    title: "Upholstery & Fabrics",
-    description: "Deep steam care for fabric armchairs, sofas and loose cushions.",
-    image: "/images/lux-service-upholstery.webp",
-    alt: "Clean textured fabric armchair with neat cushion and soft natural window light",
-    href: "/quote?service=end-of-lease-cleaning",
   },
 ];
 

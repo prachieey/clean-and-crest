@@ -1106,7 +1106,7 @@ export function QuoteForm() {
           </div>
 
           <div className={styles.estimateReason}>
-            Deep Cleaning and General Deep Cleaning quotes are prepared individually tailored to your property.
+            Deep Cleaning and General Cleaning quotes are prepared individually tailored to your property.
           </div>
 
           <div className={styles.estimateItemsList}>

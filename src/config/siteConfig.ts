@@ -469,9 +469,9 @@ export const siteConfig: SiteConfig = {
     },
     {
       slug: "general-deep-cleaning",
-      title: "General Deep Cleaning",
-      shortDescription: "A general deep clean of living areas, bathrooms, kitchen and floors.",
-      longDescription: "A general deep clean of living areas, bathrooms, kitchen and floors.",
+      title: "General Cleaning",
+      shortDescription: "A comprehensive general clean of living areas, bathrooms, kitchen and floors.",
+      longDescription: "A comprehensive general clean of living areas, bathrooms, kitchen and floors.",
       icon: "Sparkles",
       image: "/images/service-deep-cleaning.webp",
       confirmed: true,

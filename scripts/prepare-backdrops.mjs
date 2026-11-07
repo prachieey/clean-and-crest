@@ -28,3 +28,4 @@ for (const t of tasks) {
     console.log(`Generated ${t.out}: ${Math.round(stat.size / 1024)} KB`);
   }
 }
+

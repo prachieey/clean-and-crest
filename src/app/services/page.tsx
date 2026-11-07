@@ -13,7 +13,7 @@ import { JsonLd } from "@/components/seo";
 export const metadata: Metadata = generatePageMetadata({
   title: "Cleaning Services in Brisbane, Melbourne & Perth | Clean & Crest",
   description:
-    "Explore professional end of lease, deep, and general deep cleaning services across Brisbane, Melbourne, and Perth. Tailored checklists and upfront quotes for every home.",
+    "Explore professional end of lease, deep, and general cleaning services across Brisbane, Melbourne, and Perth. Tailored checklists and upfront quotes for every home.",
   path: "/services",
 });
 

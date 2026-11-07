@@ -118,7 +118,7 @@ export function ServicesComparisonTable() {
       <div className={styles.tableScrollWrapper} tabIndex={0} role="region" aria-label="Cleaning services comparison table">
         <table className={styles.comparisonTable}>
           <caption className="sr-only">
-            Detailed comparison of End of Lease Cleaning, Deep Cleaning, and General Deep Cleaning
+            Detailed comparison of End of Lease Cleaning, Deep Cleaning, and General Cleaning
           </caption>
           <thead>
             <tr>
