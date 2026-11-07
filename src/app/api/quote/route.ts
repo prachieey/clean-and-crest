@@ -14,6 +14,19 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 const RATE_LIMIT_MAX_REQUESTS = 5; // 5 submissions per window
 
+// In-memory email rate limiting: email -> { count: number, resetTime: number }
+const emailRateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const EMAIL_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const EMAIL_RATE_LIMIT_MAX_REQUESTS = 5;
+
+// In-memory idempotency cache: key -> { response: any, expiresAt: number }
+interface IdempotencyRecord {
+  response: Record<string, unknown>;
+  expiresAt: number;
+}
+const idempotencyCache = new Map<string, IdempotencyRecord>();
+const IDEMPOTENCY_TTL_MS = 15 * 60 * 1000; // 15 minutes
+
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
   const record = rateLimitMap.get(ip);
@@ -29,6 +42,38 @@ function isRateLimited(ip: string): boolean {
 
   record.count += 1;
   return false;
+}
+
+function isEmailRateLimited(email: string): boolean {
+  const cleanEmail = email.toLowerCase().trim();
+  const now = Date.now();
+  const record = emailRateLimitMap.get(cleanEmail);
+
+  if (!record || now > record.resetTime) {
+    emailRateLimitMap.set(cleanEmail, { count: 1, resetTime: now + EMAIL_RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  if (record.count >= EMAIL_RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  record.count += 1;
+  return false;
+}
+
+function getIdempotencyKey(body: Record<string, unknown>): string {
+  if (typeof body.clientToken === "string" && body.clientToken.trim()) {
+    return body.clientToken.trim();
+  }
+  if (typeof body.idempotencyKey === "string" && body.idempotencyKey.trim()) {
+    return body.idempotencyKey.trim();
+  }
+  const email = String(body.email || "").toLowerCase().trim();
+  const service = String(body.service || "").trim();
+  const postcode = String(body.postcode || "").trim();
+  const date = String(body.preferredDate || body.preferredDateOption || "").trim();
+  return `${email}|${service}|${postcode}|${date}`;
 }
 
 // Lenient Australian phone validation helper (mobile, landline with area code, 13/1300/1800)
@@ -76,6 +121,27 @@ export async function POST(request: NextRequest) {
     if (body.website && String(body.website).trim() !== "") {
       // Silently accept honeypot bot submissions without executing actions
       return NextResponse.json({ success: true, spam: true });
+    }
+
+    // 4. Idempotency Check (prevent double-click duplicate sends within 15 mins)
+    const idempotencyKey = getIdempotencyKey(body);
+    const cachedRecord = idempotencyCache.get(idempotencyKey);
+    if (cachedRecord && Date.now() < cachedRecord.expiresAt) {
+      console.log(`ℹ️ [Quote API] Returning cached response for duplicate/idempotent key: ${idempotencyKey}`);
+      return NextResponse.json(cachedRecord.response);
+    }
+
+    // 5. Per-Email Rate Limiting (max 5 submissions per hour)
+    if (body.email && typeof body.email === "string" && isValidEmail(body.email)) {
+      if (isEmailRateLimited(body.email)) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Too many quote requests for this email address. Please wait or call us directly.",
+          },
+          { status: 429 }
+        );
+      }
     }
 
     const {
@@ -386,9 +452,13 @@ export async function POST(request: NextRequest) {
     ]);
 
     const isSheetsSynced = sheetsResult.status === "fulfilled" && sheetsResult.value.success;
-    const isEmailDispatched = emailResult.status === "fulfilled" && emailResult.value.adminSent;
+    const emailData = emailResult.status === "fulfilled" ? emailResult.value : null;
+    const adminEmailSent = Boolean(emailData?.adminSent);
+    const customerEmailSent = Boolean(emailData?.customerSent);
+    const isDevMode = Boolean(emailData?.devMode);
+    const emailConfigured = adminEmailSent || customerEmailSent || isDevMode;
 
-    return NextResponse.json({
+    const responsePayload = {
       success: true,
       quoteReference,
       createdAt: quoteData.createdAt,
@@ -397,10 +467,21 @@ export async function POST(request: NextRequest) {
       pricingDataVersion: PRICING_DATA_VERSION,
       pricingDisplay,
       termsVersion,
-      emailConfigured: isEmailDispatched,
+      customerEmailSent,
+      adminEmailSent,
+      emailConfigured,
+      devMode: isDevMode,
       sheetsSynced: isSheetsSynced,
       message: "Quote enquiry received and recorded.",
+    };
+
+    // Cache successful response for idempotency
+    idempotencyCache.set(idempotencyKey, {
+      response: responsePayload,
+      expiresAt: Date.now() + IDEMPOTENCY_TTL_MS,
     });
+
+    return NextResponse.json(responsePayload);
 
   } catch (error) {
     console.error("Error processing quote submission:", error);

@@ -166,6 +166,9 @@ interface SubmissionSuccessData {
   serverEstimate: string;
   pricingDataVersion?: string;
   termsVersion: string;
+  customerEmailSent?: boolean;
+  emailConfigured?: boolean;
+  devMode?: boolean;
   submittedData: QuoteFormData;
   serviceObj: ServiceItem | null;
   estimateBreakdown?: {
@@ -651,6 +654,9 @@ export function QuoteForm() {
         pricingDataVersion: data.pricingDataVersion || "eol-2025-v1",
         estimateBreakdown: data.estimateBreakdown,
         termsVersion: data.termsVersion || siteConfig.termsVersion || "October 2026",
+        customerEmailSent: Boolean(data.customerEmailSent),
+        emailConfigured: Boolean(data.emailConfigured),
+        devMode: Boolean(data.devMode),
         submittedData: { ...formData },
         serviceObj: selectedServiceObj,
       });
@@ -709,33 +715,48 @@ export function QuoteForm() {
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-start",
             gap: "12px",
             backgroundColor: "#DCFCE7",
             border: "1px solid #86EFAC",
             borderRadius: "var(--radius-input)",
-            padding: "12px 16px",
+            padding: "16px",
             marginBottom: "var(--space-5)",
           }}
         >
-          <Icon icon={CheckCircle2} size={24} color="#16A34A" />
+          <Icon icon={CheckCircle2} size={24} color="#16A34A" style={{ marginTop: "2px", flexShrink: 0 }} />
           <div>
             <h2
               ref={successHeadingRef}
               tabIndex={-1}
               style={{
-                fontSize: "1rem",
+                fontSize: "1.0625rem",
                 fontWeight: 700,
                 color: "#166534",
-                margin: 0,
+                margin: "0 0 4px 0",
                 outline: "none",
               }}
             >
               Quotation Request Received
             </h2>
-            <p style={{ margin: 0, fontSize: "0.875rem", color: "#14532D" }}>
-              We have received your quotation request. Below is your official quotation summary and scope of service.
-            </p>
+            {submissionResult.customerEmailSent || submissionResult.devMode ? (
+              <p style={{ margin: 0, fontSize: "0.875rem", color: "#14532D", lineHeight: 1.5 }}>
+                We&apos;ve sent a confirmation to <strong>{submittedData.email}</strong>. Check your spam folder if you can&apos;t see it.
+                {submissionResult.devMode && (
+                  <span style={{ display: "block", fontSize: "0.75rem", color: "#065F46", marginTop: "4px" }}>
+                    [Development Mode: Email simulated and logged to server console]
+                  </span>
+                )}
+              </p>
+            ) : submissionResult.emailConfigured === false ? (
+              <p style={{ margin: 0, fontSize: "0.875rem", color: "#14532D", lineHeight: 1.5 }}>
+                Your request has been recorded with reference <strong>{referenceNumber}</strong>. Our team will review your specifications and contact you shortly.
+              </p>
+            ) : (
+              <p style={{ margin: 0, fontSize: "0.875rem", color: "#14532D", lineHeight: 1.5 }}>
+                We have received your quotation request. Below is your official quotation summary and scope of service.
+              </p>
+            )}
           </div>
         </div>
 
