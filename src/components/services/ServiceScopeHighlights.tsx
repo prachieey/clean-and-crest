@@ -79,3 +79,4 @@ export function ServiceScopeHighlights({ scope }: ServiceScopeHighlightsProps) {
     </div>
   );
 }
+
