@@ -48,19 +48,9 @@ export function Hero({ imageSrc }: HeroProps) {
     <section className={styles.heroSection} aria-labelledby="hero-heading">
       <SectionBackdrop
         image={BACKDROP_SETTINGS.hero.image}
+        sideZone="right"
         opacity={BACKDROP_SETTINGS.hero.opacity}
-        mobileOpacity={BACKDROP_SETTINGS.hero.mobileOpacity}
-        blur={BACKDROP_SETTINGS.hero.blur}
-        grayscale={BACKDROP_SETTINGS.hero.grayscale}
         position={BACKDROP_SETTINGS.hero.position}
-        mask={BACKDROP_SETTINGS.hero.mask}
-        scrim={{
-          color: "#EDF6FF",
-          direction: "to right",
-          strength: BACKDROP_SETTINGS.hero.scrimStrength,
-          width: "65%",
-        }}
-        pattern="aqua-glow"
       />
       <Container>
         <div className={styles.heroGrid}>

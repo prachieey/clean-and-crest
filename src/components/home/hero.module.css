@@ -2,11 +2,10 @@
 
 .heroSection {
   background-color: var(--color-ice-50);
-  background-image: radial-gradient(ellipse 70% 50% at 75% 20%, rgba(34, 211, 238, 0.08), transparent 70%);
-  padding-top: clamp(20px, 4vw, 56px);
-  padding-bottom: clamp(36px, 6vw, 80px);
+  padding-top: clamp(24px, 4vw, 56px);
+  padding-bottom: clamp(40px, 6vw, 80px);
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   isolation: isolate;
 }
 
@@ -201,7 +200,7 @@
   align-items: center;
   gap: 6px;
   font-size: var(--font-size-sm);
-  color: var(--color-ink-700);
+  color: var(--color-ink-800);
   font-weight: 500;
 }
 

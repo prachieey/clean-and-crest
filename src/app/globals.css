@@ -6,7 +6,7 @@
    * -------------------------------------------------- */
   --color-navy-950: #06162B;   /* Deepest backgrounds, footer, dark mood sections */
   --color-navy-900: #0A2342;   /* Headings, high-contrast dark sections */
-  --color-royal-600: #1D6FE5;  /* Primary interactive, links, bold accent */
+  --color-royal-600: #1665D8;  /* Primary interactive, links, bold accent (contrast > 4.7:1 on white & ice) */
   --color-blue-600: var(--color-royal-600); /* Alias for backward compatibility */
   --color-blue-500: #3A8DFF;   /* Hover, highlights (contrast >= 4.7:1) */
   --color-aqua-400: #22D3EE;   /* Bright accent (eyebrow marks, light badges) */
@@ -81,7 +81,7 @@
   --space-16: 128px;
 
   /* Layout Spacing */
-  --section-padding-y: clamp(72px, 7vw, 112px);
+  --section-padding-y: clamp(72px, 6vw, 104px);
   --container-max-width: 1200px;
   --container-padding-x: clamp(16px, 4vw, 32px);
 

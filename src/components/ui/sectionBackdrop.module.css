@@ -1,4 +1,7 @@
-/* Section Backdrop Styles */
+/* ==========================================================================
+   Section Backdrop Styles — Clean, Side-Zone Only, Zero Interference
+   ========================================================================== */
+
 .backdropRoot {
   position: absolute;
   inset: 0;
@@ -8,87 +11,38 @@
   user-select: none;
 }
 
-.imageLayer {
+/* Side Zone Positioning (30-38% width, right or left edge, alternating) */
+.sideZoneRight {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 36%;
+  max-width: 540px;
   height: 100%;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 25%, black 85%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 25%, black 85%);
+}
+
+.sideZoneLeft {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 36%;
+  max-width: 540px;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.4) 25%, black 85%);
+  mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.4) 25%, black 85%);
 }
 
 .imageElement {
   object-fit: cover;
   pointer-events: none;
-}
-
-.tintLayer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.scrimLayer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.vignetteLayer {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(6, 22, 43, 0.45) 100%);
-  pointer-events: none;
-}
-
-/* Atmospheric CSS patterns */
-.patternDots {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(var(--color-royal-600) 1px, transparent 1px);
-  background-size: 24px 24px;
-  opacity: 0.06;
-  pointer-events: none;
-}
-
-.patternAquaGlow {
-  position: absolute;
-  width: 650px;
-  height: 650px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.16) 0%, rgba(123, 231, 245, 0.05) 50%, transparent 75%);
-  filter: blur(40px);
-  pointer-events: none;
-}
-
-.patternBubbles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.bubbleTopRight {
-  position: absolute;
-  top: -40px;
-  right: -30px;
-  width: 220px;
-  height: 220px;
-  opacity: 0.08;
-  filter: blur(1px);
-}
-
-.bubbleBottomLeft {
-  position: absolute;
-  bottom: -50px;
-  left: 2%;
-  width: 180px;
-  height: 180px;
-  opacity: 0.07;
-  filter: blur(1.5px);
 }
 
 /* Hairlines */
@@ -98,8 +52,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--color-champagne-400) 25%, var(--color-champagne-200) 50%, var(--color-champagne-400) 75%, transparent 100%);
-  opacity: 0.5;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 169, 106, 0.35) 50%, transparent 100%);
   pointer-events: none;
 }
 
@@ -111,44 +64,6 @@
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(29, 111, 229, 0.12) 50%, transparent 100%);
   pointer-events: none;
-}
-
-/* Ghost Word Outline Typography */
-.ghostWord {
-  position: absolute;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(4.5rem, 12vw, 10rem);
-  font-weight: 700;
-  line-height: 0.85;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1.25px var(--color-royal-600);
-  opacity: 0.04;
-  pointer-events: none;
-  white-space: nowrap;
-  user-select: none;
-  z-index: 0;
-}
-
-.ghostWordLight {
-  -webkit-text-stroke: 1.25px var(--color-aqua-300);
-  opacity: 0.04;
-}
-
-.ghostWordLeft {
-  left: 2%;
-  top: -20px;
-}
-
-.ghostWordRight {
-  right: 2%;
-  top: -15px;
-}
-
-.ghostWordCenter {
-  left: 50%;
-  top: 15px;
-  transform: translateX(-50%);
 }
 
 /* Section Transitions / Dividers */
@@ -181,41 +96,14 @@
   z-index: 1;
 }
 
-/* Responsive Rules */
+/* Responsive Rules: On mobile, side-zone backdrops are hidden so mobile text sits on 100% solid flat backgrounds */
 @media (max-width: 768px) {
-  .hasMobileOpacity {
-    opacity: var(--mobile-opacity) !important;
-  }
-
-  .ghostWord {
-    display: none;
-  }
-  
-  .hideOnMobile {
+  .sideZoneRight,
+  .sideZoneLeft {
     display: none !important;
   }
-  
-  .bubbleTopRight {
-    width: 130px;
-    height: 130px;
-    right: -20px;
-  }
-  
-  .bubbleBottomLeft {
-    display: none;
-  }
-  
-  .patternAquaGlow {
-    width: 380px;
-    height: 380px;
-  }
-}
 
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  .patternAquaGlow,
-  .imageLayer {
-    transition: none !important;
-    animation: none !important;
+  .hideOnMobile {
+    display: none !important;
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowRight, Phone } from "lucide-react";
 import { siteConfig } from "@/config";
-import { Container, Section, Eyebrow, Button, Icon, Em, SectionVariant, SectionBackdrop } from "@/components/ui";
+import { Container, Section, Eyebrow, Button, Icon, Em, SectionVariant } from "@/components/ui";
 import styles from "./howItWorks.module.css";
 
 interface HowItWorksProps {
@@ -47,12 +47,6 @@ export function HowItWorks({
       aria-labelledby="how-it-works-heading"
       className={`${styles.howItWorksSection} ${className}`.trim()}
     >
-      <SectionBackdrop
-        pattern="bubbles"
-        ghostWord="02"
-        ghostWordPosition="right"
-        ghostWordVariant="royal"
-      />
       <Container>
         {/* Section Header */}
         <div className={styles.headerWrapper}>

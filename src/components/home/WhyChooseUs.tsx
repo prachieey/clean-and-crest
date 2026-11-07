@@ -54,13 +54,9 @@ export function WhyChooseUs() {
     <Section variant="navy" id="why-choose-us" aria-labelledby="why-choose-heading">
       <SectionBackdrop
         image={BACKDROP_SETTINGS.whyChooseUs.image}
-        opacity={BACKDROP_SETTINGS.whyChooseUs.opacity}
-        mobileOpacity={BACKDROP_SETTINGS.whyChooseUs.mobileOpacity}
-        tint="var(--color-navy-900)"
-        tintOpacity={BACKDROP_SETTINGS.whyChooseUs.overlayOpacity}
-        grayscale={BACKDROP_SETTINGS.whyChooseUs.grayscale}
-        position={BACKDROP_SETTINGS.whyChooseUs.position}
-        mask={BACKDROP_SETTINGS.whyChooseUs.mask}
+        sideZone="left"
+        opacity={0.24}
+        position="left center"
         hairlineTop="champagne"
         dividerBottom="curve"
         dividerFill="var(--color-ice-50)"

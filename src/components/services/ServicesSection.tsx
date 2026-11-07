@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Container, Section, Eyebrow, Em, SectionBackdrop } from "@/components/ui";
-import { BACKDROP_SETTINGS } from "@/config";
 import styles from "./inspection-services.module.css";
 
 interface ServiceItem {
@@ -46,22 +45,6 @@ export function ServicesSection() {
   return (
     <Section variant="white" id="services" aria-labelledby="services-heading">
       <SectionBackdrop
-        image={BACKDROP_SETTINGS.services.image}
-        opacity={BACKDROP_SETTINGS.services.opacity}
-        mobileOpacity={BACKDROP_SETTINGS.services.mobileOpacity}
-        position={BACKDROP_SETTINGS.services.position}
-        grayscale={BACKDROP_SETTINGS.services.grayscale}
-        blur={BACKDROP_SETTINGS.services.blur}
-        mask={BACKDROP_SETTINGS.services.mask}
-        scrim={{
-          color: "#FFFFFF",
-          direction: "to right",
-          strength: BACKDROP_SETTINGS.services.scrimStrength,
-          width: "55%",
-        }}
-        ghostWord="Services"
-        ghostWordPosition="right"
-        ghostWordVariant="royal"
         dividerBottom="curve"
         dividerFill="var(--color-navy-950)"
       />

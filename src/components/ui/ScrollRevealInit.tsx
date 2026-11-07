@@ -52,6 +52,13 @@ export function ScrollRevealInit() {
     );
     elementsToReveal.forEach((el) => observer.observe(el));
 
+    // Fallback: force full visibility after 1000ms if observer is delayed or skipped
+    const fallbackTimer = setTimeout(() => {
+      document.querySelectorAll("[data-reveal], [data-reveal-stagger]").forEach((el) => {
+        el.classList.add("is-revealed");
+      });
+    }, 1000);
+
     // Dynamic mutation observer for client-rendered routes/steps
     const mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -74,6 +81,7 @@ export function ScrollRevealInit() {
     });
 
     return () => {
+      clearTimeout(fallbackTimer);
       observer.disconnect();
       mutationObserver.disconnect();
       docEl.classList.remove("js-reveal");

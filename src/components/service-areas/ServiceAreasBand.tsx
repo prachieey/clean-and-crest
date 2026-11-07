@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowRight, Phone, MapPin, ChevronDown, ChevronUp } from "lucide-react";
 import { siteConfig } from "@/config";
 import { Container, Button, Icon, Eyebrow, Em, SectionBackdrop } from "@/components/ui";
-import { BACKDROP_SETTINGS } from "@/config";
 import styles from "./city-cards.module.css";
 
 export function ServiceAreasBand() {
@@ -32,22 +31,7 @@ export function ServiceAreasBand() {
       aria-labelledby="service-areas-heading"
       className={styles.bandSection}
     >
-      <SectionBackdrop
-        image={BACKDROP_SETTINGS.serviceAreas.image}
-        opacity={BACKDROP_SETTINGS.serviceAreas.opacity}
-        mobileOpacity={BACKDROP_SETTINGS.serviceAreas.mobileOpacity}
-        position={BACKDROP_SETTINGS.serviceAreas.position}
-        grayscale={BACKDROP_SETTINGS.serviceAreas.grayscale}
-        blur={BACKDROP_SETTINGS.serviceAreas.blur}
-        mask={BACKDROP_SETTINGS.serviceAreas.mask}
-        scrim={{
-          color: "#EDF6FF",
-          direction: "to right",
-          strength: BACKDROP_SETTINGS.serviceAreas.scrimStrength,
-          width: "60%",
-        }}
-        hairlineTop="subtle"
-      />
+      <SectionBackdrop hairlineTop="subtle" />
       <Container className={styles.container}>
         {/* Section Header */}
         <div className={styles.headerWrapper}>

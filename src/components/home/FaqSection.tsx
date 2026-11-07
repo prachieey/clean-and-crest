@@ -1,6 +1,6 @@
 import React from "react";
 import { ChevronDown, AlertTriangle } from "lucide-react";
-import { siteConfig, BACKDROP_SETTINGS } from "@/config";
+import { siteConfig } from "@/config";
 import { getFaqJsonLd } from "@/config/seo";
 import { Container, Section, Eyebrow, Icon, Em, SectionBackdrop } from "@/components/ui";
 import { JsonLd } from "@/components/seo";
@@ -22,19 +22,6 @@ export function FaqSection() {
   return (
     <Section variant="white" id="faq" aria-labelledby="faq-heading" className={styles.faqSection}>
       <SectionBackdrop
-        image={BACKDROP_SETTINGS.faq.image}
-        opacity={BACKDROP_SETTINGS.faq.opacity}
-        mobileOpacity={BACKDROP_SETTINGS.faq.mobileOpacity}
-        position={BACKDROP_SETTINGS.faq.position}
-        grayscale={BACKDROP_SETTINGS.faq.grayscale}
-        blur={BACKDROP_SETTINGS.faq.blur}
-        mask={BACKDROP_SETTINGS.faq.mask}
-        scrim={{
-          color: "#FFFFFF",
-          direction: "to right",
-          strength: BACKDROP_SETTINGS.faq.scrimStrength,
-          width: "55%",
-        }}
         dividerBottom="curve"
         dividerFill="var(--color-navy-950)"
       />

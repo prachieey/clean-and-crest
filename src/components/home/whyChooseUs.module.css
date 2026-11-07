@@ -68,7 +68,7 @@
 .sectionSubtitle {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  color: var(--color-sky-100);
+  color: rgba(255, 255, 255, 0.92);
   max-width: var(--prose-max-width);
   margin: 0;
 }
@@ -129,7 +129,7 @@
 .pointDesc {
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--color-sky-100);
+  color: rgba(255, 255, 255, 0.92);
   margin: 0;
 }
 
